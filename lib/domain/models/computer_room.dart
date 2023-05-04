@@ -1,25 +1,16 @@
-import 'package:unica_cybercoffee/domain/models/computer.dart';
 
-class ComputerRoom{
-  List<Computer> computers = [];
+class ComputerRoomUI{
+  late String id;
+  String name;
 
-  ComputerRoom({required this.computers});
+  ComputerRoomUI({this.id = 'dash6854hyabdys', required this.name});
 
-  static ComputerRoom fromMap(Map<dynamic, dynamic> data){
-    List<Computer> computers = [];
-    for(var computer in data['computers']){
-      computers.add(Computer.fromMap(computer));
-    }
-    return ComputerRoom(computers: computers);
+  static ComputerRoomUI fromMap(Map<dynamic, dynamic> data){
+    return ComputerRoomUI(id: data['id'], name: data['name']);
   }
 
   Map<dynamic, dynamic> toMap(){
-    List<Map<dynamic, dynamic>> computersMap = [];
 
-    for(var computer in computers){
-      computersMap.add(computer.toMap());
-    }
-
-    return {'computers': computersMap};
+    return {'id': id, 'name': name};
   }
 }
