@@ -1,14 +1,14 @@
 import 'package:unica_cybercoffee/domain/models/computer_room.dart';
 
 class UnicaRoom{
-  List<ComputerRoom> computerRooms = [];
+  List<ComputerRoomUI> computerRooms = [];
 
   UnicaRoom({required this.computerRooms});
 
   static UnicaRoom fromMap(Map<dynamic, dynamic> data){
-    List<ComputerRoom> computerRooms = [];
+    List<ComputerRoomUI> computerRooms = [];
     for(var computerRoom in data['computerRooms']){
-      computerRooms.add(ComputerRoom.fromMap(computerRoom));
+      computerRooms.add(ComputerRoomUI.fromMap(computerRoom));
     }
     return UnicaRoom(computerRooms: computerRooms);
   }
