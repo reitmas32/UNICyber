@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:unica_cybercoffee/ui/pages/computers_page.dart';
 import 'package:unica_cybercoffee/ui/pages/login_page.dart';
 import 'package:unica_cybercoffee/ui/pages/splash_page/splash_page.dart';
 import 'package:unica_cybercoffee/ui/providers/theme_provider.dart';
@@ -27,6 +28,10 @@ class UnicaCyberCoffeState extends State<UnicaCyberCoffe> {
         builder: (context, state) => const LoginPage(
           title: 'Home',
         ),
+      ),
+      GoRoute(
+        path: "/computers",
+        builder: (context, state) => ComputersPage(),
       ),
     ],
   );
