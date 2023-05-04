@@ -40,6 +40,8 @@ dependencies:
   go_router: 6.5.8
   shared_preferences: any
   animate_do: ^3.0.2
+  eva_icons_flutter: ^3.1.0
+  path_provider: ^2.0.14
 
 dev_dependencies:
   flutter_test:
