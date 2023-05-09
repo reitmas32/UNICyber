@@ -31,7 +31,7 @@ class UnicaCyberCoffeState extends State<UnicaCyberCoffe> {
       ),
       GoRoute(
         path: "/computers",
-        builder: (context, state) => ComputersPage(),
+        builder: (context, state) => const ComputersPage(),
       ),
     ],
   );
@@ -45,7 +45,7 @@ class UnicaCyberCoffeState extends State<UnicaCyberCoffe> {
       theme:
           currentTheme.isDarkTheme() ? AppTheme.darkTheme : AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.light,
     );
   }
 }
