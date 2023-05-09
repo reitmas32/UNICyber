@@ -1,20 +1,36 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:unica_cybercoffee/ui/providers/editable_ui_provider.dart';
 import 'package:unica_cybercoffee/ui/theme_preference.dart';
-import 'package:unica_cybercoffee/ui/widgets/appbar/button_app_bar.dart';
-import 'package:unica_cybercoffee/ui/widgets/appbar/button_icon.dart';
 import 'package:unica_cybercoffee/ui/widgets/appbar/button_image.dart';
 import 'package:unica_cybercoffee/ui/widgets/appbar/theme_button.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 
 class UnicaAppBar extends StatelessWidget implements PreferredSizeWidget {
   const UnicaAppBar({
     super.key,
   });
 
-  List<Widget> getActions(double width,BuildContext context, String lable) {
+  List<Widget> getActions(double width, BuildContext context, String lable) {
     // ignore: no_leading_underscores_for_local_identifiers
     List<Widget> _actions = [];
+    final editableProvider = Provider.of<EditableUIProvider>(context);
+
+    _actions.add(Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text('Edit UI'),
+        Switch(
+          // This bool value toggles the switch.
+          value: editableProvider.editable,
+          activeColor: Colors.red,
+          onChanged: (bool value) {
+            // This is called when the user toggles the switch.
+            editableProvider.seteditable();
+          },
+        ),
+      ],
+    ));
 
     _actions.add(Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -58,6 +74,7 @@ class UnicaAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
     );
 
+
     return _actions;
   }
 
@@ -68,7 +85,8 @@ class UnicaAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: getActions(MediaQuery.of(context).size.width, context, 'Usuarios'))
+            children: getActions(
+                MediaQuery.of(context).size.width, context, 'Usuarios'))
       ],
       title: Row(
         children: const [
