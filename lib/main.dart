@@ -1,5 +1,7 @@
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:unica_cybercoffee/ui/providers/editable_ui_provider.dart';
 import 'package:unica_cybercoffee/ui/providers/theme_provider.dart';
 import 'package:unica_cybercoffee/ui/unica_cybercoffee.dart';
 import 'package:url_strategy/url_strategy.dart';
@@ -18,6 +20,7 @@ class MyApp extends StatefulWidget {
 
 class MyAppState extends State<MyApp> {
   ThemeProvider themeChangeProvider = ThemeProvider();
+  EditableUIProvider editableUIProvider = EditableUIProvider();
 
   @override
   void initState() {
@@ -33,8 +36,11 @@ class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
-      value: themeChangeProvider,
-      child: const UnicaCyberCoffe(),
+      value: editableUIProvider,
+      child: ChangeNotifierProvider.value(
+        value: themeChangeProvider,
+        child: const UnicaCyberCoffe(),
+      ),
     );
   }
 }
