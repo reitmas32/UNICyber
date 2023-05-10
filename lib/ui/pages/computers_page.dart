@@ -82,40 +82,38 @@ class ComputersPageState extends State<ComputersPage> {
     final editableUIProvider = Provider.of<EditableUIProvider>(context);
     return Scaffold(
       appBar: const UnicaAppBar(),
-      body: SafeArea(
-        child: CustomTabView(
-          initPosition: initPosition,
-          itemCount: computerRooms.length,
-          tabBuilder: (context, index) => Tab(text: computerRooms[index].name),
-          pageBuilder: (context, index) {
-            return TableComputers(
-              computers: computers
-                  .where((element) =>
-                      element.idComputerRoom == computerRooms[index].id)
-                  .toList(),
-            );
-          },
-          onPositionChange: (index) {
-            if (index == computerRooms.length - 1) {
-              if (computerRooms.length == 1) {
-                _addNewComputerRoom(databaseUI, 'Aula ${index + 1}');
-                _loadComputerRooms(databaseUI);
-                initPosition = computerRooms.length - 2;
-              } else if (editableUIProvider.editable) {
-                _addNewComputerRoom(databaseUI, 'Aula ${index + 1}');
-                _loadComputerRooms(databaseUI);
-                initPosition = computerRooms.length - 2;
-              } else {
-                initPosition = lastPos;
-                return;
-              }
+      body: CustomTabView(
+        initPosition: initPosition,
+        itemCount: computerRooms.length,
+        tabBuilder: (context, index) => Tab(text: computerRooms[index].name),
+        pageBuilder: (context, index) {
+          return TableComputers(
+            computers: computers
+                .where((element) =>
+                    element.idComputerRoom == computerRooms[index].id)
+                .toList(),
+          );
+        },
+        onPositionChange: (index) {
+          if (index == computerRooms.length - 1) {
+            if (computerRooms.length == 1) {
+              _addNewComputerRoom(databaseUI, 'Aula ${index + 1}');
+              _loadComputerRooms(databaseUI);
+              initPosition = computerRooms.length - 2;
+            } else if (editableUIProvider.editable) {
+              _addNewComputerRoom(databaseUI, 'Aula ${index + 1}');
+              _loadComputerRooms(databaseUI);
+              initPosition = computerRooms.length - 2;
             } else {
-              initPosition = index;
+              initPosition = lastPos;
+              return;
             }
-            lastPos = index;
-          },
-          onScroll: (position) {},
-        ),
+          } else {
+            initPosition = index;
+          }
+          lastPos = index;
+        },
+        onScroll: (position) {},
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: editableUIProvider.editable ? () {
