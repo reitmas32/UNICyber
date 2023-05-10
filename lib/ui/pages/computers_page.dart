@@ -17,13 +17,12 @@ class ComputersPage extends StatefulWidget {
 }
 
 class ComputersPageState extends State<ComputersPage> {
-  //List<String> data = ['Aula 0', 'Aula 1', 'Nueva Aula'];
   int initPosition = 1;
   int lastPos = 1;
   //List<List<Position>> unica = [[], [], []];
   List<ComputerRoomUI> computerRooms = [];
   List<ComputerUI> computers = [];
-  IDataBaseUI databaseUI = DataBaseStaticUI();
+  DataBaseStaticUI databaseUI = databaseUI_Static;
 
   _loadComputerRooms(IDataBaseUI database) async {
     List<ComputerRoomUI> computerRoomsTmp = await database.getComputerRooms();
@@ -32,11 +31,11 @@ class ComputersPageState extends State<ComputersPage> {
     });
   }
 
-  _createComputerRooms(IDataBaseUI database) async {
+  _createComputerRooms(DataBaseStaticUI database) async {
+    await database.loadData();
+    List<ComputerUI> computerTmp = await database.getComputers();
     setState(() {
-      //database.createComputerRooms('Aula 1');
-      //database.createComputerRooms('Aula 2');
-      database.createComputerRooms('Nueva Aula');
+      computers = computerTmp;
     });
   }
 
@@ -58,6 +57,12 @@ class ComputersPageState extends State<ComputersPage> {
     setState(() {
       computers = _computers;
     });
+  }
+
+  @override
+  void deactivate() async {
+    await databaseUI.saveData();
+    super.deactivate();
   }
 
   @override
