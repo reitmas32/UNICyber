@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:path_provider/path_provider.dart';
 import 'package:unica_cybercoffee/domain/models/computerUI.dart';
 import 'package:unica_cybercoffee/domain/models/computer_room.dart';
 import 'package:unica_cybercoffee/services/DB/idatabase_UI.dart';
@@ -6,6 +10,65 @@ import 'package:unica_cybercoffee/tools/randomID.dart';
 class DataBaseStaticUI extends IDataBaseUI {
   List<ComputerUI> computers = [];
   List<ComputerRoomUI> computerRooms = [];
+
+  Future<bool> loadData() async {
+    final directory = await getApplicationSupportDirectory();
+    final collectionComputersFile =
+        File('${directory.path}/collection_computers.json');
+    if (!await collectionComputersFile.exists()) {
+      await collectionComputersFile.create();
+    } else {
+      final collectionComputersJson =
+          collectionComputersFile.readAsStringSync();
+      if (!collectionComputersJson.isEmpty) {
+        final List<dynamic> collectionComputersList =
+            jsonDecode(collectionComputersJson);
+        computers = collectionComputersList
+            .map((json) => ComputerUI.fromMap(json))
+            .toList();
+      }
+    }
+
+    final collectionComputerRoomsFile =
+        File('${directory.path}/collection_computer_rooms.json');
+    if (!await collectionComputerRoomsFile.exists()) {
+      await collectionComputerRoomsFile.create();
+    } else {
+      final collectionComputerRoomsJson =
+          collectionComputerRoomsFile.readAsStringSync();
+      if (!collectionComputerRoomsJson.isEmpty) {
+        final List<dynamic> collectionComputerRoomsList =
+            jsonDecode(collectionComputerRoomsJson);
+        computerRooms = collectionComputerRoomsList
+            .map((json) => ComputerRoomUI.fromMap(json))
+            .toList();
+      }else{
+        await createComputerRooms('Nueva Aula');
+      }
+    }
+
+    return Future(() => true);
+  }
+
+  Future<bool> saveData() async {
+    final directory = await getApplicationSupportDirectory();
+    final collectionComputers =
+        File('${directory.path}/collection_computers.json');
+    final sinkCollectionComputers = collectionComputers.openWrite();
+
+    final collectionComputerRooms =
+        File('${directory.path}/collection_computer_rooms.json');
+    final sinkCollectionComputerRooms = collectionComputerRooms.openWrite();
+
+    sinkCollectionComputers.write(
+        jsonEncode(computers.map((computer) => computer.toJson()).toList()));
+    sinkCollectionComputerRooms.write(jsonEncode(
+        computerRooms.map((computer) => computer.toJson()).toList()));
+
+    await sinkCollectionComputers.flush();
+    await sinkCollectionComputers.close();
+    return Future(() => true);
+  }
 
   @override
   Future<ComputerUI> createComputer(
@@ -68,3 +131,5 @@ class DataBaseStaticUI extends IDataBaseUI {
     return Future(() => true);
   }
 }
+
+DataBaseStaticUI databaseUI_Static = DataBaseStaticUI();
