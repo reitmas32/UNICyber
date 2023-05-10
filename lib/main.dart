@@ -1,13 +1,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:unica_cybercoffee/services/DB/database_static.dart';
 import 'package:unica_cybercoffee/ui/providers/editable_ui_provider.dart';
 import 'package:unica_cybercoffee/ui/providers/theme_provider.dart';
 import 'package:unica_cybercoffee/ui/unica_cybercoffee.dart';
 import 'package:url_strategy/url_strategy.dart';
 
-void main() {
+void main() async {
   setPathUrlStrategy();
+  DataBaseStaticUI databaseUI = databaseUI_Static;
+  await databaseUI.loadData();
   runApp(const MyApp());
 }
 
