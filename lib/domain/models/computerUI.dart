@@ -41,6 +41,18 @@ class ComputerUI extends Position {
     };
   }
 
+    Map<String, dynamic> toJson() {
+    return {
+      "name": name,
+      "imageUrl": imageUrl,
+      "state": state,
+      "idComputerRoom": idComputerRoom,
+      "x": x,
+      "y": y,
+      "id": id
+    };
+  }
+
   @override
   String toString() => 'ComputerUI{name: $name, imageUrl: $imageUrl, state: $state, idComputerRoom: $idComputerRoom, id: $id}';
 }
