@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:unica_cybercoffee/services/DB/database_static.dart';
 import 'package:unica_cybercoffee/ui/providers/editable_ui_provider.dart';
 import 'package:unica_cybercoffee/ui/theme_preference.dart';
 import 'package:unica_cybercoffee/ui/widgets/appbar/button_image.dart';
@@ -15,7 +16,32 @@ class UnicaAppBar extends StatelessWidget implements PreferredSizeWidget {
     // ignore: no_leading_underscores_for_local_identifiers
     List<Widget> _actions = [];
     final editableProvider = Provider.of<EditableUIProvider>(context);
+    DataBaseStaticUI databaseUI = databaseUI_Static;
 
+    if (editableProvider.editable) {
+      _actions.add(Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.red),
+          onPressed: () async {
+            await databaseUI.saveData();
+            editableProvider.seteditable();
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Text(
+              'SaveUI',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onPrimary,
+                fontSize: 22.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      ));
+    }
     _actions.add(Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -24,8 +50,9 @@ class UnicaAppBar extends StatelessWidget implements PreferredSizeWidget {
           // This bool value toggles the switch.
           value: editableProvider.editable,
           activeColor: Colors.red,
-          onChanged: (bool value) {
+          onChanged: (bool value) async {
             // This is called when the user toggles the switch.
+            await databaseUI.saveData();
             editableProvider.seteditable();
           },
         ),
@@ -73,7 +100,6 @@ class UnicaAppBar extends StatelessWidget implements PreferredSizeWidget {
         width: 40.0,
       ),
     );
-
 
     return _actions;
   }
