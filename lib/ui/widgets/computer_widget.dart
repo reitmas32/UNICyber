@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:unica_cybercoffee/domain/models/computerUI.dart';
 import 'package:unica_cybercoffee/ui/providers/editable_ui_provider.dart';
-import 'package:unica_cybercoffee/ui/widgets/computer_info_dialog.dart';
+import 'package:unica_cybercoffee/ui/widgets/dialogs/computer_info_dialog.dart';
 import 'package:unica_cybercoffee/ui/widgets/computer_view.dart';
-import 'package:unica_cybercoffee/ui/widgets/loan_computer_dialog.dart';
+import 'package:unica_cybercoffee/ui/widgets/dialogs/loan_computer_dialog.dart';
 
 class ComputerWidget extends StatefulWidget {
   const ComputerWidget({super.key, required this.computer});

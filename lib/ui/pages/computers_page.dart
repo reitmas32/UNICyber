@@ -5,7 +5,7 @@ import 'package:unica_cybercoffee/domain/models/computer_room.dart';
 import 'package:unica_cybercoffee/services/DB/database_static.dart';
 import 'package:unica_cybercoffee/services/DB/idatabase_UI.dart';
 import 'package:unica_cybercoffee/ui/providers/editable_ui_provider.dart';
-import 'package:unica_cybercoffee/ui/widgets/add_computer_dialog.dart';
+import 'package:unica_cybercoffee/ui/widgets/dialogs/add_computer_dialog.dart';
 import 'package:unica_cybercoffee/ui/widgets/appbar/unicaAppBar.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_tab_view.dart';
 import 'package:unica_cybercoffee/ui/widgets/table_computers.dart';
