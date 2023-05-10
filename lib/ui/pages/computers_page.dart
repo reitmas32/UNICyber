@@ -5,6 +5,7 @@ import 'package:unica_cybercoffee/domain/models/computer_room.dart';
 import 'package:unica_cybercoffee/services/DB/database_static.dart';
 import 'package:unica_cybercoffee/services/DB/idatabase_UI.dart';
 import 'package:unica_cybercoffee/ui/providers/editable_ui_provider.dart';
+import 'package:unica_cybercoffee/ui/widgets/add_computer_dialog.dart';
 import 'package:unica_cybercoffee/ui/widgets/appbar/unicaAppBar.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_tab_view.dart';
 import 'package:unica_cybercoffee/ui/widgets/table_computers.dart';
@@ -17,8 +18,8 @@ class ComputersPage extends StatefulWidget {
 }
 
 class ComputersPageState extends State<ComputersPage> {
-  int initPosition = 1;
-  int lastPos = 1;
+  int initPosition = 0;
+  int lastPos = 0;
   //List<List<Position>> unica = [[], [], []];
   List<ComputerRoomUI> computerRooms = [];
   List<ComputerUI> computers = [];
@@ -117,41 +118,22 @@ class ComputersPageState extends State<ComputersPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          //setState(() {
+        onPressed: editableUIProvider.editable ? () {
           showDialog(
             context: context,
-            builder: (context) => AlertDialog(
-              title: const Text('Datos de la Compitadora'),
-              content: TextField(
-                controller: nameNewComputer,
-              ),
-              actions: [
-                InkWell(
-                  borderRadius: BorderRadius.circular(10.0),
-                  onTap: () {
-                    _addNewComputer(databaseUI, computerRooms[lastPos].name,
-                        nameNewComputer.text);
-                    setState(() {
-                      nameNewComputer.text = '';
-                    });
-                    Navigator.of(context).pop();
-                  },
-                  hoverColor: Theme.of(context).colorScheme.secondary,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(25.0),
-                      child: const Text('Añadir Computadora'),
-                    ),
-                  ),
-                )
-              ],
+            builder: (context) => AddComputerDialog(
+              nameNewComputer: nameNewComputer,
+              onTap: () {
+                _addNewComputer(databaseUI, computerRooms[lastPos].name,
+                    nameNewComputer.text);
+                setState(() {
+                  nameNewComputer.text = '';
+                });
+                Navigator.of(context).pop();
+              },
             ),
           );
-          //unica[lastPos].add(Position(x: 0, y: 0));
-          //});
-        },
+        } : null,
         child: const Icon(Icons.add),
       ),
     );
