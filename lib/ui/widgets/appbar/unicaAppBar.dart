@@ -121,6 +121,8 @@ class UnicaAppBar extends StatelessWidget implements PreferredSizeWidget {
             imageUrl:
                 'https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/unica_logo.jpeg',
           ),
+          SizedBox(width: 30.0,),
+          Text('UNICA CyberCoffee'),
           //ButtonAppBar(lable: 'About'),
         ],
       ),
