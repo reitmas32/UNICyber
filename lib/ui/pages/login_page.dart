@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:unica_cybercoffee/services/DB/database_static.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.title});
@@ -11,6 +12,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  TextEditingController userNameController = TextEditingController(text: '');
+  TextEditingController passwordController = TextEditingController(text: '');
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -36,20 +40,21 @@ class _LoginPageState extends State<LoginPage> {
             Padding(
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
               padding: EdgeInsets.symmetric(horizontal: size.width / 3),
-              child: const TextField(
-                decoration: InputDecoration(
+              child: TextField(
+                controller: userNameController,
+                decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
                     hintText: 'Enter valid email id as abc@gmail.com'),
               ),
             ),
             Padding(
-                            padding: EdgeInsets.symmetric(horizontal: size.width / 3),
+              padding: EdgeInsets.symmetric(horizontal: size.width / 3),
 
               //padding: EdgeInsets.symmetric(horizontal: 15),
-              child: const TextField(
-                obscureText: true,
-                decoration: InputDecoration(
+              child: TextField(
+                controller: passwordController,
+                decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Password',
                     hintText: 'Enter secure password'),
@@ -70,8 +75,11 @@ class _LoginPageState extends State<LoginPage> {
               decoration: BoxDecoration(
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: TextButton(
-                onPressed: () {
-                  context.go('/computers');
+                onPressed: () async {
+                  if (await databaseStatic.signinUserAdmin(
+                      userNameController.text, passwordController.text)) {
+                    context.go('/computers');
+                  }
                 },
                 child: const Text(
                   'Login',
@@ -80,9 +88,23 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             const SizedBox(
-              height: 130,
+              height: 20,
             ),
-            const Text('New User? Create Account')
+            Container(
+              height: 50,
+              width: 250,
+              decoration: BoxDecoration(
+                  color: Colors.blue, borderRadius: BorderRadius.circular(20)),
+              child: TextButton(
+                onPressed: () {
+                  context.go('/signin');
+                },
+                child: const Text(
+                  'New User? Create Account',
+                  style: TextStyle(color: Colors.white, fontSize: 15),
+                ),
+              ),
+            ),
           ],
         ),
       ),
