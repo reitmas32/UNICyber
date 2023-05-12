@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:unica_cybercoffee/domain/models/computerUI.dart';
 import 'package:unica_cybercoffee/domain/models/computer_room.dart';
+import 'package:unica_cybercoffee/domain/models/computer_states.dart';
 import 'package:unica_cybercoffee/services/DB/database_static.dart';
 import 'package:unica_cybercoffee/services/DB/idatabase_UI.dart';
 import 'package:unica_cybercoffee/tools/randomID.dart';
@@ -86,8 +87,9 @@ class DataBaseStaticUI extends IDataBaseUI {
     var computerRoom = await findComputerRooms(nameRoom);
     var computer = ComputerUI(
       name: nameComputer,
-      imageUrl: 'imageUrl',
-      state: 'state',
+      imageUrl:
+          'https://em-content.zobj.net/source/microsoft-teams/337/desktop-computer_1f5a5-fe0f.png',
+      state: ComputerStates.disponible,
       id: randomID,
       x: 0,
       y: 0,
@@ -98,6 +100,37 @@ class DataBaseStaticUI extends IDataBaseUI {
     );
 
     return Future(() => computer);
+  }
+
+  Future<bool> setStateComputer(String id, String state) {
+    String imageUrlDisponible =
+        'https://em-content.zobj.net/source/microsoft-teams/337/desktop-computer_1f5a5-fe0f.png';
+    String imageUrlReparacion =
+        'https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/desktop-computer-reparacion.png';
+    String imageUrlProyecto =
+        'https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/desktop-computer-proyecto.png';
+    String imageUrlMantenimiento =
+        'https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/desktop-computer-mantenimiento.png';
+
+    ComputerUI computer = computers.firstWhere(
+      (element) => element.id == id,
+    );
+    computer.state = state;
+
+    if (ComputerStates.disponible == computer.state) {
+      computer.imageUrl = imageUrlDisponible;
+    }
+    if (ComputerStates.mantenimiento == computer.state) {
+      computer.imageUrl = imageUrlMantenimiento;
+    }
+    if (ComputerStates.reparacion == computer.state) {
+      computer.imageUrl = imageUrlReparacion;
+    }
+    if (ComputerStates.proyecto == computer.state) {
+      computer.imageUrl = imageUrlProyecto;
+    }
+
+    return Future(() => true);
   }
 
   @override
