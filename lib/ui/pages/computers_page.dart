@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:unica_cybercoffee/domain/models/computerUI.dart';
 import 'package:unica_cybercoffee/domain/models/computer_room.dart';
+import 'package:unica_cybercoffee/services/DB/databaseUI_static.dart';
 import 'package:unica_cybercoffee/services/DB/database_static.dart';
 import 'package:unica_cybercoffee/services/DB/idatabase_UI.dart';
 import 'package:unica_cybercoffee/ui/providers/editable_ui_provider.dart';
@@ -26,6 +27,7 @@ class ComputersPageState extends State<ComputersPage> {
   DataBaseStaticUI databaseUI = databaseUI_Static;
 
   _loadComputerRooms(IDataBaseUI database) async {
+    
     List<ComputerRoomUI> computerRoomsTmp = await database.getComputerRooms();
     setState(() {
       computerRooms = computerRoomsTmp;
@@ -68,6 +70,7 @@ class ComputersPageState extends State<ComputersPage> {
 
   @override
   void initState() {
+    print(databaseStatic.activeUserAdmin);
     _createComputerRooms(databaseUI);
 
     _loadComputerRooms(databaseUI);
