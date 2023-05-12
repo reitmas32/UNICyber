@@ -1,10 +1,19 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:unica_cybercoffee/domain/models/computer_states.dart';
 
-class ComputerInfoDialog extends StatelessWidget {
+class ComputerInfoDialog extends StatefulWidget {
   const ComputerInfoDialog({
     super.key,
   });
+
+  @override
+  State<ComputerInfoDialog> createState() => _ComputerInfoDialogState();
+}
+
+class _ComputerInfoDialogState extends State<ComputerInfoDialog> {
+  int controllerState = 0;
+  int controllerUserAction = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -46,13 +55,17 @@ class ComputerInfoDialog extends StatelessWidget {
               ),
             ),
           ),
-          const MyDropdownMenu(
+          MyDropdownMenu(
+            onChanged: (int index) {
+              setState(() {
+                controllerState = index;
+              });
+            },
             items: [
-              'Descompuesto',
-              'Mantenimiento',
-              'Reparación',
-              'Proyecto',
-              'Impresión',
+              ComputerStates.disponible,
+              ComputerStates.mantenimiento,
+              ComputerStates.reparacion,
+              ComputerStates.proyecto,
             ],
           ),
           const Align(
@@ -68,19 +81,23 @@ class ComputerInfoDialog extends StatelessWidget {
               ),
             ),
           ),
-          const MyDropdownMenu(
-            items: [
-              'Info Usuario',
-              'Sancionar',
-            ],
-          ),
+          MyDropdownMenu(
+              items: const [
+                'Info Usuario',
+                'Sancionar',
+              ],
+              onChanged: (int index) {
+                setState(() {
+                  controllerUserAction = index;
+                });
+              }),
         ],
       ),
       actions: [
         InkWell(
           borderRadius: BorderRadius.circular(10.0),
           onTap: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).pop({'state': controllerState, 'userAction': controllerUserAction});
           },
           hoverColor: Theme.of(context).colorScheme.secondary,
           child: Padding(
@@ -102,9 +119,9 @@ class ComputerInfoDialog extends StatelessWidget {
 }
 
 class MyDropdownMenu extends StatefulWidget {
-  const MyDropdownMenu({super.key, required this.items});
-
+  MyDropdownMenu({super.key, required this.items, required this.onChanged});
   final List<String> items;
+  final void Function(int value) onChanged;
 
   @override
   _MyDropdownMenuState createState() => _MyDropdownMenuState();
@@ -130,6 +147,8 @@ class _MyDropdownMenuState extends State<MyDropdownMenu> {
       onChanged: (newValue) {
         setState(() {
           _selectedItem = newValue ?? widget.items.first;
+          widget.onChanged(
+              widget.items.indexOf(newValue ?? ComputerStates.disponible));
         });
       },
       items: widget.items.map((item) {
