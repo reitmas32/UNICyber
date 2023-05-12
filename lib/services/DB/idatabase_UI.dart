@@ -20,7 +20,7 @@ class IDataBaseUI {
   }
 
   Future<ComputerRoomUI> findComputerRooms(String nameRoom) async {
-    return Future(() => ComputerRoomUI(name: 'None'));
+    return Future(() => ComputerRoomUI(name: 'None', idUserAdmin: 'None'));
   }
 
   Future<List<ComputerRoomUI>> getComputerRooms() async {
