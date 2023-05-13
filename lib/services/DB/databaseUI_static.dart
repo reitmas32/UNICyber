@@ -106,11 +106,11 @@ class DataBaseStaticUI extends IDataBaseUI {
     String imageUrlDisponible =
         'https://em-content.zobj.net/source/microsoft-teams/337/desktop-computer_1f5a5-fe0f.png';
     String imageUrlReparacion =
-        'https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/desktop-computer-reparacion.png';
+        'https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/reparacion.png';
     String imageUrlProyecto =
-        'https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/desktop-computer-proyecto.png';
+        'https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/proyecto.png';
     String imageUrlMantenimiento =
-        'https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/desktop-computer-mantenimiento.png';
+        'https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/mantenimiento.png';
 
     ComputerUI computer = computers.firstWhere(
       (element) => element.id == id,
