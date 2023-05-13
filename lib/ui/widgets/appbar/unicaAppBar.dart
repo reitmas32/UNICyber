@@ -6,6 +6,7 @@ import 'package:unica_cybercoffee/ui/providers/editable_ui_provider.dart';
 import 'package:unica_cybercoffee/ui/theme_preference.dart';
 import 'package:unica_cybercoffee/ui/widgets/appbar/button_image.dart';
 import 'package:unica_cybercoffee/ui/widgets/appbar/theme_button.dart';
+import 'package:unica_cybercoffee/ui/widgets/clock_text.dart';
 
 class UnicaAppBar extends StatelessWidget implements PreferredSizeWidget {
   const UnicaAppBar({
@@ -23,7 +24,8 @@ class UnicaAppBar extends StatelessWidget implements PreferredSizeWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-              textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.red),
+              textStyle: const TextStyle(fontSize: 20),
+              backgroundColor: Colors.red),
           onPressed: () async {
             await databaseUI.saveData();
             editableProvider.seteditable();
@@ -42,6 +44,7 @@ class UnicaAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ));
     }
+
     _actions.add(Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -115,14 +118,26 @@ class UnicaAppBar extends StatelessWidget implements PreferredSizeWidget {
                 MediaQuery.of(context).size.width, context, 'Usuarios'))
       ],
       title: Row(
-        children: const [
-          ButtonImage(
-            url: '/',
-            imageUrl:
-                'https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/unica_logo.jpeg',
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: const [
+              ButtonImage(
+                url: '/',
+                imageUrl:
+                    'https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/unica_logo.jpeg',
+              ),
+              SizedBox(
+                width: 30,
+              ),
+              Text('UNICA CyberCoffee'),
+            ],
           ),
-          SizedBox(width: 30.0,),
-          Text('UNICA CyberCoffee'),
+          const ClockText(),
+          const SizedBox(
+            width: 30,
+          ),
+
           //ButtonAppBar(lable: 'About'),
         ],
       ),
