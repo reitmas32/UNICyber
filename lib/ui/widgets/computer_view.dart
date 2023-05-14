@@ -13,8 +13,7 @@ class ComputerView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 100,
-      height: 120,
+      width: 120,
       child: Column(
         children: [
           Text(name),
