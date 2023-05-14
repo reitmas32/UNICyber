@@ -27,7 +27,6 @@ class ComputersPageState extends State<ComputersPage> {
   DataBaseStaticUI databaseUI = databaseUI_Static;
 
   _loadComputerRooms(IDataBaseUI database) async {
-    
     List<ComputerRoomUI> computerRoomsTmp = await database.getComputerRooms();
     setState(() {
       computerRooms = computerRoomsTmp;
@@ -84,56 +83,75 @@ class ComputersPageState extends State<ComputersPage> {
     final editableUIProvider = Provider.of<EditableUIProvider>(context);
     return Scaffold(
       appBar: const UnicaAppBar(),
-      body: CustomTabView(
-        initPosition: initPosition,
-        itemCount: computerRooms.length,
-        tabBuilder: (context, index) => Tab(text: computerRooms[index].name),
-        pageBuilder: (context, index) {
-          return TableComputers(
-            computers: computers
-                .where((element) =>
-                    element.idComputerRoom == computerRooms[index].id)
-                .toList(),
-          );
-        },
-        onPositionChange: (index) {
-          if (index == computerRooms.length - 1) {
-            if (computerRooms.length == 1) {
-              _addNewComputerRoom(databaseUI, 'Aula ${index + 1}');
-              _loadComputerRooms(databaseUI);
-              initPosition = computerRooms.length - 2;
-            } else if (editableUIProvider.editable) {
-              _addNewComputerRoom(databaseUI, 'Aula ${index + 1}');
-              _loadComputerRooms(databaseUI);
-              initPosition = computerRooms.length - 2;
-            } else {
-              initPosition = lastPos;
-              return;
+      body: Padding(
+        padding: const EdgeInsets.only(top: 16.0),
+        child: CustomTabView(
+          initPosition: initPosition,
+          itemCount: computerRooms.length,
+          tabBuilder: (context, index) => Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              computerRooms[index].name,
+              style: TextStyle(fontSize: 20.0),
+            ),
+          ),
+          pageBuilder: (context, index) {
+            if (index == computerRooms.length - 1) {
+              return Center(
+                child: Text(
+                  'Activa la edicion de la UI para crear una nueva Aula',
+                  style: TextStyle(fontSize: 30.0),
+                ),
+              );
             }
-          } else {
-            initPosition = index;
-          }
-          lastPos = index;
-        },
-        onScroll: (position) {},
+            return TableComputers(
+              computers: computers
+                  .where((element) =>
+                      element.idComputerRoom == computerRooms[index].id)
+                  .toList(),
+            );
+          },
+          onPositionChange: (index) {
+            if (index == computerRooms.length - 1) {
+              if (computerRooms.length == 1) {
+                _addNewComputerRoom(databaseUI, 'Aula ${index + 1}');
+                _loadComputerRooms(databaseUI);
+                initPosition = computerRooms.length - 2;
+              } else if (editableUIProvider.editable) {
+                _addNewComputerRoom(databaseUI, 'Aula ${index + 1}');
+                _loadComputerRooms(databaseUI);
+                initPosition = computerRooms.length - 2;
+              } else {
+                initPosition = lastPos;
+                return;
+              }
+            } else {
+              initPosition = index;
+            }
+            lastPos = index;
+          },
+          onScroll: (position) {},
+        ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: editableUIProvider.editable ? () {
-          showDialog(
-            context: context,
-            builder: (context) => AddComputerDialog(
-              nameNewComputer: nameNewComputer,
-              onTap: () {
-                _addNewComputer(databaseUI, computerRooms[lastPos].name,
-                    nameNewComputer.text);
-                setState(() {
-                  nameNewComputer.text = '';
-                });
-                Navigator.of(context).pop();
-              },
-            ),
-          );
-        } : null,
+        onPressed: editableUIProvider.editable
+            ? () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AddComputerDialog(
+                    nameNewComputer: nameNewComputer,
+                    onTap: () {
+                      _addNewComputer(databaseUI, computerRooms[lastPos].name,
+                          nameNewComputer.text);
+                      setState(() {
+                        nameNewComputer.text = '';
+                      });
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                );
+              }
+            : null,
         child: const Icon(Icons.add),
       ),
     );
