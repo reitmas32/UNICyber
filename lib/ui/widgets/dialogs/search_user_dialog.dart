@@ -5,7 +5,7 @@ import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
 import 'package:unica_cybercoffee/ui/widgets/dialogs/info_user_dialog.dart';
 
 class SearchUserDialog extends StatefulWidget {
-  SearchUserDialog({
+  const SearchUserDialog({
     super.key,
   });
 
