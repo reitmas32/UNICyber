@@ -10,7 +10,6 @@ import 'package:url_strategy/url_strategy.dart';
 
 void main() async {
   setPathUrlStrategy();
-  DataBaseStaticUI databaseUI = databaseUI_Static;
   await databaseStatic.loadData();
   runApp(const MyApp());
 }
