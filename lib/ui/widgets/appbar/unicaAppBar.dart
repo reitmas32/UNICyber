@@ -7,6 +7,7 @@ import 'package:unica_cybercoffee/ui/theme_preference.dart';
 import 'package:unica_cybercoffee/ui/widgets/appbar/button_image.dart';
 import 'package:unica_cybercoffee/ui/widgets/appbar/theme_button.dart';
 import 'package:unica_cybercoffee/ui/widgets/clock_text.dart';
+import 'package:unica_cybercoffee/ui/widgets/dialogs/search_user_dialog.dart';
 
 class UnicaAppBar extends StatelessWidget implements PreferredSizeWidget {
   const UnicaAppBar({super.key, this.route = ''});
@@ -70,7 +71,10 @@ class UnicaAppBar extends StatelessWidget implements PreferredSizeWidget {
           borderRadius: BorderRadius.circular(10.0),
           hoverColor: Theme.of(context).colorScheme.secondary,
           onTap: () {
-            //context.go('/${lable.toLowerCase()}');
+            showDialog(
+              context: context,
+              builder: (context) => SearchUserDialog(),
+            );
           },
           child: Padding(
             padding: const EdgeInsets.all(15.0),
@@ -86,7 +90,7 @@ class UnicaAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ));
     }
-    
+
     _actions.add(const SizedBox(
       width: 40.0,
     ));
