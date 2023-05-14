@@ -58,6 +58,7 @@ class CustomTextFiledsState extends State<CustomTextFileds> {
             : Colors.transparent,
         child: TextField(
           focusNode: widget.focusNode,
+          obscureText: widget.lable.toLowerCase() == 'password',
           controller: widget.textEditingController,
           onTap: () => setState(() {
             widget.maskController.updateMask(widget.indexTextField);
