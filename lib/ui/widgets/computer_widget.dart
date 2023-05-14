@@ -54,8 +54,8 @@ class _ComputerWidgetState extends State<ComputerWidget> {
             ),
           );
         },
-        onSecondaryTap: () {
-          showDialog(
+        onSecondaryTap: () async {
+          var result = await showDialog(
             context: context,
             builder: (context) => RawKeyboardListener(
               focusNode: FocusNode(),
@@ -65,28 +65,23 @@ class _ComputerWidgetState extends State<ComputerWidget> {
                   Navigator.pop(context);
                 }
               },
-              child: const ComputerInfoDialog(),
+              child: WillPopScope(
+                onWillPop: () async {
+                  Navigator.of(context).pop(); //Cerrar el AlertDialog
+                  return true;
+                },
+                child: ComputerInfoDialog(
+                  computerUI: widget.computer,
+                ),
+              ),
             ),
-          ).then((value) {
-            setState(() {
-              var state = ComputerStates.disponible;
-              switch (value['state']) {
-                case 0:
-                  state = ComputerStates.disponible;
-                  break;
-                case 1:
-                  state = ComputerStates.mantenimiento;
-                  break;
-                case 2:
-                  state = ComputerStates.reparacion;
-                  break;
-                case 3:
-                  state = ComputerStates.proyecto;
-                  break;
-                default:
-              }
-              databaseUI_Static.setStateComputer(widget.computer.id, state);
-            });
+          );
+
+          setState(() {
+            var state = widget.computer.state;
+            if(result != null){
+            databaseUI_Static.setStateComputer(widget.computer.id, ComputerStates.getStateLable(result['state']));
+            }
           });
         },
         onPanUpdate: (details) {
