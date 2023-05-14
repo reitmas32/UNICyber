@@ -63,6 +63,9 @@ class DataBaseStatic {
 
   Future<UserAdmin> signupUserAdmin(String userName, String password) async {
     final randomID = randomString();
+    if(userName.isEmpty || password.isEmpty){
+      return Future(() => UserAdmin(id: '', userName: '', password: ''));
+    }
     var userAdmin = UserAdmin(
       userName: userName,
       password: password,
