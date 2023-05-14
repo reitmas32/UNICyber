@@ -97,7 +97,7 @@ class ComputersPageState extends State<ComputersPage> {
           ),
           pageBuilder: (context, index) {
             if (index == computerRooms.length - 1) {
-              return Center(
+              return const Center(
                 child: Text(
                   'Activa la edicion de la UI para crear una nueva Aula',
                   style: TextStyle(fontSize: 30.0),
@@ -133,26 +133,33 @@ class ComputersPageState extends State<ComputersPage> {
           onScroll: (position) {},
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: editableUIProvider.editable
-            ? () {
-                showDialog(
-                  context: context,
-                  builder: (context) => AddComputerDialog(
-                    nameNewComputer: nameNewComputer,
-                    onTap: () {
-                      _addNewComputer(databaseUI, computerRooms[lastPos].name,
-                          nameNewComputer.text);
-                      setState(() {
-                        nameNewComputer.text = '';
-                      });
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                );
-              }
-            : null,
-        child: const Icon(Icons.add),
+      floatingActionButton: Material(
+        borderRadius: BorderRadius.circular(35.0),
+        elevation: editableUIProvider.editable ? 15.0 : 1.0,
+        shadowColor: editableUIProvider.editable ? Colors.blue : Colors.transparent,
+        child: FloatingActionButton(
+          backgroundColor:
+              editableUIProvider.editable ? Colors.blue : Colors.blueGrey,
+          onPressed: editableUIProvider.editable
+              ? () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AddComputerDialog(
+                      nameNewComputer: nameNewComputer,
+                      onTap: () {
+                        _addNewComputer(databaseUI, computerRooms[lastPos].name,
+                            nameNewComputer.text);
+                        setState(() {
+                          nameNewComputer.text = '';
+                        });
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  );
+                }
+              : null,
+          child: Icon(Icons.add, color: Theme.of(context).colorScheme.primary,),
+        ),
       ),
     );
   }
