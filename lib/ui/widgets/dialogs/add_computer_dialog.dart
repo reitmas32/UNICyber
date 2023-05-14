@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
 
 class AddComputerDialog extends StatefulWidget {
   const AddComputerDialog(
@@ -13,24 +14,44 @@ class AddComputerDialog extends StatefulWidget {
 }
 
 class _AddComputerDialogState extends State<AddComputerDialog> {
-  final FocusNode nameFocusNode = FocusNode();
+  final FocusNode focusNode = FocusNode();
+  TextEditingController nameComputerController =
+      TextEditingController(text: '');
+  TextMaskController maskController = TextMaskController(lengthMask: 2);
+
+  @override
+  void initState() {
+    maskController.addListener(() {
+      setState(() {});
+    });
+    setState(() {
+      maskController.updateMask(0);
+      focusNode.requestFocus();
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    nameFocusNode.requestFocus();
+    Size size = MediaQuery.of(context).size;
     return RawKeyboardListener(
       focusNode: FocusNode(),
       autofocus: true,
       onKey: (RawKeyEvent event) {
         if (event.logicalKey == LogicalKeyboardKey.enter) {
-          Navigator.pop(context);
+          widget.onTap();
         }
       },
       child: AlertDialog(
         title: const Text('Datos de la Compitadora'),
-        content: TextField(
-          controller: widget.nameNewComputer,
-          focusNode: nameFocusNode,
+        content: CustomTextFileds(
+          focusNode: focusNode,
+          indexTextField: 0,
+          textEditingController: nameComputerController,
+          maskController: maskController,
+          lable: 'Password',
+          padding:
+              const EdgeInsets.symmetric(vertical: 16.0),
         ),
         actions: [
           InkWell(
