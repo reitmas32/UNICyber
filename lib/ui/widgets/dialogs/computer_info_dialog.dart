@@ -30,7 +30,7 @@ class _ComputerInfoDialogState extends State<ComputerInfoDialog> {
             child: InkWell(
               borderRadius: BorderRadius.circular(10.0),
               onTap: () {
-                Navigator.of(context).pop();
+                Navigator.of(context).pop({'state': 0, 'userAction': controllerUserAction});
               },
               hoverColor: Theme.of(context).colorScheme.secondary,
               child: Padding(
