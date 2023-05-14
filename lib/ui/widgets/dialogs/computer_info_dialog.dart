@@ -1,11 +1,14 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:unica_cybercoffee/domain/models/computerUI.dart';
 import 'package:unica_cybercoffee/domain/models/computer_states.dart';
 
 class ComputerInfoDialog extends StatefulWidget {
   const ComputerInfoDialog({
-    super.key,
+    super.key, required this.computerUI,
   });
+  final ComputerUI computerUI;
+
 
   @override
   State<ComputerInfoDialog> createState() => _ComputerInfoDialogState();
@@ -56,16 +59,17 @@ class _ComputerInfoDialogState extends State<ComputerInfoDialog> {
             ),
           ),
           MyDropdownMenu(
+            computerUI: widget.computerUI,
             onChanged: (int index) {
               setState(() {
                 controllerState = index;
               });
             },
             items: [
-              ComputerStates.disponible,
-              ComputerStates.mantenimiento,
-              ComputerStates.reparacion,
-              ComputerStates.proyecto,
+              ComputerStates.getStateLable(ComputerStates.disponible),
+              ComputerStates.getStateLable(ComputerStates.mantenimiento),
+              ComputerStates.getStateLable(ComputerStates.reparacion),
+              ComputerStates.getStateLable(ComputerStates.proyecto),
             ],
           ),
           const Align(
@@ -81,23 +85,52 @@ class _ComputerInfoDialogState extends State<ComputerInfoDialog> {
               ),
             ),
           ),
-          MyDropdownMenu(
-              items: const [
-                'Info Usuario',
-                'Sancionar',
-              ],
-              onChanged: (int index) {
-                setState(() {
-                  controllerUserAction = index;
-                });
-              }),
+          InkWell(
+            borderRadius: BorderRadius.circular(10.0),
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            hoverColor: Theme.of(context).colorScheme.secondary,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(25.0),
+                child: const Text(
+                  'Historial',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          InkWell(
+            borderRadius: BorderRadius.circular(10.0),
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            hoverColor: Theme.of(context).colorScheme.secondary,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(25.0),
+                child: const Text(
+                  'Sancionar',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
       actions: [
         InkWell(
           borderRadius: BorderRadius.circular(10.0),
           onTap: () {
-            Navigator.of(context).pop({'state': controllerState, 'userAction': controllerUserAction});
+            Navigator.of(context).pop(
+                {'state': controllerState, 'userAction': controllerUserAction});
           },
           hoverColor: Theme.of(context).colorScheme.secondary,
           child: Padding(
@@ -119,8 +152,9 @@ class _ComputerInfoDialogState extends State<ComputerInfoDialog> {
 }
 
 class MyDropdownMenu extends StatefulWidget {
-  MyDropdownMenu({super.key, required this.items, required this.onChanged});
+  MyDropdownMenu({super.key, required this.items, required this.onChanged, required this.computerUI});
   final List<String> items;
+  final ComputerUI computerUI;
   final void Function(int value) onChanged;
 
   @override
@@ -132,7 +166,7 @@ class _MyDropdownMenuState extends State<MyDropdownMenu> {
 
   @override
   void initState() {
-    _selectedItem = widget.items.first;
+    _selectedItem = widget.computerUI.state;
     // TODO: implement initState
     super.initState();
   }
@@ -148,7 +182,7 @@ class _MyDropdownMenuState extends State<MyDropdownMenu> {
         setState(() {
           _selectedItem = newValue ?? widget.items.first;
           widget.onChanged(
-              widget.items.indexOf(newValue ?? ComputerStates.disponible));
+              widget.items.indexOf(newValue ?? widget.computerUI.state));
         });
       },
       items: widget.items.map((item) {
