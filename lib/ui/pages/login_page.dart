@@ -53,8 +53,7 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.only(top: 60.0),
                 child: Center(
                   child: SizedBox(
-                    width: 200,
-                    height: 150,
+                    width: 300,
                     child: Image.network(
                         'https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/unica_logo.jpeg'),
                   ),

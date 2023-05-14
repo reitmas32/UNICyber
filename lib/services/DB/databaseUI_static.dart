@@ -29,12 +29,6 @@ class DataBaseStaticUI extends IDataBaseUI {
         computerRooms = collectionComputerRoomsList
             .map((json) => ComputerRoomUI.fromMap(json))
             .toList();
-      } else {
-        /*
-        print('Hola');
-        await createComputerRooms('Aula 1');
-        await createComputerRooms('Nueva Aula');
-        */
       }
     }
 
@@ -175,7 +169,6 @@ class DataBaseStaticUI extends IDataBaseUI {
     if (computersRoomOfUser.isEmpty) {
       await createComputerRooms('Aula 1');
       await createComputerRooms('Nueva Aula');
-      print(computerRooms.length);
     }
 
     var computersRoomOfUser2 = computerRooms

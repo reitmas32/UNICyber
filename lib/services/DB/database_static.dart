@@ -74,9 +74,6 @@ class DataBaseStatic {
     usersAdmin.add(
       userAdmin,
     );
-
-    print(usersAdmin);
-
     return Future(() => userAdmin);
   }
 

@@ -19,6 +19,18 @@ class _LoanComputerDialogState extends State<LoanComputerDialog> {
   final FocusNode focusNode = FocusNode();
 
   @override
+  void initState() {
+    maskController.addListener(() {
+      setState(() {});
+    });
+    setState(() {
+      maskController.updateMask(0);
+      focusNode.requestFocus();
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     focusNode.requestFocus();
     return RawKeyboardListener(

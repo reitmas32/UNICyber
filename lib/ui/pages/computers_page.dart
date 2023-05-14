@@ -70,7 +70,6 @@ class ComputersPageState extends State<ComputersPage> {
 
   @override
   void initState() {
-    print(databaseStatic.activeUserAdmin);
     _createComputerRooms(databaseUI);
 
     _loadComputerRooms(databaseUI);

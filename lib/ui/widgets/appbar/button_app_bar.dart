@@ -16,7 +16,6 @@ class ButtonAppBar extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(10.0),
         hoverColor: Theme.of(context).colorScheme.secondary,
-        // ignore: avoid_print
         onTap: () {
           context.go('/${lable.toLowerCase()}');
           
