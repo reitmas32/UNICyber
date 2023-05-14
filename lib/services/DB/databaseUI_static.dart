@@ -83,7 +83,7 @@ class DataBaseStaticUI extends IDataBaseUI {
       name: nameComputer,
       imageUrl:
           'https://em-content.zobj.net/source/microsoft-teams/337/desktop-computer_1f5a5-fe0f.png',
-      state: ComputerStates.disponible,
+      state: ComputerStates.getStateLable(ComputerStates.disponible),
       id: randomID,
       x: 0,
       y: 0,
@@ -111,16 +111,20 @@ class DataBaseStaticUI extends IDataBaseUI {
     );
     computer.state = state;
 
-    if (ComputerStates.disponible == computer.state) {
+    if (ComputerStates.getStateLable(ComputerStates.disponible) ==
+        computer.state) {
       computer.imageUrl = imageUrlDisponible;
     }
-    if (ComputerStates.mantenimiento == computer.state) {
+    if (ComputerStates.getStateLable(ComputerStates.mantenimiento) ==
+        computer.state) {
       computer.imageUrl = imageUrlMantenimiento;
     }
-    if (ComputerStates.reparacion == computer.state) {
+    if (ComputerStates.getStateLable(ComputerStates.reparacion) ==
+        computer.state) {
       computer.imageUrl = imageUrlReparacion;
     }
-    if (ComputerStates.proyecto == computer.state) {
+    if (ComputerStates.getStateLable(ComputerStates.proyecto) ==
+        computer.state) {
       computer.imageUrl = imageUrlProyecto;
     }
 
