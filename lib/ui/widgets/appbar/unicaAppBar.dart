@@ -9,11 +9,11 @@ import 'package:unica_cybercoffee/ui/widgets/appbar/theme_button.dart';
 import 'package:unica_cybercoffee/ui/widgets/clock_text.dart';
 
 class UnicaAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const UnicaAppBar({
-    super.key,
-  });
+  const UnicaAppBar({super.key, this.route = ''});
 
-  List<Widget> getActions(double width, BuildContext context, String lable) {
+  final String? route;
+
+  List<Widget> getActions(double width, BuildContext context) {
     // ignore: no_leading_underscores_for_local_identifiers
     List<Widget> _actions = [];
     final editableProvider = Provider.of<EditableUIProvider>(context);
@@ -44,47 +44,50 @@ class UnicaAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ));
     }
+    if (route != '/') {
+      _actions.add(Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text('Edit UI'),
+          Switch(
+            // This bool value toggles the switch.
+            value: editableProvider.editable,
+            activeColor: Colors.red,
+            onChanged: (bool value) async {
+              // This is called when the user toggles the switch.
+              await databaseUI.saveData();
+              editableProvider.seteditable();
+            },
+          ),
+        ],
+      ));
+    }
 
-    _actions.add(Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text('Edit UI'),
-        Switch(
-          // This bool value toggles the switch.
-          value: editableProvider.editable,
-          activeColor: Colors.red,
-          onChanged: (bool value) async {
-            // This is called when the user toggles the switch.
-            await databaseUI.saveData();
-            editableProvider.seteditable();
+    if (route != '/') {
+      _actions.add(Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(10.0),
+          hoverColor: Theme.of(context).colorScheme.secondary,
+          // ignore: avoid_print
+          onTap: () {
+            //context.go('/${lable.toLowerCase()}');
           },
-        ),
-      ],
-    ));
-
-    _actions.add(Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(10.0),
-        hoverColor: Theme.of(context).colorScheme.secondary,
-        // ignore: avoid_print
-        onTap: () {
-          //context.go('/${lable.toLowerCase()}');
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Text(
-            lable,
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.onPrimary,
-              fontSize: 22.0,
-              fontWeight: FontWeight.w300,
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Text(
+              'Usuarios',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onPrimary,
+                fontSize: 22.0,
+                fontWeight: FontWeight.w300,
+              ),
             ),
           ),
         ),
-      ),
-    ));
-
+      ));
+    }
+    
     _actions.add(const SizedBox(
       width: 40.0,
     ));
@@ -114,8 +117,7 @@ class UnicaAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: getActions(
-                MediaQuery.of(context).size.width, context, 'Usuarios'))
+            children: getActions(MediaQuery.of(context).size.width, context))
       ],
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
