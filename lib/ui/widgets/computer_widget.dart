@@ -61,7 +61,7 @@ class _ComputerWidgetState extends State<ComputerWidget> {
               focusNode: FocusNode(),
               autofocus: true,
               onKey: (RawKeyEvent event) {
-                if (event.logicalKey == LogicalKeyboardKey.enter) {
+                if (event.logicalKey == LogicalKeyboardKey.enter || event.logicalKey == LogicalKeyboardKey.escape) {
                   Navigator.pop(context);
                 }
               },
