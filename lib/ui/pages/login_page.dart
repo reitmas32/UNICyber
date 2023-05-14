@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:unica_cybercoffee/services/DB/database_static.dart';
+import 'package:unica_cybercoffee/ui/widgets/appbar/unicaAppBar.dart';
+import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.title});
@@ -14,100 +17,140 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController userNameController = TextEditingController(text: '');
   TextEditingController passwordController = TextEditingController(text: '');
+  TextMaskController maskController = TextMaskController(lengthMask: 2);
+  bool errorLogin = false;
+  final FocusNode focusNode = FocusNode();
+
+  @override
+  void initState() {
+    maskController.addListener(() {
+      setState(() {});
+    });
+    setState(() {
+      maskController.updateMask(0);
+      focusNode.requestFocus();
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      //appBar: const PortfolioAppBar(),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 60.0),
-              child: Center(
-                child: SizedBox(
-                  width: 200,
-                  height: 150,
-                  /*decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(50.0)),*/
-                  child: Image.network(
-                      'https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/unica_logo.jpeg'),
+      appBar: const UnicaAppBar(route: '/'),
+      body: RawKeyboardListener(
+        focusNode: FocusNode(),
+        autofocus: true,
+        onKey: (RawKeyEvent event) {
+          if (event.logicalKey == LogicalKeyboardKey.enter) {
+            onLogin();
+          }
+        },
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 60.0),
+                child: Center(
+                  child: SizedBox(
+                    width: 200,
+                    height: 150,
+                    child: Image.network(
+                        'https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/unica_logo.jpeg'),
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-              padding: EdgeInsets.symmetric(horizontal: size.width / 3),
-              child: TextField(
-                controller: userNameController,
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Email',
-                    hintText: 'Enter valid email id as abc@gmail.com'),
+              CustomTextFileds(
+                focusNode: focusNode,
+                indexTextField: 0,
+                textEditingController: userNameController,
+                maskController: maskController,
+                lable: 'UserName',
+                padding: EdgeInsets.symmetric(
+                    horizontal: size.width / 3, vertical: 16.0),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: size.width / 3),
-
-              //padding: EdgeInsets.symmetric(horizontal: 15),
-              child: TextField(
-                controller: passwordController,
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Password',
-                    hintText: 'Enter secure password'),
+              CustomTextFileds(
+                indexTextField: 1,
+                textEditingController: passwordController,
+                maskController: maskController,
+                lable: 'Password',
+                padding: EdgeInsets.symmetric(
+                    horizontal: size.width / 3, vertical: 16.0),
               ),
-            ),
-            TextButton(
-              onPressed: () {
-                //TODO FORGOT PASSWORD SCREEN GOES HERE
-              },
-              child: const Text(
-                'Forgot Password',
-                style: TextStyle(color: Colors.blue, fontSize: 15),
-              ),
-            ),
-            Container(
-              height: 50,
-              width: 250,
-              decoration: BoxDecoration(
-                  color: Colors.blue, borderRadius: BorderRadius.circular(20)),
-              child: TextButton(
-                onPressed: () async {
-                  if (await databaseStatic.signinUserAdmin(
-                      userNameController.text, passwordController.text)) {
-                    context.go('/computers');
-                  }
-                },
-                child: const Text(
-                  'Login',
-                  style: TextStyle(color: Colors.white, fontSize: 25),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: TextButton(
+                  onPressed: () {
+                    //TODO FORGOT PASSWORD SCREEN GOES HERE
+                  },
+                  child: const Text(
+                    'Forgot Password',
+                    style: TextStyle(color: Colors.blue, fontSize: 15),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              height: 50,
-              width: 250,
-              decoration: BoxDecoration(
-                  color: Colors.blue, borderRadius: BorderRadius.circular(20)),
-              child: TextButton(
-                onPressed: () {
-                  context.go('/signin');
-                },
-                child: const Text(
-                  'New User? Create Account',
-                  style: TextStyle(color: Colors.white, fontSize: 15),
+              Container(
+                height: 50,
+                width: 250,
+                decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(20)),
+                child: TextButton(
+                  onPressed: onLogin,
+                  child: const Text(
+                    'Login',
+                    style: TextStyle(color: Colors.white, fontSize: 25),
+                  ),
                 ),
               ),
-            ),
-          ],
+              if (errorLogin)
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 25.0),
+                  child: Text(
+                    'Error Login',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 20.0,
+                    ),
+                  ),
+                ),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                height: 50,
+                width: 250,
+                decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(20)),
+                child: TextButton(
+                  onPressed: onSignin,
+                  child: const Text(
+                    'New User? Create Account',
+                    style: TextStyle(color: Colors.white, fontSize: 15),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  onLogin() async {
+    if (await databaseStatic.signinUserAdmin(
+        userNameController.text, passwordController.text)) {
+      // ignore: use_build_context_synchronously
+      context.go('/computers');
+    } else {
+      setState(() {
+        errorLogin = true;
+      });
+    }
+  }
+
+  onSignin() {
+    context.go('/signin');
   }
 }
