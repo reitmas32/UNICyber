@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:unica_cybercoffee/domain/models/user.dart';
+import 'package:unica_cybercoffee/services/API/data_static.dart';
 import 'package:unica_cybercoffee/services/DB/database_static.dart';
 import 'package:unica_cybercoffee/ui/widgets/appbar/unicaAppBar.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key, required this.title});
+import 'package:unica_cybercoffee/services/API/account.dart' as accounts;
+
+class SignInPage extends StatefulWidget {
+  const SignInPage({super.key, required this.title});
   final String title;
 
   @override
   // ignore: library_private_types_in_public_api
-  _LoginPageState createState() => _LoginPageState();
+  _SignInPageState createState() => _SignInPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignInPageState extends State<SignInPage> {
   TextEditingController userNameController = TextEditingController(text: '');
   TextEditingController passwordController = TextEditingController(text: '');
   TextMaskController maskController = TextMaskController(lengthMask: 2);
@@ -43,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
         autofocus: true,
         onKey: (RawKeyEvent event) {
           if (event.logicalKey == LogicalKeyboardKey.enter) {
-            onLogin();
+            onSignIn();
           }
         },
         child: SingleChildScrollView(
@@ -95,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.blue,
                     borderRadius: BorderRadius.circular(20)),
                 child: TextButton(
-                  onPressed: onLogin,
+                  onPressed: onSignIn,
                   child: const Text(
                     'Login',
                     style: TextStyle(color: Colors.white, fontSize: 25),
@@ -123,9 +127,26 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.blue,
                     borderRadius: BorderRadius.circular(20)),
                 child: TextButton(
-                  onPressed: onSignin,
+                  onPressed: onSignUp,
                   child: const Text(
                     'New User? Create Account',
+                    style: TextStyle(color: Colors.white, fontSize: 15),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                height: 50,
+                width: 250,
+                decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(20)),
+                child: TextButton(
+                  onPressed: onCreateNewComputerLab,
+                  child: const Text(
+                    'Crear Nueva Sala',
                     style: TextStyle(color: Colors.white, fontSize: 15),
                   ),
                 ),
@@ -134,22 +155,66 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {},
+        backgroundColor: Colors.blue,
+        child: const Tooltip(
+          message: 'Tutorial App',
+          child: Icon(
+            Icons.computer,
+            color: Colors.white,
+          ),
+        ),
+      ),
     );
   }
 
-  onLogin() async {
-    if (await databaseStatic.signinUserAdmin(
-        userNameController.text, passwordController.text)) {
+  onSignIn() async {
+    User user = User(
+      name: userNameController.text,
+      password: passwordController.text,
+      userName: userNameController.text,
+    );
+
+    var response = await accounts.signIn(user);
+    if (response) {
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.blue,
+          content: Text(
+            'Se inicio secion Corectamente 👌',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          duration: Duration(seconds: 2), // Duración del SnackBar
+        ),
+      );
       // ignore: use_build_context_synchronously
       context.go('/computers');
     } else {
-      setState(() {
-        errorLogin = true;
-      });
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(
+            'No se pudo inicirar sesion 😢',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          duration: Duration(seconds: 2), // Duración del SnackBar
+        ),
+      );
     }
   }
 
-  onSignin() {
-    context.go('/signin');
+  onSignUp() {
+    context.go('/signup');
+  }
+
+  onCreateNewComputerLab() {
+    context.go('/newComputerLab');
   }
 }
