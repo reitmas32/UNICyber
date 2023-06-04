@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:unica_cybercoffee/ui/pages/computers_page.dart';
-import 'package:unica_cybercoffee/ui/pages/login_page.dart';
+import 'package:unica_cybercoffee/ui/pages/signin_page.dart';
+import 'package:unica_cybercoffee/ui/pages/new_computer_lab_page.dart';
 import 'package:unica_cybercoffee/ui/pages/signup_page.dart';
 import 'package:unica_cybercoffee/ui/pages/splash_page/splash_page.dart';
 import 'package:unica_cybercoffee/ui/providers/theme_provider.dart';
@@ -25,20 +26,24 @@ class UnicaCyberCoffeState extends State<UnicaCyberCoffe> {
         builder: (context, state) => const SplashScreen(),
       ),
       GoRoute(
-        path: "/login",
-        builder: (context, state) => const LoginPage(
-          title: 'Home',
-        ),
-      ),
-      GoRoute(
         path: "/signin",
         builder: (context, state) => const SignInPage(
           title: 'Home',
         ),
       ),
       GoRoute(
+        path: "/signup",
+        builder: (context, state) => const SignUpPage(
+          title: 'Home',
+        ),
+      ),
+      GoRoute(
         path: "/computers",
         builder: (context, state) => const ComputersPage(),
+      ),
+      GoRoute(
+        path: "/newComputerLab",
+        builder: (context, state) => const NewComputerLabPage(),
       ),
     ],
   );
