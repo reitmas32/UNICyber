@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:unica_cybercoffee/ui/providers/theme_provider.dart';
 
 class TextMaskController extends ChangeNotifier {
   late List<bool> mask;
@@ -47,6 +49,7 @@ class CustomTextFiledsState extends State<CustomTextFileds> {
 
   @override
   Widget build(BuildContext context) {
+    final currentTheme = Provider.of<ThemeProvider>(context);
     return Padding(
       padding: widget.padding,
       child: Material(
@@ -57,24 +60,38 @@ class CustomTextFiledsState extends State<CustomTextFileds> {
             ? Colors.blueAccent
             : Colors.transparent,
         child: TextField(
-          focusNode: widget.focusNode,
-          obscureText: widget.lable.toLowerCase() == 'password',
+          cursorColor: Theme.of(context).colorScheme.onPrimary,
+          obscureText: widget.lable.toLowerCase() == 'password' ||
+              widget.lable.toLowerCase() == 'contraseña',
           controller: widget.textEditingController,
-          onTap: () => setState(() {
-            widget.maskController.updateMask(widget.indexTextField);
-          }),
+          onTap: () => setState(
+            () {
+              widget.maskController.updateMask(widget.indexTextField);
+            },
+          ),
+          selectionControls: DesktopTextSelectionControls(),
           decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  width: 3,
-                  color:
-                      widget.maskController.mask[widget.indexTextField] == true
-                          ? Colors.blueAccent
-                          : Colors.transparent,
-                ),
+            fillColor: currentTheme.isDarkTheme()
+                ? const Color.fromARGB(54, 86, 96, 202)
+                : const Color.fromARGB(255, 205, 206, 208),
+            filled: true,
+            labelText: widget.lable,
+            labelStyle: TextStyle(
+                color: widget.maskController.mask[widget.indexTextField] == true
+                    ? Colors.blue
+                    : Theme.of(context).colorScheme.onPrimary),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            border: const OutlineInputBorder(),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                width: 3,
+                color: widget.maskController.mask[widget.indexTextField] == true
+                    ? Colors.blueAccent
+                    : Colors.transparent,
               ),
-              hintText: widget.lable),
+            ),
+            hintText: ' ${widget.lable}',
+          ),
         ),
       ),
     );
