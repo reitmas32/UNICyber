@@ -17,7 +17,7 @@ class SplashScreenState extends State<SplashScreen> {
         seconds: 3,
       ),
       () {
-        context.go('/login');
+        context.go('/signin');
       },
     );
   }
@@ -25,8 +25,11 @@ class SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: Image.network('https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/unica_logo.jpeg')
-    ));
+      body: Center(
+        child: Image.network(
+          'https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/unica_logo.jpeg',
+        ),
+      ),
+    );
   }
 }
