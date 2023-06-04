@@ -3,24 +3,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:unica_cybercoffee/services/DB/databaseUI_static.dart';
-import 'package:unica_cybercoffee/services/DB/database_static.dart';
+import 'package:unica_cybercoffee/domain/models/user.dart';
+import 'package:unica_cybercoffee/services/API/account.dart' as accounts;
 import 'package:unica_cybercoffee/ui/widgets/appbar/unicaAppBar.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
 
-class SignInPage extends StatefulWidget {
-  const SignInPage({super.key, required this.title});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key, required this.title});
   final String title;
 
   @override
   // ignore: library_private_types_in_public_api
-  _SignInPageState createState() => _SignInPageState();
+  _SignUpPageState createState() => _SignUpPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _SignUpPageState extends State<SignUpPage> {
+  TextEditingController nameController = TextEditingController(text: '');
+  TextEditingController lastNameController = TextEditingController(text: '');
+  TextEditingController emailController = TextEditingController(text: '');
   TextEditingController userNameController = TextEditingController(text: '');
+  TextEditingController phoneNumberController = TextEditingController(text: '');
+  TextEditingController dateOfBirthController = TextEditingController(text: '');
   TextEditingController passwordController = TextEditingController(text: '');
-  TextMaskController maskController = TextMaskController(lengthMask: 2);
+  TextEditingController roleController = TextEditingController(text: '');
+  TextMaskController maskController = TextMaskController(lengthMask: 8);
 
   final FocusNode focusNode = FocusNode();
 
@@ -66,17 +72,65 @@ class _SignInPageState extends State<SignInPage> {
               CustomTextFileds(
                 focusNode: focusNode,
                 indexTextField: 0,
-                textEditingController: userNameController,
+                textEditingController: nameController,
                 maskController: maskController,
-                lable: 'UserName',
+                lable: 'Nombre',
                 padding: EdgeInsets.symmetric(
                     horizontal: size.width / 3, vertical: 16.0),
               ),
               CustomTextFileds(
                 indexTextField: 1,
+                textEditingController: lastNameController,
+                maskController: maskController,
+                lable: 'Apellidos',
+                padding: EdgeInsets.symmetric(
+                    horizontal: size.width / 3, vertical: 16.0),
+              ),
+              CustomTextFileds(
+                indexTextField: 2,
+                textEditingController: emailController,
+                maskController: maskController,
+                lable: 'Correo Electronico',
+                padding: EdgeInsets.symmetric(
+                    horizontal: size.width / 3, vertical: 16.0),
+              ),
+              CustomTextFileds(
+                indexTextField: 3,
+                textEditingController: userNameController,
+                maskController: maskController,
+                lable: 'Nombre de Usuario',
+                padding: EdgeInsets.symmetric(
+                    horizontal: size.width / 3, vertical: 16.0),
+              ),
+              CustomTextFileds(
+                indexTextField: 4,
+                textEditingController: phoneNumberController,
+                maskController: maskController,
+                lable: 'Telefono',
+                padding: EdgeInsets.symmetric(
+                    horizontal: size.width / 3, vertical: 16.0),
+              ),
+              CustomTextFileds(
+                indexTextField: 5,
+                textEditingController: dateOfBirthController,
+                maskController: maskController,
+                lable: 'Fecha de Nacimiento',
+                padding: EdgeInsets.symmetric(
+                    horizontal: size.width / 3, vertical: 16.0),
+              ),
+              CustomTextFileds(
+                indexTextField: 6,
                 textEditingController: passwordController,
                 maskController: maskController,
-                lable: 'Password',
+                lable: 'Contraseña',
+                padding: EdgeInsets.symmetric(
+                    horizontal: size.width / 3, vertical: 16.0),
+              ),
+              CustomTextFileds(
+                indexTextField: 7,
+                textEditingController: roleController,
+                maskController: maskController,
+                lable: 'Role',
                 padding: EdgeInsets.symmetric(
                     horizontal: size.width / 3, vertical: 16.0),
               ),
@@ -98,7 +152,7 @@ class _SignInPageState extends State<SignInPage> {
                 child: TextButton(
                   onPressed: onSignin,
                   child: const Text(
-                    'SignIn',
+                    'SignUp',
                     style: TextStyle(color: Colors.white, fontSize: 25),
                   ),
                 ),
@@ -114,10 +168,44 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   onSignin() async {
-    await databaseStatic.signupUserAdmin(
-        userNameController.text, passwordController.text);
-    await databaseStatic.saveData();
-    await databaseUI_Static.loadData();
-    context.go('/login');
+    User user = User(
+      name: userNameController.text,
+      lastName: lastNameController.text,
+      dateOfBirth: dateOfBirthController.text,
+      email: emailController.text,
+      password: passwordController.text,
+      phoneNumber: phoneNumberController.text,
+      role: roleController.text,
+      userName: userNameController.text,
+    );
+
+    var response = await accounts.signUp(user);
+    if (response) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.blue,
+          content: Text(
+            'Usuario Creado Con exito 👌',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          duration: Duration(seconds: 2), // Duración del SnackBar
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(
+            'No se pudo crear el Usuario 😢',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          duration: Duration(seconds: 2), // Duración del SnackBar
+        ),
+      );
+    }
   }
 }
