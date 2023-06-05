@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:unica_cybercoffee/domain/models/user.dart';
-import 'package:unica_cybercoffee/services/API/data_static.dart';
-import 'package:unica_cybercoffee/services/DB/database_static.dart';
 import 'package:unica_cybercoffee/ui/widgets/appbar/unicaAppBar.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
 
@@ -22,7 +20,6 @@ class _SignInPageState extends State<SignInPage> {
   TextEditingController userNameController = TextEditingController(text: '');
   TextEditingController passwordController = TextEditingController(text: '');
   TextMaskController maskController = TextMaskController(lengthMask: 2);
-  bool errorLogin = false;
   final FocusNode focusNode = FocusNode();
 
   @override
@@ -106,17 +103,6 @@ class _SignInPageState extends State<SignInPage> {
                   ),
                 ),
               ),
-              if (errorLogin)
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 25.0),
-                  child: Text(
-                    'Error Login',
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontSize: 20.0,
-                    ),
-                  ),
-                ),
               const SizedBox(
                 height: 20,
               ),
@@ -135,21 +121,57 @@ class _SignInPageState extends State<SignInPage> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 100,
               ),
-              Container(
-                height: 50,
-                width: 250,
-                decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(20)),
-                child: TextButton(
-                  onPressed: onCreateNewComputerLab,
-                  child: const Text(
-                    'Crear Nueva Sala',
-                    style: TextStyle(color: Colors.white, fontSize: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    height: 50,
+                    width: 250,
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: TextButton(
+                      onPressed: onLinkComputerLab,
+                      child: const Text(
+                        'Vincular Sala',
+                        style: TextStyle(color: Colors.white, fontSize: 15),
+                      ),
+                    ),
                   ),
-                ),
+                  Container(
+                    height: 50,
+                    width: 250,
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: TextButton(
+                      onPressed: onCreateNewComputerLab,
+                      child: const Text(
+                        'Crear Nueva Sala',
+                        style: TextStyle(color: Colors.white, fontSize: 15),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 50,
+                    width: 250,
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: TextButton(
+                      onPressed: onUpdateNewComputerLab,
+                      child: const Text(
+                        'Acutalizar Sala',
+                        style: TextStyle(color: Colors.white, fontSize: 15),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -216,5 +238,13 @@ class _SignInPageState extends State<SignInPage> {
 
   onCreateNewComputerLab() {
     context.go('/newComputerLab');
+  }
+
+  onLinkComputerLab() {
+    context.go('/linkComputerLab');
+  }
+
+  onUpdateNewComputerLab() {
+    context.go('/updateComputerLab');
   }
 }
