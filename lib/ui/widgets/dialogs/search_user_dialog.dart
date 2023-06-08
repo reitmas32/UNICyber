@@ -65,7 +65,7 @@ class _SearchUserDialogState extends State<SearchUserDialog> {
               Navigator.of(context).pop();
               showDialog(
                 context: context,
-                builder: (context) => InfoUserDialog(),
+                builder: (context) => const InfoUserDialog(),
               );
             },
           ),

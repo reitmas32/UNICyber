@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:unica_cybercoffee/ui/widgets/action_button.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_tab_view.dart';
-import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
 
 class InfoUserDialog extends StatefulWidget {
-  InfoUserDialog({
+  const InfoUserDialog({
     super.key,
   });
 
@@ -43,11 +42,11 @@ class _InfoUserDialogState extends State<InfoUserDialog> {
             tabBuilder: (context, index) => Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                '${tabs[index]}',
-                style: TextStyle(fontSize: 20.0),
+                tabs[index],
+                style: const TextStyle(fontSize: 20.0),
               ),
             ),
-            pageBuilder: (context, index) => Text('${tabs[index]}'),
+            pageBuilder: (context, index) => Text(tabs[index]),
           ),
         ),
         actions: [

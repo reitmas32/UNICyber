@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
 
 class LoanComputerDialog extends StatefulWidget {
-  LoanComputerDialog({
+  const LoanComputerDialog({
     super.key,
   });
 
