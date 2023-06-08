@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:unica_cybercoffee/domain/models/computer.dart';
+import 'package:unica_cybercoffee/services/API/data_static.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
 
-class AddComputerDialog extends StatefulWidget {
-  const AddComputerDialog(
-      {super.key, required this.onTap, required this.nameNewComputer});
+import 'package:unica_cybercoffee/services/API/computer.dart' as computer;
 
-  final void Function() onTap;
-  final TextEditingController nameNewComputer;
+class AddComputerDialog extends StatefulWidget {
+  const AddComputerDialog({super.key});
 
   @override
   State<AddComputerDialog> createState() => _AddComputerDialogState();
@@ -16,6 +16,8 @@ class AddComputerDialog extends StatefulWidget {
 class _AddComputerDialogState extends State<AddComputerDialog> {
   final FocusNode focusNode = FocusNode();
   TextEditingController nameComputerController =
+      TextEditingController(text: '');
+  TextEditingController typeComputerController =
       TextEditingController(text: '');
   TextMaskController maskController = TextMaskController(lengthMask: 2);
 
@@ -37,24 +39,35 @@ class _AddComputerDialogState extends State<AddComputerDialog> {
       focusNode: FocusNode(),
       autofocus: true,
       onKey: (RawKeyEvent event) {
-        if (event.logicalKey == LogicalKeyboardKey.enter) {
-          widget.onTap();
-        }
+        if (event.logicalKey == LogicalKeyboardKey.enter) {}
       },
       child: AlertDialog(
-        title: const Text('Datos de la Compitadora'),
-        content: CustomTextFileds(
-          focusNode: focusNode,
-          indexTextField: 0,
-          textEditingController: nameComputerController,
-          maskController: maskController,
-          lable: 'Password',
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
+        title: const Text('Datos de la Computadora'),
+        content: IntrinsicHeight(
+          child: Column(
+            children: [
+              CustomTextFileds(
+                focusNode: focusNode,
+                indexTextField: 0,
+                textEditingController: nameComputerController,
+                maskController: maskController,
+                lable: 'Nombre',
+                padding: EdgeInsets.all(8.0),
+              ),
+              CustomTextFileds(
+                indexTextField: 1,
+                textEditingController: typeComputerController,
+                maskController: maskController,
+                lable: 'Tipo',
+                padding: EdgeInsets.all(8.0),
+              ),
+            ],
+          ),
         ),
         actions: [
           InkWell(
             borderRadius: BorderRadius.circular(10.0),
-            onTap: widget.onTap,
+            onTap: onAddComputer,
             hoverColor: Theme.of(context).colorScheme.secondary,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -67,5 +80,15 @@ class _AddComputerDialogState extends State<AddComputerDialog> {
         ],
       ),
     );
+  }
+
+  onAddComputer() async {
+    Computer newComputer = Computer(
+      name: nameComputerController.text,
+      type: typeComputerController.text,
+      idRoom: dataStatic.idRoomCurrent,
+    );
+    var response = await computer.createComputer(newComputer);
+    Navigator.of(context).pop();
   }
 }
