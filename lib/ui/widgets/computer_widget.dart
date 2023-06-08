@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:unica_cybercoffee/domain/models/computer_ui.dart';
+import 'package:unica_cybercoffee/domain/models/computer.dart';
 import 'package:unica_cybercoffee/domain/models/computer_states.dart';
 import 'package:unica_cybercoffee/services/DB/database_ui_static.dart';
 import 'package:unica_cybercoffee/ui/providers/editable_ui_provider.dart';
@@ -12,7 +12,7 @@ import 'package:unica_cybercoffee/ui/widgets/dialogs/loan_computer_dialog.dart';
 class ComputerWidget extends StatefulWidget {
   const ComputerWidget({super.key, required this.computer});
 
-  final ComputerUI computer;
+  final Computer computer;
 
   @override
   State<ComputerWidget> createState() => _ComputerWidgetState();
@@ -59,7 +59,7 @@ class _ComputerWidgetState extends State<ComputerWidget> {
                   return true;
                 },
                 child: ComputerInfoDialog(
-                  computerUI: widget.computer,
+                  computer: widget.computer,
                 ),
               ),
             ),
@@ -67,7 +67,7 @@ class _ComputerWidgetState extends State<ComputerWidget> {
 
           setState(() {
             if (result != null) {
-              databaseUIStatic.setStateComputer(widget.computer.id,
+              databaseUIStatic.setStateComputer('widget.computer.id',
                   ComputerStates.getStateLable(result['state']));
             }
           });
@@ -82,7 +82,8 @@ class _ComputerWidgetState extends State<ComputerWidget> {
         },
         child: ComputerView(
           name: widget.computer.name,
-          imageUrl: widget.computer.imageUrl,
+          imageUrl:
+              'https://em-content.zobj.net/source/microsoft-teams/337/desktop-computer_1f5a5-fe0f.png',
         ),
       ),
     );
