@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:go_router/go_router.dart';
 import 'package:unica_cybercoffee/domain/models/user.dart';
 import 'package:unica_cybercoffee/services/API/account.dart' as accounts;
 import 'package:unica_cybercoffee/ui/widgets/appbar/unicaAppBar.dart';
@@ -135,9 +134,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     horizontal: size.width / 3, vertical: 16.0),
               ),
               TextButton(
-                onPressed: () {
-                  //TODO FORGOT PASSWORD SCREEN GOES HERE
-                },
+                onPressed: () {},
                 child: const Text(
                   'Forgot Password',
                   style: TextStyle(color: Colors.blue, fontSize: 15),
