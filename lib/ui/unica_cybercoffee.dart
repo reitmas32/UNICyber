@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:unica_cybercoffee/ui/pages/computers_page.dart';
+import 'package:unica_cybercoffee/ui/pages/computer_lab_page.dart';
 import 'package:unica_cybercoffee/ui/pages/error_page.dart';
 import 'package:unica_cybercoffee/ui/pages/link_computer_lab_code_page.dart';
 import 'package:unica_cybercoffee/ui/pages/link_computer_lab_page.dart';
