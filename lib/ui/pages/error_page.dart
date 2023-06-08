@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:go_router/go_router.dart';
-import 'package:unica_cybercoffee/domain/models/user.dart';
-import 'package:unica_cybercoffee/services/API/data_static.dart';
-import 'package:unica_cybercoffee/services/DB/database_static.dart';
 import 'package:unica_cybercoffee/ui/widgets/appbar/unicaAppBar.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
-
-import 'package:unica_cybercoffee/services/API/account.dart' as accounts;
 
 class ErrorPage extends StatefulWidget {
   const ErrorPage({super.key});
