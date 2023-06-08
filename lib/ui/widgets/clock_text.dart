@@ -25,7 +25,7 @@ class _ClockTextState extends State<ClockText> {
   Widget build(BuildContext context) {
     return Text(
       _timeString,
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 25.0,
       ),
     );
