@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:unica_cybercoffee/domain/models/computer.dart';
 import 'package:unica_cybercoffee/domain/models/computer_ui.dart';
 import 'package:unica_cybercoffee/ui/widgets/computer_widget.dart';
 
 class TableComputers extends StatefulWidget {
   const TableComputers({super.key, required this.computers});
-  final List<ComputerUI> computers;
+  final List<Computer> computers;
 
   @override
   State<TableComputers> createState() => _TableComputersState();
