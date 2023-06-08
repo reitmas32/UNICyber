@@ -1,15 +1,14 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:unica_cybercoffee/domain/models/computer_lab.dart';
 import 'package:unica_cybercoffee/services/API/computer_lab.dart'
     as computer_lab;
 import 'package:unica_cybercoffee/services/API/data_static.dart';
-import 'package:unica_cybercoffee/domain/models/computer_lab.dart';
 import 'package:unica_cybercoffee/ui/widgets/appbar/unicaAppBar.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
+import 'package:unica_cybercoffee/ui/widgets/radio_button_group.dart';
 
 class LinkComputerLabPage extends StatefulWidget {
   const LinkComputerLabPage({super.key});
@@ -146,7 +145,8 @@ class _LinkComputerLabPageState extends State<LinkComputerLabPage> {
           duration: Duration(seconds: 2), // Duración del SnackBar
         ),
       );
-      context.go('/signin');
+
+      context.go('/linkComputerLabCode');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -164,67 +164,6 @@ class _LinkComputerLabPageState extends State<LinkComputerLabPage> {
   }
 
   onGetComputerLabs() async {
-    var response = computer_lab.getComputerLabs();
-  }
-}
-
-class RadioButtonGroupController<T> extends ChangeNotifier {
-  late T selectedOption;
-  RadioButtonGroupController({required this.selectedOption});
-  setOption(T value) {
-    selectedOption = value;
-    notifyListeners();
-  }
-}
-
-class RadioButtonGroup<T> extends StatefulWidget {
-  RadioButtonGroupController<T> controller;
-  List<T> data;
-
-  RadioButtonGroup({super.key, required this.controller, required this.data});
-
-  @override
-  _RadioButtonGroupState<T> createState() => _RadioButtonGroupState();
-}
-
-class _RadioButtonGroupState<T> extends State<RadioButtonGroup> {
-  @override
-  void initState() {
-    super.initState();
-    // Aquí realizarías la petición a la API y asignarías la respuesta a 'widget.data'
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Text(
-          'Selecciona un elemento:',
-          style: TextStyle(fontSize: 18),
-        ),
-        const SizedBox(height: 10),
-        if (widget.data.isNotEmpty)
-          Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width / 3),
-            child: Column(
-              children: widget.data
-                  .map(
-                    (option) => RadioListTile(
-                      title: Text(option.name),
-                      value: option,
-                      groupValue: widget.controller.selectedOption,
-                      onChanged: (value) {
-                        setState(() {
-                          widget.controller.setOption(value);
-                        });
-                      },
-                    ),
-                  )
-                  .toList(),
-            ),
-          ),
-      ],
-    );
+    //var response = computer_lab.getComputerLabs();
   }
 }
