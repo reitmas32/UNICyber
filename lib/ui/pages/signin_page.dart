@@ -80,9 +80,7 @@ class _SignInPageState extends State<SignInPage> {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: TextButton(
-                  onPressed: () {
-                    //TODO FORGOT PASSWORD SCREEN GOES HERE
-                  },
+                  onPressed: () {},
                   child: const Text(
                     'Forgot Password',
                     style: TextStyle(color: Colors.blue, fontSize: 15),
@@ -213,8 +211,10 @@ class _SignInPageState extends State<SignInPage> {
           duration: Duration(seconds: 2), // Duración del SnackBar
         ),
       );
+
+      //var response = await computer_labs.getComputerLabsOfUser();
       // ignore: use_build_context_synchronously
-      context.go('/computers');
+      context.go('/selectComputerLab');
     } else {
       // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
