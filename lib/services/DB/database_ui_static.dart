@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
-import 'package:unica_cybercoffee/domain/models/computerUI.dart';
+import 'package:unica_cybercoffee/domain/models/computer_ui.dart';
 import 'package:unica_cybercoffee/domain/models/computer_room.dart';
 import 'package:unica_cybercoffee/domain/models/computer_states.dart';
 import 'package:unica_cybercoffee/services/DB/database_static.dart';
-import 'package:unica_cybercoffee/services/DB/idatabase_UI.dart';
-import 'package:unica_cybercoffee/tools/randomID.dart';
+import 'package:unica_cybercoffee/services/DB/idatabase_ui.dart';
+import 'package:unica_cybercoffee/tools/random_id.dart';
 
 class DataBaseStaticUI extends IDataBaseUI {
   List<ComputerUI> computers = [];
@@ -39,7 +39,7 @@ class DataBaseStaticUI extends IDataBaseUI {
     } else {
       final collectionComputersJson =
           collectionComputersFile.readAsStringSync();
-      if (!collectionComputersJson.isEmpty) {
+      if (collectionComputersJson.isNotEmpty) {
         final List<dynamic> collectionComputersList =
             jsonDecode(collectionComputersJson);
         computers = collectionComputersList
@@ -138,7 +138,6 @@ class DataBaseStaticUI extends IDataBaseUI {
 
   @override
   Future<List<ComputerUI>> getComputers() async {
-    // TODO: implement getComputers
     return computers;
   }
 
@@ -175,9 +174,6 @@ class DataBaseStaticUI extends IDataBaseUI {
       await createComputerRooms('Nueva Aula');
     }
 
-    var computersRoomOfUser2 = computerRooms
-        .where((computerRoom) => computerRoom.idUserAdmin == idUser)
-        .toList();
     return Future(() => computerRooms
         .where((computerRoom) => computerRoom.idUserAdmin == idUser)
         .toList());
@@ -190,4 +186,4 @@ class DataBaseStaticUI extends IDataBaseUI {
   }
 }
 
-DataBaseStaticUI databaseUI_Static = DataBaseStaticUI();
+DataBaseStaticUI databaseUIStatic = DataBaseStaticUI();

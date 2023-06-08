@@ -1,4 +1,4 @@
-import 'package:unica_cybercoffee/domain/models/computerUI.dart';
+import 'package:unica_cybercoffee/domain/models/computer_ui.dart';
 import 'package:unica_cybercoffee/domain/models/computer_room.dart';
 
 class IDataBaseUI {
