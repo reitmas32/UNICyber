@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:unica_cybercoffee/ui/pages/computers_page.dart';
 import 'package:unica_cybercoffee/ui/pages/error_page.dart';
+import 'package:unica_cybercoffee/ui/pages/link_computer_lab_code_page.dart';
 import 'package:unica_cybercoffee/ui/pages/link_computer_lab_page.dart';
+import 'package:unica_cybercoffee/ui/pages/select_computer_lab_page.dart';
 import 'package:unica_cybercoffee/ui/pages/signin_page.dart';
 import 'package:unica_cybercoffee/ui/pages/new_computer_lab_page.dart';
 import 'package:unica_cybercoffee/ui/pages/signup_page.dart';
@@ -50,6 +52,14 @@ class UnicaCyberCoffeState extends State<UnicaCyberCoffe> {
       GoRoute(
         path: "/linkComputerLab",
         builder: (context, state) => const LinkComputerLabPage(),
+      ),
+      GoRoute(
+        path: "/linkComputerLabCode",
+        builder: (context, state) => const LinkComputerLabCodePage(),
+      ),
+      GoRoute(
+        path: "/selectComputerLab",
+        builder: (context, state) => const SelectComputerLabPage(),
       ),
     ],
     errorBuilder: (context, state) => const ErrorPage(),
