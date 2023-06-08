@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:unica_cybercoffee/domain/models/computer.dart';
 import 'package:unica_cybercoffee/domain/models/computer_ui.dart';
 import 'package:unica_cybercoffee/domain/models/computer_states.dart';
 
 class ComputerInfoDialog extends StatefulWidget {
   const ComputerInfoDialog({
     super.key,
-    required this.computerUI,
+    required this.computer,
   });
-  final ComputerUI computerUI;
+  final Computer computer;
 
   @override
   State<ComputerInfoDialog> createState() => _ComputerInfoDialogState();
@@ -59,7 +60,7 @@ class _ComputerInfoDialogState extends State<ComputerInfoDialog> {
             ),
           ),
           MyDropdownMenu(
-            computerUI: widget.computerUI,
+            computer: widget.computer,
             onChanged: (int index) {
               setState(() {
                 controllerState = index;
@@ -156,9 +157,9 @@ class MyDropdownMenu extends StatefulWidget {
       {super.key,
       required this.items,
       required this.onChanged,
-      required this.computerUI});
+      required this.computer});
   final List<String> items;
-  final ComputerUI computerUI;
+  final Computer computer;
   final void Function(int value) onChanged;
 
   @override
@@ -170,7 +171,7 @@ class MyDropdownMenuState extends State<MyDropdownMenu> {
 
   @override
   void initState() {
-    _selectedItem = widget.computerUI.state;
+    _selectedItem = widget.computer.state;
     super.initState();
   }
 
@@ -185,7 +186,7 @@ class MyDropdownMenuState extends State<MyDropdownMenu> {
         setState(() {
           _selectedItem = newValue ?? widget.items.first;
           widget.onChanged(
-              widget.items.indexOf(newValue ?? widget.computerUI.state));
+              widget.items.indexOf(newValue ?? widget.computer.state));
         });
       },
       items: widget.items.map((item) {
