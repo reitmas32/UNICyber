@@ -33,6 +33,7 @@ Future<bool> signIn(User user) async {
 
     if (success) {
       dataStatic.jwt = responseData['Data']['token_jwt'];
+      dataStatic.userName = user.userName;
     }
 
     return Future(() => success);
