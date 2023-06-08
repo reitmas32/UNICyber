@@ -41,7 +41,7 @@ class ComputerUI extends Position {
     };
   }
 
-    Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson() {
     return {
       "name": name,
       "imageUrl": imageUrl,
@@ -54,5 +54,6 @@ class ComputerUI extends Position {
   }
 
   @override
-  String toString() => 'ComputerUI{name: $name, imageUrl: $imageUrl, state: $state, idComputerRoom: $idComputerRoom, id: $id}';
+  String toString() =>
+      'ComputerUI{name: $name, imageUrl: $imageUrl, state: $state, idComputerRoom: $idComputerRoom, id: $id}';
 }
