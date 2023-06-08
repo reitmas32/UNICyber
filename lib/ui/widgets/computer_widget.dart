@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:unica_cybercoffee/domain/models/computerUI.dart';
+import 'package:unica_cybercoffee/domain/models/computer_ui.dart';
 import 'package:unica_cybercoffee/domain/models/computer_states.dart';
-import 'package:unica_cybercoffee/services/DB/databaseUI_static.dart';
+import 'package:unica_cybercoffee/services/DB/database_ui_static.dart';
 import 'package:unica_cybercoffee/ui/providers/editable_ui_provider.dart';
 import 'package:unica_cybercoffee/ui/widgets/dialogs/computer_info_dialog.dart';
 import 'package:unica_cybercoffee/ui/widgets/computer_view.dart';
@@ -19,18 +19,6 @@ class ComputerWidget extends StatefulWidget {
 }
 
 class _ComputerWidgetState extends State<ComputerWidget> {
-  String _imageUrl =
-      'https://em-content.zobj.net/source/microsoft-teams/337/desktop-computer_1f5a5-fe0f.png';
-
-  String _imageUrlDisponible =
-      'https://em-content.zobj.net/source/microsoft-teams/337/desktop-computer_1f5a5-fe0f.png';
-  String _imageUrlReparacion =
-      'https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/desktop-computer-reparacion.png';
-  String _imageUrlProyecto =
-      'https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/desktop-computer-proyecto.png';
-  String _imageUrlMantenimiento =
-      'https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/desktop-computer-mantenimiento.png';
-
   @override
   Widget build(BuildContext context) {
     final editableProvider = Provider.of<EditableUIProvider>(context);
@@ -50,7 +38,7 @@ class _ComputerWidgetState extends State<ComputerWidget> {
                   Navigator.pop(context);
                 }
               },
-              child: LoanComputerDialog(),
+              child: const LoanComputerDialog(),
             ),
           );
         },
@@ -78,9 +66,9 @@ class _ComputerWidgetState extends State<ComputerWidget> {
           );
 
           setState(() {
-            var state = widget.computer.state;
-            if(result != null){
-            databaseUI_Static.setStateComputer(widget.computer.id, ComputerStates.getStateLable(result['state']));
+            if (result != null) {
+              databaseUIStatic.setStateComputer(widget.computer.id,
+                  ComputerStates.getStateLable(result['state']));
             }
           });
         },
