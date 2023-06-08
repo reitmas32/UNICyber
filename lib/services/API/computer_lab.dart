@@ -99,8 +99,6 @@ Future<bool> getComputerLabsOfUser() async {
       for (var computerLab in responseData['Data']) {
         dataStatic.allComputerLabs.add(ComputerLab.fromJson(computerLab));
       }
-
-      //print(responseData['Data']);
     }
 
     return Future(() => success);
