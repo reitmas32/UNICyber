@@ -1,19 +1,19 @@
 class ComputerLab {
   String name;
   String description;
-  String idComputerLab;
+  int id;
 
   ComputerLab({
     this.name = '',
     this.description = '',
-    this.idComputerLab = '',
+    this.id = 0,
   });
 
   static ComputerLab fromJson(Map<String, dynamic> data) {
     return ComputerLab(
       name: data['Name'],
       description: data['Description'],
-      idComputerLab: data['IdComputerLab'],
+      id: data['ID'],
     );
   }
 
@@ -26,6 +26,6 @@ class ComputerLab {
 
   @override
   String toString() {
-    return 'Name: $name, Description $description, ID: $idComputerLab';
+    return 'Name: $name, Description $description, ID: $id';
   }
 }
