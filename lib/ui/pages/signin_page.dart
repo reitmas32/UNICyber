@@ -6,6 +6,8 @@ import 'package:unica_cybercoffee/ui/widgets/appbar/unicaAppBar.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
 
 import 'package:unica_cybercoffee/services/API/account.dart' as accounts;
+import 'package:unica_cybercoffee/services/API/computer_lab.dart'
+    as computer_labs;
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key, required this.title});
@@ -212,7 +214,7 @@ class _SignInPageState extends State<SignInPage> {
         ),
       );
 
-      //var response = await computer_labs.getComputerLabsOfUser();
+      var response = await computer_labs.getComputerLabsOfUser();
       // ignore: use_build_context_synchronously
       context.go('/selectComputerLab');
     } else {
