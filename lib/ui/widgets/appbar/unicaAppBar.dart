@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:unica_cybercoffee/services/DB/databaseUI_static.dart';
+import 'package:unica_cybercoffee/services/DB/database_ui_static.dart';
 import 'package:unica_cybercoffee/ui/providers/editable_ui_provider.dart';
 import 'package:unica_cybercoffee/ui/theme_preference.dart';
 import 'package:unica_cybercoffee/ui/widgets/appbar/button_image.dart';
@@ -18,7 +18,7 @@ class UnicaAppBar extends StatelessWidget implements PreferredSizeWidget {
     // ignore: no_leading_underscores_for_local_identifiers
     List<Widget> _actions = [];
     final editableProvider = Provider.of<EditableUIProvider>(context);
-    DataBaseStaticUI databaseUI = databaseUI_Static;
+    DataBaseStaticUI databaseUI = databaseUIStatic;
 
     if (editableProvider.editable) {
       _actions.add(Padding(
@@ -73,7 +73,7 @@ class UnicaAppBar extends StatelessWidget implements PreferredSizeWidget {
           onTap: () {
             showDialog(
               context: context,
-              builder: (context) => SearchUserDialog(),
+              builder: (context) => const SearchUserDialog(),
             );
           },
           child: Padding(

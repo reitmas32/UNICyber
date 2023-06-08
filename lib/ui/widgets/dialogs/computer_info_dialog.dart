@@ -1,14 +1,13 @@
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:unica_cybercoffee/domain/models/computerUI.dart';
+import 'package:unica_cybercoffee/domain/models/computer_ui.dart';
 import 'package:unica_cybercoffee/domain/models/computer_states.dart';
 
 class ComputerInfoDialog extends StatefulWidget {
   const ComputerInfoDialog({
-    super.key, required this.computerUI,
+    super.key,
+    required this.computerUI,
   });
   final ComputerUI computerUI;
-
 
   @override
   State<ComputerInfoDialog> createState() => _ComputerInfoDialogState();
@@ -30,7 +29,8 @@ class _ComputerInfoDialogState extends State<ComputerInfoDialog> {
             child: InkWell(
               borderRadius: BorderRadius.circular(10.0),
               onTap: () {
-                Navigator.of(context).pop({'state': 0, 'userAction': controllerUserAction});
+                Navigator.of(context)
+                    .pop({'state': 0, 'userAction': controllerUserAction});
               },
               hoverColor: Theme.of(context).colorScheme.secondary,
               child: Padding(
@@ -152,22 +152,25 @@ class _ComputerInfoDialogState extends State<ComputerInfoDialog> {
 }
 
 class MyDropdownMenu extends StatefulWidget {
-  MyDropdownMenu({super.key, required this.items, required this.onChanged, required this.computerUI});
+  const MyDropdownMenu(
+      {super.key,
+      required this.items,
+      required this.onChanged,
+      required this.computerUI});
   final List<String> items;
   final ComputerUI computerUI;
   final void Function(int value) onChanged;
 
   @override
-  _MyDropdownMenuState createState() => _MyDropdownMenuState();
+  MyDropdownMenuState createState() => MyDropdownMenuState();
 }
 
-class _MyDropdownMenuState extends State<MyDropdownMenu> {
+class MyDropdownMenuState extends State<MyDropdownMenu> {
   String _selectedItem = '';
 
   @override
   void initState() {
     _selectedItem = widget.computerUI.state;
-    // TODO: implement initState
     super.initState();
   }
 

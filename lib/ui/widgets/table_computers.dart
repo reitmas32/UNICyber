@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:unica_cybercoffee/domain/models/computerUI.dart';
+import 'package:unica_cybercoffee/domain/models/computer_ui.dart';
 import 'package:unica_cybercoffee/ui/widgets/computer_widget.dart';
 
 class TableComputers extends StatefulWidget {
