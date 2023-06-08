@@ -45,8 +45,8 @@ Future<bool> getComputerLabs() async {
 Future<bool> linkComputerLab(ComputerLab computerLab, String userName) async {
   var url = Uri.parse('http://localhost:3000/api/v1/link-account');
   var body = jsonEncode({
-    'idComputerLab': computerLab.idComputerLab,
-    'username': userName,
+    'idComputerLab': computerLab.id,
+    'user_name': userName,
   });
   var response = await http.post(url, body: body);
   if (response.statusCode == 200) {
@@ -55,6 +55,53 @@ Future<bool> linkComputerLab(ComputerLab computerLab, String userName) async {
 
     // Acceder a los datos específicos dentro del objeto responseData
     var success = responseData['Success'];
+
+    dataStatic.userName = userName;
+
+    return Future(() => success);
+  }
+  return Future(() => false);
+}
+
+Future<bool> linkComputerLabConfirm(String code, String userName) async {
+  var url = Uri.parse('http://localhost:3000/api/v1/link-account');
+  var body = jsonEncode({
+    'code': code,
+    'user_name': userName,
+  });
+
+  var response = await http.put(url, body: body);
+  if (response.statusCode == 200) {
+    // La petición fue exitosa, extraer los datos del cuerpo de la respuesta
+    var responseData = jsonDecode(response.body);
+
+    // Acceder a los datos específicos dentro del objeto responseData
+    var success = responseData['Success'];
+
+    return Future(() => success);
+  }
+  return Future(() => false);
+}
+
+Future<bool> getComputerLabsOfUser() async {
+  var url = Uri.parse(
+      'http://localhost:3000/api/v1/computer-labs-user/${dataStatic.userName}');
+  var response = await http.get(url);
+  if (response.statusCode == 200) {
+    // La petición fue exitosa, extraer los datos del cuerpo de la respuesta
+    var responseData = jsonDecode(response.body);
+
+    // Acceder a los datos específicos dentro del objeto responseData
+    var success = responseData['Success'];
+
+    if (success) {
+      dataStatic.allComputerLabs.clear();
+      for (var computerLab in responseData['Data']) {
+        dataStatic.allComputerLabs.add(ComputerLab.fromJson(computerLab));
+      }
+
+      //print(responseData['Data']);
+    }
 
     return Future(() => success);
   }
