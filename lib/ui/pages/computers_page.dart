@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:unica_cybercoffee/domain/models/computerUI.dart';
+import 'package:unica_cybercoffee/domain/models/computer_ui.dart';
 import 'package:unica_cybercoffee/domain/models/computer_room.dart';
-import 'package:unica_cybercoffee/services/DB/databaseUI_static.dart';
-import 'package:unica_cybercoffee/services/DB/database_static.dart';
-import 'package:unica_cybercoffee/services/DB/idatabase_UI.dart';
+import 'package:unica_cybercoffee/services/DB/database_ui_static.dart';
+import 'package:unica_cybercoffee/services/DB/idatabase_ui.dart';
 import 'package:unica_cybercoffee/ui/providers/editable_ui_provider.dart';
 import 'package:unica_cybercoffee/ui/widgets/dialogs/add_computer_dialog.dart';
 import 'package:unica_cybercoffee/ui/widgets/appbar/unicaAppBar.dart';
@@ -24,7 +23,7 @@ class ComputersPageState extends State<ComputersPage> {
   //List<List<Position>> unica = [[], [], []];
   List<ComputerRoomUI> computerRooms = [];
   List<ComputerUI> computers = [];
-  DataBaseStaticUI databaseUI = databaseUI_Static;
+  DataBaseStaticUI databaseUI = databaseUIStatic;
 
   _loadComputerRooms(IDataBaseUI database) async {
     List<ComputerRoomUI> computerRoomsTmp = await database.getComputerRooms();
@@ -92,7 +91,7 @@ class ComputersPageState extends State<ComputersPage> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               computerRooms[index].name,
-              style: TextStyle(fontSize: 20.0),
+              style: const TextStyle(fontSize: 20.0),
             ),
           ),
           pageBuilder: (context, index) {
@@ -136,7 +135,8 @@ class ComputersPageState extends State<ComputersPage> {
       floatingActionButton: Material(
         borderRadius: BorderRadius.circular(35.0),
         elevation: editableUIProvider.editable ? 15.0 : 1.0,
-        shadowColor: editableUIProvider.editable ? Colors.blue : Colors.transparent,
+        shadowColor:
+            editableUIProvider.editable ? Colors.blue : Colors.transparent,
         child: FloatingActionButton(
           backgroundColor:
               editableUIProvider.editable ? Colors.blue : Colors.blueGrey,
@@ -158,7 +158,10 @@ class ComputersPageState extends State<ComputersPage> {
                   );
                 }
               : null,
-          child: Icon(Icons.add, color: Theme.of(context).colorScheme.primary,),
+          child: Icon(
+            Icons.add,
+            color: Theme.of(context).colorScheme.primary,
+          ),
         ),
       ),
     );
