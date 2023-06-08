@@ -94,6 +94,7 @@ class _SelectComputerLabPageState extends State<SelectComputerLabPage> {
   }
 
   onViewComputerLab() {
+    dataStatic.idComputerLab = radioButtonGroupController.selectedOption.id;
     context.go('/computers');
   }
 }
