@@ -33,7 +33,6 @@ class _AddComputerDialogState extends State<AddComputerDialog> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return RawKeyboardListener(
       focusNode: FocusNode(),
       autofocus: true,
@@ -50,8 +49,7 @@ class _AddComputerDialogState extends State<AddComputerDialog> {
           textEditingController: nameComputerController,
           maskController: maskController,
           lable: 'Password',
-          padding:
-              const EdgeInsets.symmetric(vertical: 16.0),
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
         ),
         actions: [
           InkWell(
