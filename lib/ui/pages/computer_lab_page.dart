@@ -24,21 +24,25 @@ class ComputersPageState extends State<ComputersPage> {
   int initPosition = 0;
   int lastPos = 0;
 
-  _addNewComputer(IDataBaseUI database, String nameComputerRoom,
-      String nameComputer) async {
-    await database.createComputer(nameComputerRoom, nameComputer);
-    // ignore: no_leading_underscores_for_local_identifiers
-    List<ComputerUI> _computers = await database.getComputers();
-  }
-
   @override
   void deactivate() async {
     super.deactivate();
   }
 
+  bool isLoading = true;
+
   @override
   void initState() {
     getRooms();
+    Future.delayed(const Duration(milliseconds: 500), () {
+      setState(() {
+        isLoading = false;
+      });
+      if (dataStatic.roomsOfComputerLab.isNotEmpty) {
+        dataStatic.idRoomCurrent = dataStatic.roomsOfComputerLab[0].id;
+        getComputers();
+      }
+    });
     super.initState();
   }
 
@@ -50,34 +54,42 @@ class ComputersPageState extends State<ComputersPage> {
     return Scaffold(
       appBar: const UnicaAppBar(),
       body: Padding(
-        padding: EdgeInsets.only(top: 16.0),
-        child: CustomTabView(
-          initPosition: initPosition,
-          itemCount: dataStatic.roomsOfComputerLab.length,
-          tabBuilder: (context, index) => Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              dataStatic.roomsOfComputerLab[index].name,
-              style: const TextStyle(fontSize: 20.0),
-            ),
-          ),
-          pageBuilder: (context, index) {
-            //Load COmputers
-            return TableComputers(
-              computers: dataStatic.computerOfRoom,
-            );
-          },
-          onPositionChange: (index) {
-            initPosition = index;
+        padding: const EdgeInsets.only(top: 16.0),
+        child: isLoading
+            ? const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.blue,
+                ),
+              )
+            : CustomTabView(
+                initPosition: initPosition,
+                itemCount: dataStatic.roomsOfComputerLab.length,
+                tabBuilder: (context, index) => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    dataStatic.roomsOfComputerLab[index].name,
+                    style: const TextStyle(fontSize: 20.0),
+                  ),
+                ),
+                pageBuilder: (context, index) {
+                  //Load COmputers
+                  return TableComputers(
+                    computers: dataStatic.computerOfRoom,
+                    editableUIProvider: editableUIProvider,
+                  );
+                },
+                onPositionChange: (index) async {
+                  initPosition = index;
 
-            lastPos = index;
+                  lastPos = index;
 
-            dataStatic.idRoomCurrent = dataStatic.roomsOfComputerLab[index].id;
+                  dataStatic.idRoomCurrent =
+                      dataStatic.roomsOfComputerLab[index].id;
 
-            getComputers();
-          },
-          onScroll: (position) {},
-        ),
+                  getComputers();
+                },
+                onScroll: (position) {},
+              ),
       ),
       floatingActionButton: editableUIProvider.editable
           ? ExpendableFab(
@@ -147,20 +159,5 @@ class ComputersPageState extends State<ComputersPage> {
   getComputers() async {
     await computer.getComputersOfRoom(dataStatic.idRoomCurrent);
     setState(() {});
-  }
-
-  toast(BuildContext context, String action) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: Colors.blue,
-        content: Text(
-          "Selected $action",
-          style: const TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        duration: const Duration(seconds: 1), // Duración del SnackBar
-      ),
-    );
   }
 }
