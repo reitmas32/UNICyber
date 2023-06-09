@@ -11,11 +11,12 @@ class DataStatic {
   int idComputerLab;
   int idRoomCurrent;
 
-  DataStatic(
-      {this.jwt = '',
-      this.userName = '',
-      this.idComputerLab = -1,
-      this.idRoomCurrent = -1});
+  DataStatic({
+    this.jwt = '',
+    this.userName = '',
+    this.idComputerLab = -1,
+    this.idRoomCurrent = -1,
+  });
 }
 
 DataStatic dataStatic = DataStatic();
