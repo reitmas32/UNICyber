@@ -6,10 +6,8 @@ import 'package:unica_cybercoffee/ui/providers/editable_ui_provider.dart';
 import 'package:unica_cybercoffee/ui/widgets/computer_widget.dart';
 
 class TableComputers extends StatefulWidget {
-  const TableComputers(
-      {super.key, required this.computers, required this.editableUIProvider});
+  const TableComputers({super.key, required this.computers});
   final List<Computer> computers;
-  final EditableUIProvider editableUIProvider;
 
   @override
   State<TableComputers> createState() => _TableComputersState();
@@ -22,9 +20,7 @@ class _TableComputersState extends State<TableComputers> {
   void initState() {
     super.initState();
     // Simulación de una operación que tarda 2 segundos en completarse
-    Future.delayed(
-        Duration(milliseconds: widget.editableUIProvider.editable ? 50 : 50),
-        () {
+    Future.delayed(const Duration(milliseconds: 300), () {
       setState(() {
         isLoading = false;
       });

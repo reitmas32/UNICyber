@@ -75,7 +75,6 @@ class ComputersPageState extends State<ComputersPage> {
                   //Load COmputers
                   return TableComputers(
                     computers: dataStatic.computerOfRoom,
-                    editableUIProvider: editableUIProvider,
                   );
                 },
                 onPositionChange: (index) async {
