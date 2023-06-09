@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:unica_cybercoffee/domain/models/computer.dart';
-import 'package:unica_cybercoffee/domain/models/computer_ui.dart';
 import 'package:unica_cybercoffee/domain/models/computer_states.dart';
+import 'package:unica_cybercoffee/services/API/computer.dart' as computer;
+import 'package:unica_cybercoffee/services/API/data_static.dart';
 
 class ComputerInfoDialog extends StatefulWidget {
   const ComputerInfoDialog({
@@ -30,8 +31,8 @@ class _ComputerInfoDialogState extends State<ComputerInfoDialog> {
             child: InkWell(
               borderRadius: BorderRadius.circular(10.0),
               onTap: () {
-                Navigator.of(context)
-                    .pop({'state': 0, 'userAction': controllerUserAction});
+                widget.computer.setState(0);
+                Navigator.of(context).pop(widget.computer);
               },
               hoverColor: Theme.of(context).colorScheme.secondary,
               child: Padding(
@@ -89,7 +90,7 @@ class _ComputerInfoDialogState extends State<ComputerInfoDialog> {
           InkWell(
             borderRadius: BorderRadius.circular(10.0),
             onTap: () {
-              Navigator.of(context).pop();
+              Navigator.of(context).pop(widget.computer);
             },
             hoverColor: Theme.of(context).colorScheme.secondary,
             child: Padding(
@@ -108,7 +109,7 @@ class _ComputerInfoDialogState extends State<ComputerInfoDialog> {
           InkWell(
             borderRadius: BorderRadius.circular(10.0),
             onTap: () {
-              Navigator.of(context).pop();
+              Navigator.of(context).pop(widget.computer);
             },
             hoverColor: Theme.of(context).colorScheme.secondary,
             child: Padding(
@@ -129,9 +130,9 @@ class _ComputerInfoDialogState extends State<ComputerInfoDialog> {
       actions: [
         InkWell(
           borderRadius: BorderRadius.circular(10.0),
-          onTap: () {
-            Navigator.of(context).pop(
-                {'state': controllerState, 'userAction': controllerUserAction});
+          onTap: () async {
+            widget.computer.setState(controllerState);
+            Navigator.of(context).pop(widget.computer);
           },
           hoverColor: Theme.of(context).colorScheme.secondary,
           child: Padding(
