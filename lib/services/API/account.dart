@@ -15,6 +15,8 @@ Future<bool> signUp(User user) async {
     // Acceder a los datos específicos dentro del objeto responseData
     var success = responseData['Success'];
 
+    print(responseData);
+
     return Future(() => success);
   }
   return Future(() => false);

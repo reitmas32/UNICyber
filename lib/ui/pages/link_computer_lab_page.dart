@@ -88,6 +88,7 @@ class _LinkComputerLabPageState extends State<LinkComputerLabPage> {
                       color: Colors.blue,
                     );
                   } else {
+                    print(dataStatic.allComputerLabs);
                     // Renderiza el widget deseado después de 2 segundos
                     return Column(
                       children: [
@@ -164,6 +165,6 @@ class _LinkComputerLabPageState extends State<LinkComputerLabPage> {
   }
 
   onGetComputerLabs() async {
-    //var response = computer_lab.getComputerLabs();
+    var response = computer_lab.getComputerLabs();
   }
 }
