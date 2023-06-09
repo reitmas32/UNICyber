@@ -48,4 +48,16 @@ class Computer {
   @override
   String toString() =>
       'Computer{name: $name, state: $state, idRoom: $idRoom, id: $id, x: $x, y: $y}';
+
+  setState(int state) {
+    if (state == 0) {
+      this.state = 'Disponible';
+    } else if (state == 1) {
+      this.state = 'Mantenimiento';
+    } else if (state == 2) {
+      this.state = 'Reparacion';
+    } else if (state == 3) {
+      this.state = 'Proyecto';
+    }
+  }
 }
