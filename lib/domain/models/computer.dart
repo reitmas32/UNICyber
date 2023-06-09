@@ -38,8 +38,8 @@ class Computer {
       "id_room": idRoom,
       "name": name,
       "state": state,
-      "x": x,
-      "y": y,
+      "Pos_x": x,
+      "Pos_y": y,
       "type": type,
       "message": message,
     };
@@ -47,5 +47,5 @@ class Computer {
 
   @override
   String toString() =>
-      'Computer{name: $name, state: $state, idRoom: $idRoom, id: $id}';
+      'Computer{name: $name, state: $state, idRoom: $idRoom, id: $id, x: $x, y: $y}';
 }
