@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:unica_cybercoffee/domain/models/computer_lab.dart';
 import 'package:unica_cybercoffee/domain/models/room.dart';
 import 'package:unica_cybercoffee/services/API/data_static.dart';
 
@@ -16,8 +15,6 @@ Future<bool> createRoom(Room computerLab) async {
 
     // Acceder a los datos específicos dentro del objeto responseData
     var success = responseData['Success'];
-
-    print(responseData);
 
     return Future(() => success);
   }

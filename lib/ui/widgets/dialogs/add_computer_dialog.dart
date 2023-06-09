@@ -52,14 +52,14 @@ class _AddComputerDialogState extends State<AddComputerDialog> {
                 textEditingController: nameComputerController,
                 maskController: maskController,
                 lable: 'Nombre',
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
               ),
               CustomTextFileds(
                 indexTextField: 1,
                 textEditingController: typeComputerController,
                 maskController: maskController,
                 lable: 'Tipo',
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
               ),
             ],
           ),
@@ -88,7 +88,8 @@ class _AddComputerDialogState extends State<AddComputerDialog> {
       type: typeComputerController.text,
       idRoom: dataStatic.idRoomCurrent,
     );
-    var response = await computer.createComputer(newComputer);
+    await computer.createComputer(newComputer);
+    // ignore: use_build_context_synchronously
     Navigator.of(context).pop();
   }
 }

@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:unica_cybercoffee/domain/models/computer.dart';
-import 'package:unica_cybercoffee/domain/models/computer.dart';
-import 'package:unica_cybercoffee/domain/models/computer_states.dart';
-import 'package:unica_cybercoffee/services/API/data_static.dart';
 import 'package:unica_cybercoffee/ui/providers/editable_ui_provider.dart';
 import 'package:unica_cybercoffee/ui/widgets/dialogs/computer_info_dialog.dart';
 import 'package:unica_cybercoffee/ui/widgets/computer_view.dart';
 import 'package:unica_cybercoffee/ui/widgets/dialogs/loan_computer_dialog.dart';
 import 'package:unica_cybercoffee/services/API/computer.dart' as computer;
 
+// ignore: must_be_immutable
 class ComputerWidget extends StatefulWidget {
   ComputerWidget({super.key, required this.computer});
 

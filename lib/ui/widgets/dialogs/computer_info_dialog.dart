@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unica_cybercoffee/domain/models/computer.dart';
 import 'package:unica_cybercoffee/domain/models/computer_states.dart';
-import 'package:unica_cybercoffee/services/API/computer.dart' as computer;
-import 'package:unica_cybercoffee/services/API/data_static.dart';
 
 class ComputerInfoDialog extends StatefulWidget {
   const ComputerInfoDialog({

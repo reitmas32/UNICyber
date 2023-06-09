@@ -118,11 +118,11 @@ class UnicaAppBar extends StatelessWidget implements PreferredSizeWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: getActions(MediaQuery.of(context).size.width, context))
       ],
-      title: Row(
+      title: const Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
-            children: const [
+            children: [
               ButtonImage(
                 url: '/',
                 imageUrl:
@@ -134,8 +134,8 @@ class UnicaAppBar extends StatelessWidget implements PreferredSizeWidget {
               Text('UNICA CyberCoffee'),
             ],
           ),
-          const ClockText(),
-          const SizedBox(
+          ClockText(),
+          SizedBox(
             width: 30,
           ),
 

@@ -49,6 +49,6 @@ Future<bool> getComputersOfRoom(int idRoom) async {
 Future<bool> updateComputer(Computer computer) async {
   var url = Uri.parse('http://localhost:3000/api/v1/computer/${computer.id}');
   var body = jsonEncode(computer.toJson());
-  var response = await http.put(url, body: body);
+  await http.put(url, body: body);
   return Future(() => true);
 }

@@ -70,7 +70,8 @@ class _AddRoomDialogState extends State<AddRoomDialog> {
   onAddRoom() async {
     Room newRoom = Room(
         idComputerLab: dataStatic.idComputerLab, name: nameRoomController.text);
-    var response = await room.createRoom(newRoom);
+    await room.createRoom(newRoom);
+    // ignore: use_build_context_synchronously
     Navigator.of(context).pop();
   }
 }

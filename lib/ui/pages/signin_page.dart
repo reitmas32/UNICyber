@@ -214,7 +214,7 @@ class _SignInPageState extends State<SignInPage> {
         ),
       );
 
-      var response = await computer_labs.getComputerLabsOfUser();
+      await computer_labs.getComputerLabsOfUser();
       // ignore: use_build_context_synchronously
       context.go('/selectComputerLab');
     } else {
