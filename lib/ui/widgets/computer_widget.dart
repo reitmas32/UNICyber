@@ -5,7 +5,6 @@ import 'package:unica_cybercoffee/domain/models/computer.dart';
 import 'package:unica_cybercoffee/domain/models/computer.dart';
 import 'package:unica_cybercoffee/domain/models/computer_states.dart';
 import 'package:unica_cybercoffee/services/API/data_static.dart';
-import 'package:unica_cybercoffee/services/DB/database_ui_static.dart';
 import 'package:unica_cybercoffee/ui/providers/editable_ui_provider.dart';
 import 'package:unica_cybercoffee/ui/widgets/dialogs/computer_info_dialog.dart';
 import 'package:unica_cybercoffee/ui/widgets/computer_view.dart';
@@ -13,9 +12,9 @@ import 'package:unica_cybercoffee/ui/widgets/dialogs/loan_computer_dialog.dart';
 import 'package:unica_cybercoffee/services/API/computer.dart' as computer;
 
 class ComputerWidget extends StatefulWidget {
-  const ComputerWidget({super.key, required this.computer});
+  ComputerWidget({super.key, required this.computer});
 
-  final Computer computer;
+  Computer computer;
 
   @override
   State<ComputerWidget> createState() => _ComputerWidgetState();
@@ -67,13 +66,12 @@ class _ComputerWidgetState extends State<ComputerWidget> {
               ),
             ),
           );
-
-          setState(() {
-            if (result != null) {
-              databaseUIStatic.setStateComputer('widget.computer.id',
-                  ComputerStates.getStateLable(result['state']));
-            }
-          });
+          if (result != null) {
+            await computer.updateComputer(result);
+            setState(() {
+              widget.computer = result;
+            });
+          }
         },
         onPanUpdate: (details) {
           if (editableProvider.editable) {
@@ -90,10 +88,28 @@ class _ComputerWidgetState extends State<ComputerWidget> {
         },
         child: ComputerView(
           name: widget.computer.name,
-          imageUrl:
-              'https://em-content.zobj.net/source/microsoft-teams/337/desktop-computer_1f5a5-fe0f.png',
+          imageUrl: getUrlImage(),
         ),
       ),
     );
+  }
+
+  String getUrlImage() {
+    var urlImage =
+        'https://em-content.zobj.net/source/microsoft-teams/337/desktop-computer_1f5a5-fe0f.png';
+    if (widget.computer.state == 'Disponible') {
+      urlImage =
+          'https://em-content.zobj.net/source/microsoft-teams/337/desktop-computer_1f5a5-fe0f.png';
+    } else if (widget.computer.state == 'Mantenimiento') {
+      urlImage =
+          'https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/mantenimiento.png';
+    } else if (widget.computer.state == 'Reparacion') {
+      urlImage =
+          'https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/reparacion.png';
+    } else if (widget.computer.state == 'Proyecto') {
+      urlImage =
+          'https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/proyecto.png';
+    }
+    return urlImage;
   }
 }
