@@ -96,8 +96,11 @@ Future<bool> getComputerLabsOfUser() async {
 
     if (success) {
       dataStatic.allComputerLabs.clear();
+      if(responseData['Data'] != null){
+
       for (var computerLab in responseData['Data']) {
         dataStatic.allComputerLabs.add(ComputerLab.fromJson(computerLab));
+      }
       }
     }
 
