@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:unica_cybercoffee/domain/models/user.dart';
+import 'package:unica_cybercoffee/services/API/api_connection.dart';
 import 'package:unica_cybercoffee/ui/widgets/appbar/unicaAppBar.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
 
 import 'package:unica_cybercoffee/services/API/account.dart' as accounts;
 import 'package:unica_cybercoffee/services/API/computer_lab.dart'
     as computer_labs;
+import 'package:unica_cybercoffee/services/API/api_connection.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key, required this.title});
@@ -198,7 +200,7 @@ class _SignInPageState extends State<SignInPage> {
       userName: userNameController.text,
     );
 
-    var response = await accounts.signIn(user);
+    var response = await api.accounts.signIn(user);
     if (response) {
       // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
@@ -214,7 +216,7 @@ class _SignInPageState extends State<SignInPage> {
         ),
       );
 
-      await computer_labs.getComputerLabsOfUser();
+      await api.computerLabs.getComputerLabsOfUser();
       // ignore: use_build_context_synchronously
       context.go('/selectComputerLab');
     } else {
