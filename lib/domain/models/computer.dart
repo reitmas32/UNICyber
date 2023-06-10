@@ -7,6 +7,7 @@ class Computer {
     this.x = 0.0,
     this.y = 0.0,
     this.state = '',
+    this.idState = 0,
     this.message = '',
   });
 
@@ -15,6 +16,7 @@ class Computer {
   double x;
   double y;
   String name;
+  int idState;
   String state;
   String type;
   String message;
@@ -23,6 +25,7 @@ class Computer {
     return Computer(
       id: data['ID'],
       idRoom: data['IdRoom'],
+      idState: data['IdState'],
       x: data['Pos_x'].toDouble(),
       y: data['Pos_y'].toDouble(),
       name: data['Name'],
@@ -47,7 +50,7 @@ class Computer {
 
   @override
   String toString() =>
-      'Computer{name: $name, state: $state, idRoom: $idRoom, id: $id, x: $x, y: $y}';
+      'Computer{name: $name, state: $idState, idRoom: $idRoom, id: $id, x: $x, y: $y}';
 
   setState(int state) {
     if (state == 0) {
