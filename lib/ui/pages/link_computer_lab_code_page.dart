@@ -6,6 +6,7 @@ import 'package:unica_cybercoffee/services/API/computer_lab.dart'
 import 'package:unica_cybercoffee/services/API/data_static.dart';
 import 'package:unica_cybercoffee/ui/widgets/appbar/unicaAppBar.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
+import 'package:unica_cybercoffee/services/API/api_connection.dart';
 
 class LinkComputerLabCodePage extends StatefulWidget {
   const LinkComputerLabCodePage({super.key});
@@ -93,7 +94,7 @@ class _LinkComputerLabCodePageState extends State<LinkComputerLabCodePage> {
   }
 
   onLinkComputerLabConfirm() async {
-    var response = await computer_lab.linkComputerLabConfirm(
+    var response = await api.computerLabs.linkComputerLabConfirm(
         codeController.text, dataStatic.userName);
     if (response) {
       ScaffoldMessenger.of(context).showSnackBar(

@@ -3,8 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:unica_cybercoffee/domain/models/computer_lab.dart';
-import 'package:unica_cybercoffee/services/API/computer_lab.dart'
-    as computer_lab;
 import 'package:unica_cybercoffee/services/API/data_static.dart';
 import 'package:unica_cybercoffee/ui/widgets/appbar/unicaAppBar.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
@@ -132,7 +130,7 @@ class _LinkComputerLabPageState extends State<LinkComputerLabPage> {
   }
 
   onLinkComputerLab() async {
-    var response = await computer_lab.linkComputerLab(
+    var response = await api.computerLabs.linkComputerLab(
         radioButtonGroupController.selectedOption, nameController.text);
     if (response) {
       ScaffoldMessenger.of(context).showSnackBar(
