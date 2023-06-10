@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:unica_cybercoffee/domain/models/computer.dart';
-import 'package:unica_cybercoffee/domain/models/computer_states.dart';
+import 'package:unica_cybercoffee/domain/models/state.dart';
+import 'package:unica_cybercoffee/services/API/data_static.dart';
+
+import 'package:unica_cybercoffee/services/API/states.dart' as states;
 
 class ComputerInfoDialog extends StatefulWidget {
   const ComputerInfoDialog({
@@ -14,7 +17,7 @@ class ComputerInfoDialog extends StatefulWidget {
 }
 
 class _ComputerInfoDialogState extends State<ComputerInfoDialog> {
-  int controllerState = 0;
+  int controllerState = -1;
   int controllerUserAction = 0;
 
   @override
@@ -28,8 +31,9 @@ class _ComputerInfoDialogState extends State<ComputerInfoDialog> {
             padding: const EdgeInsets.all(16.0),
             child: InkWell(
               borderRadius: BorderRadius.circular(10.0),
-              onTap: () {
-                widget.computer.setState(0);
+              onTap: () async {
+                await onChangeStateAvailable();
+                // ignore: use_build_context_synchronously
                 Navigator.of(context).pop(widget.computer);
               },
               hoverColor: Theme.of(context).colorScheme.secondary,
@@ -65,12 +69,9 @@ class _ComputerInfoDialogState extends State<ComputerInfoDialog> {
                 controllerState = index;
               });
             },
-            items: [
-              ComputerStates.getStateLable(ComputerStates.disponible),
-              ComputerStates.getStateLable(ComputerStates.mantenimiento),
-              ComputerStates.getStateLable(ComputerStates.reparacion),
-              ComputerStates.getStateLable(ComputerStates.proyecto),
-            ],
+            items: dataStatic.states
+                .map((stateComputer) => stateComputer.name)
+                .toList(),
           ),
           const Align(
             alignment: Alignment.centerLeft,
@@ -129,7 +130,9 @@ class _ComputerInfoDialogState extends State<ComputerInfoDialog> {
         InkWell(
           borderRadius: BorderRadius.circular(10.0),
           onTap: () async {
-            widget.computer.setState(controllerState);
+            await onChangeState();
+
+            // ignore: use_build_context_synchronously
             Navigator.of(context).pop(widget.computer);
           },
           hoverColor: Theme.of(context).colorScheme.secondary,
@@ -148,6 +151,23 @@ class _ComputerInfoDialogState extends State<ComputerInfoDialog> {
         ),
       ],
     );
+  }
+
+  onChangeStateAvailable() async {
+    await states.setStateOfComputer(widget.computer.id, 1);
+    setState(() {
+      widget.computer.idState = dataStatic.states[0].id;
+    });
+  }
+
+  onChangeState() async {
+    if (controllerState >= 1) {
+      await states.setStateOfComputer(
+          widget.computer.id, dataStatic.states[controllerState].id);
+      setState(() {
+        widget.computer.idState = dataStatic.states[controllerState].id;
+      });
+    }
   }
 }
 
@@ -170,7 +190,15 @@ class MyDropdownMenuState extends State<MyDropdownMenu> {
 
   @override
   void initState() {
-    _selectedItem = widget.computer.state;
+    _selectedItem = dataStatic.states
+        .firstWhere(
+          (state) => state.id == widget.computer.idState,
+          orElse: () => StateComputer(
+            name: '',
+            img: '',
+          ),
+        )
+        .name;
     super.initState();
   }
 
