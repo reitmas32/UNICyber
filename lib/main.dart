@@ -5,11 +5,17 @@ import 'package:unica_cybercoffee/ui/providers/editable_ui_provider.dart';
 import 'package:unica_cybercoffee/ui/providers/theme_provider.dart';
 import 'package:unica_cybercoffee/ui/unica_cybercoffee.dart';
 import 'package:url_strategy/url_strategy.dart';
+import 'package:unica_cybercoffee/services/API/states.dart' as states;
 
 void main() async {
   setPathUrlStrategy();
   await databaseStatic.loadData();
+  await onGetStates();
   runApp(const MyApp());
+}
+
+onGetStates() async {
+  await states.getStates();
 }
 
 class MyApp extends StatefulWidget {
