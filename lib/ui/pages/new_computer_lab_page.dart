@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:unica_cybercoffee/domain/models/computer_lab.dart';
 import 'package:unica_cybercoffee/services/API/computer_lab.dart'
     as computer_lab;
+import 'package:unica_cybercoffee/services/API/api_connection.dart';
 import 'package:unica_cybercoffee/ui/widgets/appbar/unicaAppBar.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
 
@@ -108,7 +109,7 @@ class _NewComputerLabPageState extends State<NewComputerLabPage> {
     ComputerLab computerLab = ComputerLab(
         name: nameController.text, description: descriptionController.text);
 
-    var response = await computer_lab.createComputerLab(computerLab);
+    var response = await api.computerLabs.createComputerLab(computerLab);
     if (response) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
