@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:unica_cybercoffee/domain/models/computer.dart';
+import 'package:unica_cybercoffee/services/API/data_static.dart';
 import 'package:unica_cybercoffee/ui/providers/editable_ui_provider.dart';
 import 'package:unica_cybercoffee/ui/widgets/dialogs/computer_info_dialog.dart';
 import 'package:unica_cybercoffee/ui/widgets/computer_view.dart';
@@ -65,9 +66,9 @@ class _ComputerWidgetState extends State<ComputerWidget> {
             ),
           );
           if (result != null) {
-            await computer.updateComputer(result);
+            //await computer.updateComputer(result);
             setState(() {
-              widget.computer = result;
+              //widget.computer = result;
             });
           }
         },
@@ -86,28 +87,12 @@ class _ComputerWidgetState extends State<ComputerWidget> {
         },
         child: ComputerView(
           name: widget.computer.name,
-          imageUrl: getUrlImage(),
+          imageUrl: dataStatic.states
+              .toList()
+              .firstWhere((element) => element.id == widget.computer.idState)
+              .img,
         ),
       ),
     );
-  }
-
-  String getUrlImage() {
-    var urlImage =
-        'https://em-content.zobj.net/source/microsoft-teams/337/desktop-computer_1f5a5-fe0f.png';
-    if (widget.computer.state == 'Disponible') {
-      urlImage =
-          'https://em-content.zobj.net/source/microsoft-teams/337/desktop-computer_1f5a5-fe0f.png';
-    } else if (widget.computer.state == 'Mantenimiento') {
-      urlImage =
-          'https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/mantenimiento.png';
-    } else if (widget.computer.state == 'Reparacion') {
-      urlImage =
-          'https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/reparacion.png';
-    } else if (widget.computer.state == 'Proyecto') {
-      urlImage =
-          'https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/proyecto.png';
-    }
-    return urlImage;
   }
 }
