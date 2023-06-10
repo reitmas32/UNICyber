@@ -25,6 +25,7 @@ abstract class ComputerLabAPI {
   Future<bool> createComputerLab(ComputerLab computerLab);
   Future<bool> getComputerLabs();
   Future<bool> linkComputerLab(ComputerLab computerLab, String userName);
+  Future<bool> linkComputerLabConfirm(String code, String userName);
   Future<bool> getComputerLabsOfUser();
   // Otros métodos relacionados con mensajes
 }

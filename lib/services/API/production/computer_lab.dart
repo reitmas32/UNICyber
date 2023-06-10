@@ -69,6 +69,7 @@ class ProductionComputerLabAPI implements ComputerLabAPI {
     return Future(() => false);
   }
 
+  @override
   Future<bool> linkComputerLabConfirm(String code, String userName) async {
     var url = Uri.parse('http://localhost:3000/api/v1/link-account');
     var body = jsonEncode({
