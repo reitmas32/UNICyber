@@ -9,6 +9,7 @@ import 'package:unica_cybercoffee/services/API/data_static.dart';
 import 'package:unica_cybercoffee/ui/widgets/appbar/unicaAppBar.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
 import 'package:unica_cybercoffee/ui/widgets/radio_button_group.dart';
+import 'package:unica_cybercoffee/services/API/api_connection.dart';
 
 class LinkComputerLabPage extends StatefulWidget {
   const LinkComputerLabPage({super.key});
@@ -165,6 +166,6 @@ class _LinkComputerLabPageState extends State<LinkComputerLabPage> {
   }
 
   onGetComputerLabs() async {
-    var response = computer_lab.getComputerLabs();
+    var response = api.computerLabs.getComputerLabs();
   }
 }
