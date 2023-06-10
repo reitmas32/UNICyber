@@ -8,6 +8,7 @@ import 'package:unica_cybercoffee/ui/widgets/dialogs/computer_info_dialog.dart';
 import 'package:unica_cybercoffee/ui/widgets/computer_view.dart';
 import 'package:unica_cybercoffee/ui/widgets/dialogs/loan_computer_dialog.dart';
 import 'package:unica_cybercoffee/services/API/computer.dart' as computer;
+import 'package:unica_cybercoffee/services/API/api_connection.dart';
 
 // ignore: must_be_immutable
 class ComputerWidget extends StatefulWidget {
@@ -82,7 +83,7 @@ class _ComputerWidgetState extends State<ComputerWidget> {
         },
         onPanEnd: (details) async {
           if (editableProvider.editable) {
-            await computer.updateComputer(widget.computer);
+            await api.computers.updateComputer(widget.computer);
           }
         },
         child: ComputerView(

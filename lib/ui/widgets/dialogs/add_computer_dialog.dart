@@ -5,6 +5,7 @@ import 'package:unica_cybercoffee/services/API/data_static.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
 
 import 'package:unica_cybercoffee/services/API/computer.dart' as computer;
+import 'package:unica_cybercoffee/services/API/api_connection.dart';
 
 class AddComputerDialog extends StatefulWidget {
   const AddComputerDialog({super.key});
@@ -88,7 +89,7 @@ class _AddComputerDialogState extends State<AddComputerDialog> {
       type: typeComputerController.text,
       idRoom: dataStatic.idRoomCurrent,
     );
-    await computer.createComputer(newComputer);
+    await api.computers.createComputer(newComputer);
     // ignore: use_build_context_synchronously
     Navigator.of(context).pop();
   }
