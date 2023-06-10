@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:unica_cybercoffee/domain/models/user.dart';
-import 'package:unica_cybercoffee/services/API/account.dart' as accounts;
+import 'package:unica_cybercoffee/services/API/api_connection.dart';
 import 'package:unica_cybercoffee/ui/widgets/appbar/unicaAppBar.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
 
@@ -176,7 +176,7 @@ class _SignUpPageState extends State<SignUpPage> {
       userName: userNameController.text,
     );
 
-    var response = await accounts.signUp(user);
+    var response = await api.accounts.signUp(user);
     if (response) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
