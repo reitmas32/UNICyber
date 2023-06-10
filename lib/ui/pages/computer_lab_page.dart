@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:unica_cybercoffee/services/API/data_static.dart';
 import 'package:unica_cybercoffee/ui/providers/editable_ui_provider.dart';
 import 'package:unica_cybercoffee/ui/widgets/appbar/unicaAppBar.dart';
+import 'package:unica_cybercoffee/ui/widgets/bottom_navy_bar.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_tab_view.dart';
 import 'package:unica_cybercoffee/ui/widgets/dialogs/add_computer_dialog.dart';
 import 'package:unica_cybercoffee/ui/widgets/dialogs/add_room_dialog.dart';
@@ -45,48 +46,92 @@ class ComputersPageState extends State<ComputersPage> {
   }
 
   TextEditingController nameNewComputer = TextEditingController();
-
+  int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     final editableUIProvider = Provider.of<EditableUIProvider>(context);
     return Scaffold(
       appBar: const UnicaAppBar(),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 16.0),
-        child: isLoading
-            ? const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.blue,
-                ),
-              )
-            : CustomTabView(
-                initPosition: initPosition,
-                itemCount: dataStatic.roomsOfComputerLab.length,
-                tabBuilder: (context, index) => Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    dataStatic.roomsOfComputerLab[index].name,
-                    style: const TextStyle(fontSize: 20.0),
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 16.0),
+            child: isLoading
+                ? const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.blue,
+                    ),
+                  )
+                : CustomTabView(
+                    initPosition: initPosition,
+                    itemCount: dataStatic.roomsOfComputerLab.length,
+                    tabBuilder: (context, index) => Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        dataStatic.roomsOfComputerLab[index].name,
+                        style: const TextStyle(fontSize: 20.0),
+                      ),
+                    ),
+                    pageBuilder: (context, index) {
+                      //Load COmputers
+                      return TableComputers(
+                        computers: dataStatic.computerOfRoom,
+                      );
+                    },
+                    onPositionChange: (index) async {
+                      initPosition = index;
+
+                      lastPos = index;
+
+                      dataStatic.idRoomCurrent =
+                          dataStatic.roomsOfComputerLab[index].id;
+
+                      getComputers();
+                    },
+                    onScroll: (position) {},
                   ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: BottomNavyBar(
+              selectedIndex: _currentIndex,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              backgroundColor: Theme.of(context).colorScheme.onSecondary,
+              itemCornerRadius: 24,
+              containerWidth: MediaQuery.of(context).size.width / 2,
+              curve: Curves.easeIn,
+              onItemSelected: (index) => setState(() => _currentIndex = index),
+              items: <BottomNavyBarItem>[
+                BottomNavyBarItem(
+                  icon: const Icon(Icons.apps),
+                  title: const Text('Home'),
+                  activeColor: Colors.red,
+                  textAlign: TextAlign.center,
                 ),
-                pageBuilder: (context, index) {
-                  //Load COmputers
-                  return TableComputers(
-                    computers: dataStatic.computerOfRoom,
-                  );
-                },
-                onPositionChange: (index) async {
-                  initPosition = index;
-
-                  lastPos = index;
-
-                  dataStatic.idRoomCurrent =
-                      dataStatic.roomsOfComputerLab[index].id;
-
-                  getComputers();
-                },
-                onScroll: (position) {},
-              ),
+                BottomNavyBarItem(
+                  icon: const Icon(Icons.people),
+                  title: const Text('Users'),
+                  activeColor: Colors.purpleAccent,
+                  textAlign: TextAlign.center,
+                ),
+                BottomNavyBarItem(
+                  icon: const Icon(Icons.message),
+                  title: const Text(
+                    'Messages test for mes teset test test ',
+                  ),
+                  activeColor: Colors.pink,
+                  textAlign: TextAlign.center,
+                ),
+                BottomNavyBarItem(
+                  icon: const Icon(Icons.settings),
+                  title: const Text('Settings'),
+                  activeColor: Colors.blue,
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
       floatingActionButton: editableUIProvider.editable
           ? ExpendableFab(
