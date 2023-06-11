@@ -34,6 +34,8 @@ class _CreateStudentDialogState extends State<CreateStudentDialog> {
   SemesterSliderController semesterSliderController =
       SemesterSliderController();
 
+  bool isEnterKeyPressed = false;
+
   @override
   void initState() {
     maskController.addListener(() {
@@ -73,8 +75,9 @@ class _CreateStudentDialogState extends State<CreateStudentDialog> {
     return RawKeyboardListener(
       focusNode: FocusNode(),
       onKey: (RawKeyEvent event) {
-        if (event.logicalKey == LogicalKeyboardKey.enter) {
-          //widget.onTap();
+        if (event.logicalKey == LogicalKeyboardKey.enter ||
+            event.logicalKey == LogicalKeyboardKey.numpadEnter) {
+          onConfirm();
         }
       },
       child: AlertDialog(

@@ -35,8 +35,10 @@ class _SearchUserDialogState extends State<SearchUserDialog> {
   Widget build(BuildContext context) {
     return RawKeyboardListener(
       focusNode: FocusNode(),
+      includeSemantics: true,
       onKey: (RawKeyEvent event) {
-        if (event.logicalKey == LogicalKeyboardKey.enter) {
+        if (event.logicalKey == LogicalKeyboardKey.enter ||
+            event.logicalKey == LogicalKeyboardKey.numpadEnter) {
           onSearch();
         }
       },
@@ -71,10 +73,20 @@ class _SearchUserDialogState extends State<SearchUserDialog> {
   }
 
   onSearch() async {
+    showDialog(
+      context: context,
+      builder: (context) => ProgressDialog(),
+    );
+
+    await Future.delayed(const Duration(milliseconds: 350));
+
     var newStudent =
         await api.students.getStudent(accountNumberController.text);
     // ignore: use_build_context_synchronously
     Navigator.of(context).pop();
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).pop();
+
     if (newStudent.isNotEmpty()) {
       // ignore: use_build_context_synchronously
       showDialog(
@@ -93,5 +105,27 @@ class _SearchUserDialogState extends State<SearchUserDialog> {
         ),
       );
     }
+  }
+}
+
+class ProgressDialog extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Informacion de Usuario'),
+      content: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: const [
+            CircularProgressIndicator(
+              color: Colors.blue,
+            ),
+            SizedBox(width: 16.0),
+            Text("Loading..."),
+          ],
+        ),
+      ),
+    );
   }
 }
