@@ -5,6 +5,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
+    sliderTheme: const SliderThemeData(
+      trackHeight: 25.0,
+      valueIndicatorTextStyle: TextStyle(
+        color: Color.fromARGB(255, 41, 40, 41),
+        fontWeight: FontWeight.bold,
+        fontSize: 15.0,
+      ),
+      valueIndicatorColor: Colors.grey,
+    ),
     scaffoldBackgroundColor: const Color.fromARGB(255, 233, 227, 227),
     primaryColor: Colors.green,
     colorScheme: const ColorScheme(
@@ -34,6 +43,15 @@ class AppTheme {
     brightness: Brightness.dark,
     scaffoldBackgroundColor: const Color.fromARGB(255, 56, 53, 53),
     primaryColor: Colors.green,
+    sliderTheme: const SliderThemeData(
+      trackHeight: 25.0,
+      valueIndicatorTextStyle: TextStyle(
+        color: Color.fromARGB(255, 246, 243, 246),
+        fontWeight: FontWeight.bold,
+        fontSize: 15.0,
+      ),
+      valueIndicatorColor: Colors.grey,
+    ),
     colorScheme: const ColorScheme(
       brightness: Brightness.dark,
       primary: Color.fromARGB(255, 62, 61, 61),
