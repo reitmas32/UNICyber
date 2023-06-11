@@ -3,7 +3,7 @@ class Student {
   String name;
   String lastName;
   String email;
-  String universityProgram;
+  int idUniversityProgram;
   String accountNumber;
   int semester;
 
@@ -14,7 +14,7 @@ class Student {
     required this.email,
     required this.lastName,
     required this.semester,
-    required this.universityProgram,
+    required this.idUniversityProgram,
   });
 
   Student.empty({
@@ -24,7 +24,7 @@ class Student {
     this.email = '',
     this.lastName = '',
     this.semester = 0,
-    this.universityProgram = '',
+    this.idUniversityProgram = 0,
   });
 
   static Student fromJson(Map<dynamic, dynamic> data) {
@@ -35,19 +35,18 @@ class Student {
       email: data['Email'],
       lastName: data['LastName'],
       semester: data['Semester'],
-      universityProgram: data['UniversityProgram'],
+      idUniversityProgram: data['IdUniversityProgram'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'ID': id,
-      'Name': name,
-      'AccountNumber': accountNumber,
-      'Email': email,
-      'LastName': lastName,
-      'Semester': semester,
-      'UniversityProgram': universityProgram,
+      'name': name,
+      'account_number': accountNumber,
+      'email': email,
+      'last_name': lastName,
+      'semester': semester,
+      'id_university_program': idUniversityProgram,
     };
   }
 
@@ -60,7 +59,7 @@ class Student {
         email.isEmpty ||
         lastName.isEmpty ||
         semester == 0 ||
-        universityProgram.isEmpty;
+        idUniversityProgram == 0;
   }
 
   bool isNotEmpty() {
