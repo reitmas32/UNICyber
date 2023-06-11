@@ -10,11 +10,16 @@ void main() async {
   setPathUrlStrategy();
   api.initialize();
   await onGetStates();
+  await onGetUniversityPrograms();
   runApp(const MyApp());
 }
 
 onGetStates() async {
   await api.states.getStates();
+}
+
+onGetUniversityPrograms() async {
+  await api.universityProgram.getUniversityPrograms();
 }
 
 class MyApp extends StatefulWidget {
