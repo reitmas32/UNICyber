@@ -34,6 +34,7 @@ class CustomTextFileds extends StatefulWidget {
     required this.padding,
     this.focusNode,
     this.onlyNumbers = false,
+    this.autofocus = false,
   });
   final TextMaskController maskController;
   final TextEditingController textEditingController;
@@ -41,6 +42,7 @@ class CustomTextFileds extends StatefulWidget {
   final String lable;
   final EdgeInsets padding;
   final bool onlyNumbers;
+  final bool autofocus;
   final FocusNode? focusNode;
   @override
   CustomTextFiledsState createState() => CustomTextFiledsState();
@@ -65,6 +67,7 @@ class CustomTextFiledsState extends State<CustomTextFileds> {
             ? Colors.blueAccent
             : Colors.transparent,
         child: TextField(
+          autofocus: widget.autofocus,
           keyboardType: widget.onlyNumbers ? TextInputType.number : null,
           inputFormatters: widget.onlyNumbers
               ? [FilteringTextInputFormatter.digitsOnly]
