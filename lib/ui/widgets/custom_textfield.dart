@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:unica_cybercoffee/main.dart';
 import 'package:unica_cybercoffee/ui/providers/theme_provider.dart';
 
 class TextMaskController extends ChangeNotifier {
@@ -23,19 +25,22 @@ class TextMaskController extends ChangeNotifier {
 }
 
 class CustomTextFileds extends StatefulWidget {
-  const CustomTextFileds(
-      {required this.maskController,
-      required this.indexTextField,
-      super.key,
-      required this.textEditingController,
-      required this.lable,
-      required this.padding,
-      this.focusNode});
+  const CustomTextFileds({
+    required this.maskController,
+    required this.indexTextField,
+    super.key,
+    required this.textEditingController,
+    required this.lable,
+    required this.padding,
+    this.focusNode,
+    this.onlyNumbers = false,
+  });
   final TextMaskController maskController;
   final TextEditingController textEditingController;
   final int indexTextField;
   final String lable;
   final EdgeInsets padding;
+  final bool onlyNumbers;
   final FocusNode? focusNode;
   @override
   CustomTextFiledsState createState() => CustomTextFiledsState();
@@ -60,6 +65,10 @@ class CustomTextFiledsState extends State<CustomTextFileds> {
             ? Colors.blueAccent
             : Colors.transparent,
         child: TextField(
+          keyboardType: widget.onlyNumbers ? TextInputType.number : null,
+          inputFormatters: widget.onlyNumbers
+              ? [FilteringTextInputFormatter.digitsOnly]
+              : null,
           cursorColor: Theme.of(context).colorScheme.onPrimary,
           obscureText: widget.lable.toLowerCase() == 'password' ||
               widget.lable.toLowerCase() == 'contraseña',
