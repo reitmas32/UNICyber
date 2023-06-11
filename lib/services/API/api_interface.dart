@@ -54,6 +54,7 @@ abstract class StateAPI {
 
 abstract class StudentAPI {
   Future<Student> getStudent(String accountNumber);
+  Future<Student> createStudent(Student student);
   // Otros métodos relacionados con mensajes
 }
 
