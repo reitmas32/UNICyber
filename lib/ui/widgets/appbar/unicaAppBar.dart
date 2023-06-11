@@ -6,7 +6,7 @@ import 'package:unica_cybercoffee/ui/theme_preference.dart';
 import 'package:unica_cybercoffee/ui/widgets/appbar/button_image.dart';
 import 'package:unica_cybercoffee/ui/widgets/appbar/theme_button.dart';
 import 'package:unica_cybercoffee/ui/widgets/clock_text.dart';
-import 'package:unica_cybercoffee/ui/widgets/dialogs/search_user_dialog.dart';
+import 'package:unica_cybercoffee/ui/widgets/dialogs/search_student_dialog.dart';
 
 class UnicaAppBar extends StatelessWidget implements PreferredSizeWidget {
   const UnicaAppBar({super.key, this.route = ''});
