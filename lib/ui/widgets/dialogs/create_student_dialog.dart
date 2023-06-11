@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:unica_cybercoffee/domain/models/student.dart';
+import 'package:unica_cybercoffee/services/API/data_static.dart';
 import 'package:unica_cybercoffee/ui/widgets/action_button.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
 import 'package:unica_cybercoffee/ui/widgets/drop_menu_custom.dart';
@@ -30,11 +33,14 @@ class _CreateStudentDialogState extends State<CreateStudentDialog> {
   TextEditingController semesterController = TextEditingController(text: '');
   TextMaskController maskController = TextMaskController(lengthMask: 7);
   final FocusNode focusNode = FocusNode();
-  int controllerState = -1;
+  DropMenuController dropMenuController = DropMenuController();
 
   @override
   void initState() {
     maskController.addListener(() {
+      setState(() {});
+    });
+    dropMenuController.addListener(() {
       setState(() {});
     });
     setState(() {
@@ -65,7 +71,6 @@ class _CreateStudentDialogState extends State<CreateStudentDialog> {
     Size size = MediaQuery.of(context).size;
     return RawKeyboardListener(
       focusNode: FocusNode(),
-      autofocus: true,
       onKey: (RawKeyEvent event) {
         if (event.logicalKey == LogicalKeyboardKey.enter) {
           //widget.onTap();
@@ -75,13 +80,14 @@ class _CreateStudentDialogState extends State<CreateStudentDialog> {
         title: const Center(child: Text('Alta de Estudiante')),
         content: Container(
             width: 600,
-            height: 600,
+            height: 650,
             padding: const EdgeInsets.all(8.0),
             child: SingleChildScrollView(
               child: Column(
                 children: [
                   CustomTextFileds(
                     focusNode: focusNode,
+                    autofocus: true,
                     indexTextField: 0,
                     textEditingController: nameController,
                     maskController: maskController,
@@ -92,7 +98,6 @@ class _CreateStudentDialogState extends State<CreateStudentDialog> {
                     ),
                   ),
                   CustomTextFileds(
-                    focusNode: focusNode,
                     indexTextField: 0,
                     textEditingController: lastNameController,
                     maskController: maskController,
@@ -103,7 +108,6 @@ class _CreateStudentDialogState extends State<CreateStudentDialog> {
                     ),
                   ),
                   CustomTextFileds(
-                    focusNode: focusNode,
                     indexTextField: 0,
                     textEditingController: emailController,
                     maskController: maskController,
@@ -114,7 +118,6 @@ class _CreateStudentDialogState extends State<CreateStudentDialog> {
                     ),
                   ),
                   CustomTextFileds(
-                    focusNode: focusNode,
                     indexTextField: 0,
                     textEditingController: universityProgramController,
                     maskController: maskController,
@@ -124,20 +127,7 @@ class _CreateStudentDialogState extends State<CreateStudentDialog> {
                       horizontal: size.width / 10,
                     ),
                   ),
-                  DropdownMenuCustom(
-                    onChanged: (int index) {
-                      setState(() {
-                        controllerState = index;
-                      });
-                    },
-                    items: [
-                      'Compu',
-                      'Electr',
-                      'Mecanica',
-                    ],
-                  ),
                   CustomTextFileds(
-                    focusNode: focusNode,
                     indexTextField: 0,
                     onlyNumbers: true,
                     textEditingController: accountNumberController,
@@ -148,8 +138,17 @@ class _CreateStudentDialogState extends State<CreateStudentDialog> {
                       horizontal: size.width / 10,
                     ),
                   ),
+                  DropdownMenuCustom(
+                    onChanged: (int index) {
+                      print(index);
+                    },
+                    controller: dropMenuController,
+                    items: dataStatic.universityPrograms
+                        .map((universityProgram) => universityProgram.name)
+                        .toList(),
+                  ),
                   const SizedBox(
-                    height: 40.0,
+                    height: 80.0,
                     child: Align(
                       alignment: Alignment.center,
                       child: Text(
@@ -168,7 +167,11 @@ class _CreateStudentDialogState extends State<CreateStudentDialog> {
         actions: [
           ActionButton(
             lable: 'Confirmar',
-            onTap: () => Navigator.of(context).pop(),
+            onTap: () {
+              print(dataStatic
+                  .universityPrograms[dropMenuController.currentSelected]);
+              //Navigator.of(context).pop()
+            },
           ),
           ActionButton(
             lable: 'Cancelar',
