@@ -52,6 +52,7 @@ class _SearchUserDialogState extends State<SearchUserDialog> {
           children: [
             CustomTextFileds(
               focusNode: focusNode,
+              onlyNumbers: true,
               indexTextField: 0,
               textEditingController: accountNumberController,
               maskController: maskController,
@@ -77,6 +78,7 @@ class _SearchUserDialogState extends State<SearchUserDialog> {
                   ),
                 );
               } else {
+                newStudent.accountNumber = accountNumberController.text;
                 // ignore: use_build_context_synchronously
                 showDialog(
                   context: context,
