@@ -3,8 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:unica_cybercoffee/domain/models/computer.dart';
 import 'package:unica_cybercoffee/services/API/data_static.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
-
-import 'package:unica_cybercoffee/services/API/computer.dart' as computer;
 import 'package:unica_cybercoffee/services/API/api_connection.dart';
 
 class AddComputerDialog extends StatefulWidget {

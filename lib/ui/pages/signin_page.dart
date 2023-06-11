@@ -6,11 +6,6 @@ import 'package:unica_cybercoffee/services/API/api_connection.dart';
 import 'package:unica_cybercoffee/ui/widgets/appbar/unicaAppBar.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
 
-import 'package:unica_cybercoffee/services/API/account.dart' as accounts;
-import 'package:unica_cybercoffee/services/API/computer_lab.dart'
-    as computer_labs;
-import 'package:unica_cybercoffee/services/API/api_connection.dart';
-
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key, required this.title});
   final String title;

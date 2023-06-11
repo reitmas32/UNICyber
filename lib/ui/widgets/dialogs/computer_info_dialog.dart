@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:unica_cybercoffee/domain/models/computer.dart';
 import 'package:unica_cybercoffee/domain/models/state.dart';
 import 'package:unica_cybercoffee/services/API/data_static.dart';
-
-import 'package:unica_cybercoffee/services/API/states.dart' as states;
 import 'package:unica_cybercoffee/services/API/api_connection.dart';
 
 class ComputerInfoDialog extends StatefulWidget {

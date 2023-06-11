@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:unica_cybercoffee/domain/models/computer_lab.dart';
-import 'package:unica_cybercoffee/services/API/computer_lab.dart'
-    as computer_lab;
 import 'package:unica_cybercoffee/services/API/api_connection.dart';
 import 'package:unica_cybercoffee/ui/widgets/appbar/unicaAppBar.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';

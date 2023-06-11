@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:unica_cybercoffee/domain/models/room.dart';
 import 'package:unica_cybercoffee/services/API/data_static.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
-import 'package:unica_cybercoffee/services/API/room.dart' as room;
 import 'package:unica_cybercoffee/services/API/api_connection.dart';
 
 class AddRoomDialog extends StatefulWidget {

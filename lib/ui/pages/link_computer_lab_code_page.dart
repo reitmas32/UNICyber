@@ -1,8 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:unica_cybercoffee/services/API/computer_lab.dart'
-    as computer_lab;
 import 'package:unica_cybercoffee/services/API/data_static.dart';
 import 'package:unica_cybercoffee/ui/widgets/appbar/unicaAppBar.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
@@ -94,8 +92,8 @@ class _LinkComputerLabCodePageState extends State<LinkComputerLabCodePage> {
   }
 
   onLinkComputerLabConfirm() async {
-    var response = await api.computerLabs.linkComputerLabConfirm(
-        codeController.text, dataStatic.userName);
+    var response = await api.computerLabs
+        .linkComputerLabConfirm(codeController.text, dataStatic.userName);
     if (response) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

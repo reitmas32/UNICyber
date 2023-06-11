@@ -9,8 +9,6 @@ import 'package:unica_cybercoffee/ui/widgets/dialogs/add_computer_dialog.dart';
 import 'package:unica_cybercoffee/ui/widgets/dialogs/add_room_dialog.dart';
 import 'package:unica_cybercoffee/ui/widgets/expandable_fab.dart';
 import 'package:unica_cybercoffee/ui/widgets/table_computers.dart';
-import 'package:unica_cybercoffee/services/API/room.dart' as room;
-import 'package:unica_cybercoffee/services/API/computer.dart' as computer;
 import 'package:unica_cybercoffee/services/API/api_connection.dart';
 
 class ComputersPage extends StatefulWidget {

@@ -4,7 +4,6 @@ import 'package:unica_cybercoffee/ui/providers/editable_ui_provider.dart';
 import 'package:unica_cybercoffee/ui/providers/theme_provider.dart';
 import 'package:unica_cybercoffee/ui/unica_cybercoffee.dart';
 import 'package:url_strategy/url_strategy.dart';
-import 'package:unica_cybercoffee/services/API/states.dart' as states;
 import 'package:unica_cybercoffee/services/API/api_connection.dart';
 
 void main() async {
