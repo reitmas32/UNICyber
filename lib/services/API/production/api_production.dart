@@ -4,6 +4,7 @@ import 'package:unica_cybercoffee/services/API/production/computer.dart';
 import 'package:unica_cybercoffee/services/API/production/computer_lab.dart';
 import 'package:unica_cybercoffee/services/API/production/room.dart';
 import 'package:unica_cybercoffee/services/API/production/states.dart';
+import 'package:unica_cybercoffee/services/API/production/students.dart';
 
 class ProductionApi implements ApiInterface {
   late ProductionAccountAPI _accountsApi;
@@ -11,6 +12,7 @@ class ProductionApi implements ApiInterface {
   late ProductionComputerAPI _computerApi;
   late ProductionRoomAPI _roomsApi;
   late ProductionStateAPI _stateApi;
+  late ProductionStudentAPI _studentApi;
 
   @override
   Future<void> initialize() {
@@ -19,6 +21,7 @@ class ProductionApi implements ApiInterface {
     _computerApi = ProductionComputerAPI();
     _roomsApi = ProductionRoomAPI();
     _stateApi = ProductionStateAPI();
+    _studentApi = ProductionStudentAPI();
 
     return Future(() => true);
   }
@@ -37,4 +40,7 @@ class ProductionApi implements ApiInterface {
 
   @override
   StateAPI get states => _stateApi;
+
+  @override
+  StudentAPI get students => _studentApi;
 }
