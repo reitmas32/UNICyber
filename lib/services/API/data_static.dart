@@ -2,6 +2,7 @@ import 'package:unica_cybercoffee/domain/models/computer.dart';
 import 'package:unica_cybercoffee/domain/models/computer_lab.dart';
 import 'package:unica_cybercoffee/domain/models/room.dart';
 import 'package:unica_cybercoffee/domain/models/state.dart';
+import 'package:unica_cybercoffee/domain/models/university_program.dart';
 
 class DataStatic {
   String jwt;
@@ -9,6 +10,7 @@ class DataStatic {
   List<Room> roomsOfComputerLab = [];
   List<Computer> computerOfRoom = [];
   List<StateComputer> states = [];
+  List<UniversityProgram> universityPrograms = [];
   String userName;
   int idComputerLab;
   int idRoomCurrent;

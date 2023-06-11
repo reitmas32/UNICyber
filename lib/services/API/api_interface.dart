@@ -11,6 +11,7 @@ abstract class ApiInterface {
   RoomAPI get rooms;
   StateAPI get states;
   StudentAPI get students;
+  UniversityProgramAPI get universityProgram;
 
   //ComputerLabAPI get computerLab;
   // Otras secciones de la API
@@ -53,5 +54,10 @@ abstract class StateAPI {
 
 abstract class StudentAPI {
   Future<Student> getStudent(String accountNumber);
+  // Otros métodos relacionados con mensajes
+}
+
+abstract class UniversityProgramAPI {
+  Future<bool> getUniversityPrograms();
   // Otros métodos relacionados con mensajes
 }
