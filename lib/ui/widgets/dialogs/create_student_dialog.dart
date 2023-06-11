@@ -1,8 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:unica_cybercoffee/domain/models/student.dart';
+import 'package:unica_cybercoffee/services/API/api_connection.dart';
 import 'package:unica_cybercoffee/services/API/data_static.dart';
 import 'package:unica_cybercoffee/ui/widgets/action_button.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
@@ -26,21 +25,24 @@ class _CreateStudentDialogState extends State<CreateStudentDialog> {
   TextEditingController nameController = TextEditingController(text: '');
   TextEditingController lastNameController = TextEditingController(text: '');
   TextEditingController emailController = TextEditingController(text: '');
-  TextEditingController universityProgramController =
-      TextEditingController(text: '');
   TextEditingController accountNumberController =
       TextEditingController(text: '');
   TextEditingController semesterController = TextEditingController(text: '');
   TextMaskController maskController = TextMaskController(lengthMask: 7);
   final FocusNode focusNode = FocusNode();
-  DropMenuController dropMenuController = DropMenuController();
+  DropMenuController universityProgramController = DropMenuController();
+  SemesterSliderController semesterSliderController =
+      SemesterSliderController();
 
   @override
   void initState() {
     maskController.addListener(() {
       setState(() {});
     });
-    dropMenuController.addListener(() {
+    universityProgramController.addListener(() {
+      setState(() {});
+    });
+    semesterSliderController.addListener(() {
       setState(() {});
     });
     setState(() {
@@ -68,7 +70,6 @@ class _CreateStudentDialogState extends State<CreateStudentDialog> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return RawKeyboardListener(
       focusNode: FocusNode(),
       onKey: (RawKeyEvent event) {
@@ -80,21 +81,20 @@ class _CreateStudentDialogState extends State<CreateStudentDialog> {
         title: const Center(child: Text('Alta de Estudiante')),
         content: Container(
             width: 600,
-            height: 650,
+            height: 550,
             padding: const EdgeInsets.all(8.0),
             child: SingleChildScrollView(
               child: Column(
                 children: [
                   CustomTextFileds(
-                    focusNode: focusNode,
+                    width: 350,
                     autofocus: true,
                     indexTextField: 0,
                     textEditingController: nameController,
                     maskController: maskController,
                     lable: 'Nombre',
-                    padding: EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                       vertical: 16.0,
-                      horizontal: size.width / 10,
                     ),
                   ),
                   CustomTextFileds(
@@ -102,30 +102,20 @@ class _CreateStudentDialogState extends State<CreateStudentDialog> {
                     textEditingController: lastNameController,
                     maskController: maskController,
                     lable: 'Apellidos',
-                    padding: EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                       vertical: 16.0,
-                      horizontal: size.width / 10,
                     ),
+                    width: 350,
                   ),
                   CustomTextFileds(
                     indexTextField: 0,
                     textEditingController: emailController,
                     maskController: maskController,
                     lable: 'Correo',
-                    padding: EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                       vertical: 16.0,
-                      horizontal: size.width / 10,
                     ),
-                  ),
-                  CustomTextFileds(
-                    indexTextField: 0,
-                    textEditingController: universityProgramController,
-                    maskController: maskController,
-                    lable: 'Carrera',
-                    padding: EdgeInsets.symmetric(
-                      vertical: 16.0,
-                      horizontal: size.width / 10,
-                    ),
+                    width: 350,
                   ),
                   CustomTextFileds(
                     indexTextField: 0,
@@ -133,16 +123,14 @@ class _CreateStudentDialogState extends State<CreateStudentDialog> {
                     textEditingController: accountNumberController,
                     maskController: maskController,
                     lable: 'Numero de Cuenta',
-                    padding: EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                       vertical: 16.0,
-                      horizontal: size.width / 10,
                     ),
+                    width: 350,
                   ),
                   DropdownMenuCustom(
-                    onChanged: (int index) {
-                      print(index);
-                    },
-                    controller: dropMenuController,
+                    onChanged: (value) {},
+                    controller: universityProgramController,
                     items: dataStatic.universityPrograms
                         .map((universityProgram) => universityProgram.name)
                         .toList(),
@@ -160,25 +148,68 @@ class _CreateStudentDialogState extends State<CreateStudentDialog> {
                       ),
                     ),
                   ),
-                  SemesterSlider(),
+                  SemesterSlider(
+                    controller: semesterSliderController,
+                  ),
                 ],
               ),
             )),
         actions: [
-          ActionButton(
-            lable: 'Confirmar',
-            onTap: () {
-              print(dataStatic
-                  .universityPrograms[dropMenuController.currentSelected]);
-              //Navigator.of(context).pop()
-            },
-          ),
+          ActionButton(lable: 'Confirmar', onTap: onConfirm),
           ActionButton(
             lable: 'Cancelar',
-            onTap: () => Navigator.of(context).pop(),
+            onTap: onCancel,
           ),
         ],
       ),
     );
+  }
+
+  onCancel() {
+    Navigator.of(context).pop();
+  }
+
+  onConfirm() async {
+    var student = Student(
+      name: nameController.text,
+      accountNumber: accountNumberController.text,
+      email: emailController.text,
+      lastName: lastNameController.text,
+      semester: semesterSliderController.currentSelected,
+      idUniversityProgram: dataStatic
+          .universityPrograms[universityProgramController.currentSelected].id,
+    );
+    var result = await api.students.createStudent(student);
+    if (result.isNotEmpty()) {
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.blue,
+          content: Text(
+            'Estudiante registrado Corectamente 👌',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          duration: Duration(seconds: 2), // Duración del SnackBar
+        ),
+      );
+    } else {
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(
+            'No se Pudo registrar al Estudiante 😢',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          duration: Duration(seconds: 2), // Duración del SnackBar
+        ),
+      );
+    }
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).pop();
   }
 }
