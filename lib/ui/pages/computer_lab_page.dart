@@ -195,7 +195,7 @@ class ComputersPageState extends State<ComputersPage> {
   }
 
   getRooms() async {
-    await room.getRoomsOfComputerLab(dataStatic.idComputerLab);
+    await api.rooms.getRoomsOfComputerLab(dataStatic.idComputerLab);
     setState(() {});
   }
 

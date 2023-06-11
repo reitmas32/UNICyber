@@ -4,6 +4,7 @@ import 'package:unica_cybercoffee/domain/models/room.dart';
 import 'package:unica_cybercoffee/services/API/data_static.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
 import 'package:unica_cybercoffee/services/API/room.dart' as room;
+import 'package:unica_cybercoffee/services/API/api_connection.dart';
 
 class AddRoomDialog extends StatefulWidget {
   const AddRoomDialog({super.key});
@@ -70,7 +71,7 @@ class _AddRoomDialogState extends State<AddRoomDialog> {
   onAddRoom() async {
     Room newRoom = Room(
         idComputerLab: dataStatic.idComputerLab, name: nameRoomController.text);
-    await room.createRoom(newRoom);
+    await api.rooms.createRoom(newRoom);
     // ignore: use_build_context_synchronously
     Navigator.of(context).pop();
   }
