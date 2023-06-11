@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:unica_cybercoffee/services/API/api_connection.dart';
 import 'package:unica_cybercoffee/ui/widgets/action_button.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
-import 'package:unica_cybercoffee/ui/widgets/dialogs/info_user_dialog.dart';
+import 'package:unica_cybercoffee/ui/widgets/dialogs/create_student_dialog.dart';
+import 'package:unica_cybercoffee/ui/widgets/dialogs/info_student_dialog.dart';
 
 class SearchUserDialog extends StatefulWidget {
   const SearchUserDialog({
@@ -61,12 +63,28 @@ class _SearchUserDialogState extends State<SearchUserDialog> {
         actions: [
           ActionButton(
             lable: 'Buscar',
-            onTap: () {
+            onTap: () async {
+              var newStudent =
+                  await api.students.getStudent(accountNumberController.text);
+              // ignore: use_build_context_synchronously
               Navigator.of(context).pop();
-              showDialog(
-                context: context,
-                builder: (context) => const InfoUserDialog(),
-              );
+              if (newStudent.isNotEmpty()) {
+                // ignore: use_build_context_synchronously
+                showDialog(
+                  context: context,
+                  builder: (context) => InfoStudentDialog(
+                    student: newStudent,
+                  ),
+                );
+              } else {
+                // ignore: use_build_context_synchronously
+                showDialog(
+                  context: context,
+                  builder: (context) => CreateStudentDialog(
+                    student: newStudent,
+                  ),
+                );
+              }
             },
           ),
           ActionButton(
