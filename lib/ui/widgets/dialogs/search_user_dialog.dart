@@ -20,8 +20,6 @@ class _SearchUserDialogState extends State<SearchUserDialog> {
       TextEditingController(text: '');
   TextMaskController maskController = TextMaskController(lengthMask: 1);
 
-  final FocusNode focusNode = FocusNode();
-
   @override
   void initState() {
     maskController.addListener(() {
@@ -29,20 +27,17 @@ class _SearchUserDialogState extends State<SearchUserDialog> {
     });
     setState(() {
       maskController.updateMask(0);
-      focusNode.requestFocus();
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    focusNode.requestFocus();
     return RawKeyboardListener(
       focusNode: FocusNode(),
-      autofocus: true,
       onKey: (RawKeyEvent event) {
         if (event.logicalKey == LogicalKeyboardKey.enter) {
-          //widget.onTap();
+          onSearch();
         }
       },
       child: AlertDialog(
@@ -51,8 +46,8 @@ class _SearchUserDialogState extends State<SearchUserDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             CustomTextFileds(
-              focusNode: focusNode,
               onlyNumbers: true,
+              autofocus: true,
               indexTextField: 0,
               textEditingController: accountNumberController,
               maskController: maskController,
@@ -64,30 +59,7 @@ class _SearchUserDialogState extends State<SearchUserDialog> {
         actions: [
           ActionButton(
             lable: 'Buscar',
-            onTap: () async {
-              var newStudent =
-                  await api.students.getStudent(accountNumberController.text);
-              // ignore: use_build_context_synchronously
-              Navigator.of(context).pop();
-              if (newStudent.isNotEmpty()) {
-                // ignore: use_build_context_synchronously
-                showDialog(
-                  context: context,
-                  builder: (context) => InfoStudentDialog(
-                    student: newStudent,
-                  ),
-                );
-              } else {
-                newStudent.accountNumber = accountNumberController.text;
-                // ignore: use_build_context_synchronously
-                showDialog(
-                  context: context,
-                  builder: (context) => CreateStudentDialog(
-                    student: newStudent,
-                  ),
-                );
-              }
-            },
+            onTap: onSearch,
           ),
           ActionButton(
             lable: 'Cerrar',
@@ -96,5 +68,30 @@ class _SearchUserDialogState extends State<SearchUserDialog> {
         ],
       ),
     );
+  }
+
+  onSearch() async {
+    var newStudent =
+        await api.students.getStudent(accountNumberController.text);
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).pop();
+    if (newStudent.isNotEmpty()) {
+      // ignore: use_build_context_synchronously
+      showDialog(
+        context: context,
+        builder: (context) => InfoStudentDialog(
+          student: newStudent,
+        ),
+      );
+    } else {
+      newStudent.accountNumber = accountNumberController.text;
+      // ignore: use_build_context_synchronously
+      showDialog(
+        context: context,
+        builder: (context) => CreateStudentDialog(
+          student: newStudent,
+        ),
+      );
+    }
   }
 }
