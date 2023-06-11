@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:unica_cybercoffee/domain/models/student.dart';
 import 'package:unica_cybercoffee/ui/widgets/action_button.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_tab_view.dart';
 
-class InfoUserDialog extends StatefulWidget {
-  const InfoUserDialog({
+class InfoStudentDialog extends StatefulWidget {
+  InfoStudentDialog({
     super.key,
+    required this.student,
   });
 
+  Student student;
+
   @override
-  State<InfoUserDialog> createState() => _InfoUserDialogState();
+  State<InfoStudentDialog> createState() => _InfoStudentDialogState();
 }
 
-class _InfoUserDialogState extends State<InfoUserDialog> {
+class _InfoStudentDialogState extends State<InfoStudentDialog> {
   List<String> tabs = [
     'Informacion',
     'Prestamo',
