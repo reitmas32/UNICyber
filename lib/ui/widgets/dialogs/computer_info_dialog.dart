@@ -4,6 +4,7 @@ import 'package:unica_cybercoffee/domain/models/state.dart';
 import 'package:unica_cybercoffee/services/API/data_static.dart';
 
 import 'package:unica_cybercoffee/services/API/states.dart' as states;
+import 'package:unica_cybercoffee/services/API/api_connection.dart';
 
 class ComputerInfoDialog extends StatefulWidget {
   const ComputerInfoDialog({
@@ -154,7 +155,7 @@ class _ComputerInfoDialogState extends State<ComputerInfoDialog> {
   }
 
   onChangeStateAvailable() async {
-    await states.setStateOfComputer(widget.computer.id, 1);
+    await api.states.setStateOfComputer(widget.computer.id, 1);
     setState(() {
       widget.computer.idState = dataStatic.states[0].id;
     });
@@ -162,7 +163,7 @@ class _ComputerInfoDialogState extends State<ComputerInfoDialog> {
 
   onChangeState() async {
     if (controllerState >= 1) {
-      await states.setStateOfComputer(
+      await api.states.setStateOfComputer(
           widget.computer.id, dataStatic.states[controllerState].id);
       setState(() {
         widget.computer.idState = dataStatic.states[controllerState].id;

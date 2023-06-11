@@ -15,7 +15,7 @@ void main() async {
 }
 
 onGetStates() async {
-  await states.getStates();
+  await api.states.getStates();
 }
 
 class MyApp extends StatefulWidget {
