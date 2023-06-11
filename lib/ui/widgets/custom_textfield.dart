@@ -25,14 +25,15 @@ class TextMaskController extends ChangeNotifier {
 }
 
 class CustomTextFileds extends StatefulWidget {
-  const CustomTextFileds({
+  CustomTextFileds({
     required this.maskController,
     required this.indexTextField,
     super.key,
     required this.textEditingController,
     required this.lable,
-    required this.padding,
+    this.padding,
     this.focusNode,
+    this.width,
     this.onlyNumbers = false,
     this.autofocus = false,
   });
@@ -40,10 +41,11 @@ class CustomTextFileds extends StatefulWidget {
   final TextEditingController textEditingController;
   final int indexTextField;
   final String lable;
-  final EdgeInsets padding;
+  final EdgeInsets? padding;
   final bool onlyNumbers;
   final bool autofocus;
   final FocusNode? focusNode;
+  final double? width;
   @override
   CustomTextFiledsState createState() => CustomTextFiledsState();
 }
@@ -58,51 +60,56 @@ class CustomTextFiledsState extends State<CustomTextFileds> {
   Widget build(BuildContext context) {
     final currentTheme = Provider.of<ThemeProvider>(context);
     return Padding(
-      padding: widget.padding,
-      child: Material(
-        elevation: widget.maskController.mask[widget.indexTextField] == true
-            ? 20.0
-            : 0.0,
-        shadowColor: widget.maskController.mask[widget.indexTextField] == true
-            ? Colors.blueAccent
-            : Colors.transparent,
-        child: TextField(
-          autofocus: widget.autofocus,
-          keyboardType: widget.onlyNumbers ? TextInputType.number : null,
-          inputFormatters: widget.onlyNumbers
-              ? [FilteringTextInputFormatter.digitsOnly]
-              : null,
-          cursorColor: Theme.of(context).colorScheme.onPrimary,
-          obscureText: widget.lable.toLowerCase() == 'password' ||
-              widget.lable.toLowerCase() == 'contraseña',
-          controller: widget.textEditingController,
-          onTap: () => setState(
-            () {
-              widget.maskController.updateMask(widget.indexTextField);
-            },
-          ),
-          selectionControls: DesktopTextSelectionControls(),
-          decoration: InputDecoration(
-            fillColor: currentTheme.isDarkTheme()
-                ? const Color.fromARGB(54, 86, 96, 202)
-                : const Color.fromARGB(255, 205, 206, 208),
-            filled: true,
-            labelText: widget.lable,
-            labelStyle: TextStyle(
-                color: widget.maskController.mask[widget.indexTextField] == true
-                    ? Colors.blue
-                    : Theme.of(context).colorScheme.onPrimary),
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-            border: const OutlineInputBorder(),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                width: 3,
-                color: widget.maskController.mask[widget.indexTextField] == true
-                    ? Colors.blueAccent
-                    : Colors.transparent,
-              ),
+      padding: widget.padding ?? const EdgeInsets.all(0.0),
+      child: Container(
+        width: widget.width ?? double.infinity,
+        child: Material(
+          elevation: widget.maskController.mask[widget.indexTextField] == true
+              ? 20.0
+              : 0.0,
+          shadowColor: widget.maskController.mask[widget.indexTextField] == true
+              ? Colors.blueAccent
+              : Colors.transparent,
+          child: TextField(
+            autofocus: widget.autofocus,
+            keyboardType: widget.onlyNumbers ? TextInputType.number : null,
+            inputFormatters: widget.onlyNumbers
+                ? [FilteringTextInputFormatter.digitsOnly]
+                : null,
+            cursorColor: Theme.of(context).colorScheme.onPrimary,
+            obscureText: widget.lable.toLowerCase() == 'password' ||
+                widget.lable.toLowerCase() == 'contraseña',
+            controller: widget.textEditingController,
+            onTap: () => setState(
+              () {
+                widget.maskController.updateMask(widget.indexTextField);
+              },
             ),
-            hintText: ' ${widget.lable}',
+            selectionControls: DesktopTextSelectionControls(),
+            decoration: InputDecoration(
+              fillColor: currentTheme.isDarkTheme()
+                  ? const Color.fromARGB(54, 86, 96, 202)
+                  : const Color.fromARGB(255, 205, 206, 208),
+              filled: true,
+              labelText: widget.lable,
+              labelStyle: TextStyle(
+                  color:
+                      widget.maskController.mask[widget.indexTextField] == true
+                          ? Colors.blue
+                          : Theme.of(context).colorScheme.onPrimary),
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+              border: const OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  width: 3,
+                  color:
+                      widget.maskController.mask[widget.indexTextField] == true
+                          ? Colors.blueAccent
+                          : Colors.transparent,
+                ),
+              ),
+              hintText: ' ${widget.lable}',
+            ),
           ),
         ),
       ),
