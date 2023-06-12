@@ -16,8 +16,6 @@ class _LoanComputerDialogState extends State<LoanComputerDialog> {
       TextEditingController(text: '');
   TextMaskController maskController = TextMaskController(lengthMask: 1);
 
-  final FocusNode focusNode = FocusNode();
-
   @override
   void initState() {
     maskController.addListener(() {
@@ -25,17 +23,14 @@ class _LoanComputerDialogState extends State<LoanComputerDialog> {
     });
     setState(() {
       maskController.updateMask(0);
-      focusNode.requestFocus();
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    focusNode.requestFocus();
     return RawKeyboardListener(
       focusNode: FocusNode(),
-      autofocus: true,
       onKey: (RawKeyEvent event) {
         if (event.logicalKey == LogicalKeyboardKey.enter) {
           //widget.onTap();
@@ -47,7 +42,7 @@ class _LoanComputerDialogState extends State<LoanComputerDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             CustomTextFileds(
-              focusNode: focusNode,
+              autofocus: true,
               indexTextField: 0,
               textEditingController: accountNumberController,
               maskController: maskController,

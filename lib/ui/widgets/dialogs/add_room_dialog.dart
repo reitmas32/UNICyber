@@ -33,7 +33,6 @@ class _AddRoomDialogState extends State<AddRoomDialog> {
   Widget build(BuildContext context) {
     return RawKeyboardListener(
       focusNode: FocusNode(),
-      autofocus: true,
       onKey: (RawKeyEvent event) {
         if (event.logicalKey == LogicalKeyboardKey.enter) {}
       },
@@ -41,6 +40,7 @@ class _AddRoomDialogState extends State<AddRoomDialog> {
         title: const Text('Datos de la Aula'),
         content: CustomTextFileds(
           focusNode: focusNode,
+          autofocus: true,
           indexTextField: 0,
           textEditingController: nameRoomController,
           maskController: maskController,

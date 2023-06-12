@@ -36,7 +36,6 @@ class _AddComputerDialogState extends State<AddComputerDialog> {
   Widget build(BuildContext context) {
     return RawKeyboardListener(
       focusNode: FocusNode(),
-      autofocus: true,
       onKey: (RawKeyEvent event) {
         if (event.logicalKey == LogicalKeyboardKey.enter) {}
       },
@@ -46,7 +45,7 @@ class _AddComputerDialogState extends State<AddComputerDialog> {
           child: Column(
             children: [
               CustomTextFileds(
-                focusNode: focusNode,
+                autofocus: true,
                 indexTextField: 0,
                 textEditingController: nameComputerController,
                 maskController: maskController,
