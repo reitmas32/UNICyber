@@ -39,6 +39,7 @@ class Computer {
     return {
       "id": id,
       "id_room": idRoom,
+      "id_state": idState,
       "name": name,
       "state": state,
       "Pos_x": x,
