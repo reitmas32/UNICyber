@@ -42,7 +42,6 @@ class _NewComputerLabPageState extends State<NewComputerLabPage> {
       appBar: const UnicaAppBar(route: '/'),
       body: RawKeyboardListener(
         focusNode: FocusNode(),
-        autofocus: true,
         onKey: (RawKeyEvent event) {
           if (event.logicalKey == LogicalKeyboardKey.enter) {
             onCreateNewComputerLab();
@@ -64,6 +63,7 @@ class _NewComputerLabPageState extends State<NewComputerLabPage> {
               ),
               CustomTextFileds(
                 focusNode: focusNode,
+                autofocus: true,
                 indexTextField: 0,
                 textEditingController: nameController,
                 maskController: maskController,

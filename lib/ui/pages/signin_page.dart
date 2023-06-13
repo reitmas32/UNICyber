@@ -40,7 +40,6 @@ class _SignInPageState extends State<SignInPage> {
       appBar: const UnicaAppBar(route: '/'),
       body: RawKeyboardListener(
         focusNode: FocusNode(),
-        autofocus: true,
         onKey: (RawKeyEvent event) {
           if (event.logicalKey == LogicalKeyboardKey.enter) {
             onSignIn();
@@ -61,6 +60,7 @@ class _SignInPageState extends State<SignInPage> {
               ),
               CustomTextFileds(
                 focusNode: focusNode,
+                autofocus: true,
                 indexTextField: 0,
                 textEditingController: userNameController,
                 maskController: maskController,
