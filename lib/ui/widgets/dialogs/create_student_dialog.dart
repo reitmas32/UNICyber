@@ -24,11 +24,10 @@ class CreateStudentDialog extends StatefulWidget {
 class _CreateStudentDialogState extends State<CreateStudentDialog> {
   TextEditingController nameController = TextEditingController(text: '');
   TextEditingController lastNameController = TextEditingController(text: '');
-  TextEditingController emailController = TextEditingController(text: '');
   TextEditingController accountNumberController =
       TextEditingController(text: '');
   TextEditingController semesterController = TextEditingController(text: '');
-  TextMaskController maskController = TextMaskController(lengthMask: 7);
+  TextMaskController maskController = TextMaskController(lengthMask: 2);
   final FocusNode focusNode = FocusNode();
   DropMenuController universityProgramController = DropMenuController();
   SemesterSliderController semesterSliderController =
@@ -84,7 +83,7 @@ class _CreateStudentDialogState extends State<CreateStudentDialog> {
         title: const Center(child: Text('Alta de Estudiante')),
         content: Container(
             width: 600,
-            height: 550,
+            height: 500,
             padding: const EdgeInsets.all(8.0),
             child: SingleChildScrollView(
               child: Column(
@@ -105,16 +104,6 @@ class _CreateStudentDialogState extends State<CreateStudentDialog> {
                     textEditingController: lastNameController,
                     maskController: maskController,
                     lable: 'Apellidos',
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 16.0,
-                    ),
-                    width: 350,
-                  ),
-                  CustomTextFileds(
-                    indexTextField: 0,
-                    textEditingController: emailController,
-                    maskController: maskController,
-                    lable: 'Correo',
                     padding: const EdgeInsets.symmetric(
                       vertical: 16.0,
                     ),
@@ -176,7 +165,7 @@ class _CreateStudentDialogState extends State<CreateStudentDialog> {
     var student = Student(
       name: nameController.text,
       accountNumber: accountNumberController.text,
-      email: emailController.text,
+      email: '',
       lastName: lastNameController.text,
       semester: semesterSliderController.currentSelected,
       idUniversityProgram: dataStatic
