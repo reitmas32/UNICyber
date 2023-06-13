@@ -85,6 +85,7 @@ class _AddComputerDialogState extends State<AddComputerDialog> {
       name: nameComputerController.text,
       type: typeComputerController.text,
       idRoom: dataStatic.idRoomCurrent,
+      idState: dataStatic.states[0].id,
     );
     await api.computers.createComputer(newComputer);
     // ignore: use_build_context_synchronously
