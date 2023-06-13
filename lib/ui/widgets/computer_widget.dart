@@ -46,23 +46,8 @@ class _ComputerWidgetState extends State<ComputerWidget> {
         onSecondaryTap: () async {
           var result = await showDialog(
             context: context,
-            builder: (context) => RawKeyboardListener(
-              focusNode: FocusNode(),
-              autofocus: true,
-              onKey: (RawKeyEvent event) {
-                if (event.logicalKey == LogicalKeyboardKey.enter) {
-                  Navigator.pop(context);
-                }
-              },
-              child: WillPopScope(
-                onWillPop: () async {
-                  Navigator.of(context).pop(); //Cerrar el AlertDialog
-                  return true;
-                },
-                child: ComputerInfoDialog(
-                  computer: widget.computer,
-                ),
-              ),
+            builder: (context) => ComputerInfoDialog(
+              computer: widget.computer,
             ),
           );
           if (result != null) {
@@ -82,6 +67,10 @@ class _ComputerWidgetState extends State<ComputerWidget> {
         },
         onPanEnd: (details) async {
           if (editableProvider.editable) {
+            setState(() {
+              widget.computer.x = (widget.computer.x / 50).round() * 50;
+              widget.computer.y = (widget.computer.y / 50).round() * 50;
+            });
             await api.computers.updateComputer(widget.computer);
           }
         },
