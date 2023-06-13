@@ -66,6 +66,7 @@ class _LinkComputerLabPageState extends State<LinkComputerLabPage> {
             CustomTextFileds(
               focusNode: focusNode,
               indexTextField: 0,
+              autofocus: true,
               textEditingController: nameController,
               maskController: maskController,
               lable: 'Nombre de usuario',
