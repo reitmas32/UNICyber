@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:unica_cybercoffee/ui/providers/editable_ui_provider.dart';
 
 class ComputerView extends StatelessWidget {
   const ComputerView({
@@ -12,7 +14,17 @@ class ComputerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    final editableProvider = Provider.of<EditableUIProvider>(context);
+
+    return Container(
+      decoration: BoxDecoration(
+        border: editableProvider.editable
+            ? Border.all(
+                color: Colors.blue,
+                width: 2.0,
+              )
+            : null,
+      ),
       width: 120,
       child: Column(
         children: [
