@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:unica_cybercoffee/domain/models/computer.dart';
 import 'package:unica_cybercoffee/domain/models/state.dart';
 import 'package:unica_cybercoffee/services/API/data_static.dart';
@@ -21,18 +22,86 @@ class _ComputerInfoDialogState extends State<ComputerInfoDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: const Text('Datos de la Computadora'),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: InkWell(
+    return RawKeyboardListener(
+      focusNode: FocusNode(),
+      autofocus: true,
+      onKey: (RawKeyEvent event) {
+        if (event.logicalKey == LogicalKeyboardKey.enter) {
+          Navigator.pop(context);
+        }
+        if (event.logicalKey == LogicalKeyboardKey.space) {
+          onChangeStateAvailable();
+          widget.computer.idState = dataStatic.states[0].id;
+          Navigator.of(context).pop(widget.computer);
+        }
+      },
+      child: AlertDialog(
+        title: const Text('Datos de la Computadora'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: InkWell(
+                borderRadius: BorderRadius.circular(10.0),
+                onTap: () async {
+                  await onChangeStateAvailable();
+                  // ignore: use_build_context_synchronously
+                  Navigator.of(context).pop(widget.computer);
+                },
+                hoverColor: Theme.of(context).colorScheme.secondary,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(25.0),
+                    child: const Text(
+                      'Disponible',
+                      style: TextStyle(fontSize: 25.0),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 16.0),
+                child: Text(
+                  'Estado',
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            MyDropdownMenu(
+              computer: widget.computer,
+              onChanged: (int index) {
+                setState(() {
+                  controllerState = index;
+                });
+              },
+              items: dataStatic.states
+                  .map((stateComputer) => stateComputer.name)
+                  .toList(),
+            ),
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 16.0),
+                child: Text(
+                  'Usuario',
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            InkWell(
               borderRadius: BorderRadius.circular(10.0),
-              onTap: () async {
-                await onChangeStateAvailable();
-                // ignore: use_build_context_synchronously
+              onTap: () {
                 Navigator.of(context).pop(widget.computer);
               },
               hoverColor: Theme.of(context).colorScheme.secondary,
@@ -41,53 +110,42 @@ class _ComputerInfoDialogState extends State<ComputerInfoDialog> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(25.0),
                   child: const Text(
-                    'Disponible',
-                    style: TextStyle(fontSize: 25.0),
+                    'Historial',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
-              child: Text(
-                'Estado',
-                textAlign: TextAlign.right,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
+            InkWell(
+              borderRadius: BorderRadius.circular(10.0),
+              onTap: () {
+                Navigator.of(context).pop(widget.computer);
+              },
+              hoverColor: Theme.of(context).colorScheme.secondary,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(25.0),
+                  child: const Text(
+                    'Sancionar',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-          MyDropdownMenu(
-            computer: widget.computer,
-            onChanged: (int index) {
-              setState(() {
-                controllerState = index;
-              });
-            },
-            items: dataStatic.states
-                .map((stateComputer) => stateComputer.name)
-                .toList(),
-          ),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
-              child: Text(
-                'Usuario',
-                textAlign: TextAlign.right,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
+          ],
+        ),
+        actions: [
           InkWell(
             borderRadius: BorderRadius.circular(10.0),
-            onTap: () {
+            onTap: () async {
+              await onChangeState();
+
+              // ignore: use_build_context_synchronously
               Navigator.of(context).pop(widget.computer);
             },
             hoverColor: Theme.of(context).colorScheme.secondary,
@@ -96,26 +154,7 @@ class _ComputerInfoDialogState extends State<ComputerInfoDialog> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(25.0),
                 child: const Text(
-                  'Historial',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          InkWell(
-            borderRadius: BorderRadius.circular(10.0),
-            onTap: () {
-              Navigator.of(context).pop(widget.computer);
-            },
-            hoverColor: Theme.of(context).colorScheme.secondary,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(25.0),
-                child: const Text(
-                  'Sancionar',
+                  'Guardar',
                   style: TextStyle(
                     fontSize: 20.0,
                   ),
@@ -125,30 +164,6 @@ class _ComputerInfoDialogState extends State<ComputerInfoDialog> {
           ),
         ],
       ),
-      actions: [
-        InkWell(
-          borderRadius: BorderRadius.circular(10.0),
-          onTap: () async {
-            await onChangeState();
-
-            // ignore: use_build_context_synchronously
-            Navigator.of(context).pop(widget.computer);
-          },
-          hoverColor: Theme.of(context).colorScheme.secondary,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(25.0),
-              child: const Text(
-                'Guardar',
-                style: TextStyle(
-                  fontSize: 20.0,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 
