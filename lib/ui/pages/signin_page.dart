@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:unica_cybercoffee/domain/models/user.dart';
 import 'package:unica_cybercoffee/services/API/api_connection.dart';
+import 'package:unica_cybercoffee/services/API/data_static.dart';
 import 'package:unica_cybercoffee/ui/widgets/appbar/unicaAppBar.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
 
@@ -212,8 +213,14 @@ class _SignInPageState extends State<SignInPage> {
       );
 
       await api.computerLabs.getComputerLabsOfUser();
-      // ignore: use_build_context_synchronously
-      context.go('/selectComputerLab');
+      if (dataStatic.allComputerLabs.length > 1) {
+        // ignore: use_build_context_synchronously
+        context.go('/selectComputerLab');
+      } else if(dataStatic.allComputerLabs.length == 1) {
+        dataStatic.idComputerLab = dataStatic.allComputerLabs.first.id;
+        // ignore: use_build_context_synchronously
+        context.go('/computers');
+      }
     } else {
       // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
