@@ -87,7 +87,7 @@ class TablePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = themeProvider.isDarkTheme() ? Colors.white : Colors.black
-      ..strokeWidth = 1.0
+      ..strokeWidth = 0.2
       ..style = PaintingStyle.stroke;
 
     // Líneas horizontales
