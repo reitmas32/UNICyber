@@ -168,7 +168,7 @@ class _ComputerInfoDialogState extends State<ComputerInfoDialog> {
   }
 
   onChangeStateAvailable() async {
-    await api.states.setStateOfComputer(widget.computer.id, 1);
+    await api.loanService.leaveLoanOfComputer(widget.computer.id);
     setState(() {
       widget.computer.idState = dataStatic.states[0].id;
     });
