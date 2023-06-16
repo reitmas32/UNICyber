@@ -44,8 +44,8 @@ class _ComputerViewState extends State<ComputerView> {
         setState(() {
           diferenciaTiempo = formatDuration(diferencia);
           seconds = diferencia.inSeconds;
-        })
-      });#
+        });
+      });
     } else {
       timer = Timer.periodic(const Duration(days: 1), (timer) {});
     }
