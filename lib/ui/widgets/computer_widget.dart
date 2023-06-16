@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +22,23 @@ class ComputerWidget extends StatefulWidget {
 }
 
 class _ComputerWidgetState extends State<ComputerWidget> {
+  DateTime sesionStart = DateTime.now();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.computer.idState == 6) {
+      onGetLoan();
+    }
+  }
+
+  onGetLoan() async {
+    var response =
+        await api.loanService.getLoanByIdComputer(widget.computer.id);
+    sesionStart = DateTime.parse(response.sesionStart);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final editableProvider = Provider.of<EditableUIProvider>(context);
@@ -28,20 +47,22 @@ class _ComputerWidgetState extends State<ComputerWidget> {
       left: widget.computer.x,
       top: widget.computer.y,
       child: GestureDetector(
-        onTap: () {
-          showDialog(
+        onTap: () async {
+          var result = await showDialog(
             context: context,
             builder: (context) => RawKeyboardListener(
               focusNode: FocusNode(),
-              autofocus: true,
               onKey: (RawKeyEvent event) {
                 if (event.logicalKey == LogicalKeyboardKey.enter) {
                   Navigator.pop(context);
                 }
               },
-              child: const LoanComputerDialog(),
+              child: LoanComputerDialog(computer: widget.computer),
             ),
           );
+          if (result != null) {
+            setState(() {});
+          }
         },
         onSecondaryTap: () async {
           var result = await showDialog(
@@ -80,6 +101,8 @@ class _ComputerWidgetState extends State<ComputerWidget> {
               .toList()
               .firstWhere((element) => element.id == widget.computer.idState)
               .img,
+          idState: widget.computer.idState,
+          sesionStart: sesionStart,
         ),
       ),
     );
