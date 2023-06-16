@@ -1,5 +1,6 @@
 import 'package:unica_cybercoffee/domain/models/computer.dart';
 import 'package:unica_cybercoffee/domain/models/computer_lab.dart';
+import 'package:unica_cybercoffee/domain/models/loan.dart';
 import 'package:unica_cybercoffee/domain/models/room.dart';
 import 'package:unica_cybercoffee/domain/models/student.dart';
 import 'package:unica_cybercoffee/domain/models/user.dart';
@@ -12,6 +13,7 @@ abstract class ApiInterface {
   StateAPI get states;
   StudentAPI get students;
   UniversityProgramAPI get universityProgram;
+  LoanServiceAPI get loanService;
 
   //ComputerLabAPI get computerLab;
   // Otras secciones de la API
@@ -60,5 +62,12 @@ abstract class StudentAPI {
 
 abstract class UniversityProgramAPI {
   Future<bool> getUniversityPrograms();
+  // Otros métodos relacionados con mensajes
+}
+
+abstract class LoanServiceAPI {
+  Future<bool> createLoanOfComputer(int idComputer, String accountNumber);
+  Future<bool> leaveLoanOfComputer(int idComputer);
+  Future<Loan> getLoanByIdComputer(int idComputer);
   // Otros métodos relacionados con mensajes
 }
