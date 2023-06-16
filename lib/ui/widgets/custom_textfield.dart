@@ -51,8 +51,12 @@ class CustomTextFileds extends StatefulWidget {
 }
 
 class CustomTextFiledsState extends State<CustomTextFileds> {
+  bool _obscureText = true;
+  bool _isPasswordTextFiled = false;
   @override
   void initState() {
+    _isPasswordTextFiled = widget.lable.toLowerCase() == 'password' ||
+        widget.lable.toLowerCase() == 'contraseña';
     super.initState();
   }
 
@@ -77,8 +81,11 @@ class CustomTextFiledsState extends State<CustomTextFileds> {
                 ? [FilteringTextInputFormatter.digitsOnly]
                 : null,
             cursorColor: Theme.of(context).colorScheme.onPrimary,
+            /*
             obscureText: widget.lable.toLowerCase() == 'password' ||
                 widget.lable.toLowerCase() == 'contraseña',
+                */
+            obscureText: _obscureText,
             controller: widget.textEditingController,
             onTap: () => setState(
               () {
@@ -87,6 +94,19 @@ class CustomTextFiledsState extends State<CustomTextFileds> {
             ),
             selectionControls: DesktopTextSelectionControls(),
             decoration: InputDecoration(
+              suffixIcon: _isPasswordTextFiled
+                  ? IconButton(
+                      icon: Icon(
+                        _obscureText ? Icons.visibility : Icons.visibility_off,
+                        color: _obscureText ? Colors.blue : const Color.fromARGB(255, 130, 176, 215),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _obscureText = !_obscureText;
+                        });
+                      },
+                    )
+                  : null,
               fillColor: currentTheme.isDarkTheme()
                   ? const Color.fromARGB(54, 86, 96, 202)
                   : const Color.fromARGB(255, 205, 206, 208),
