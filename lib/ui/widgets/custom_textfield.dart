@@ -57,6 +57,7 @@ class CustomTextFiledsState extends State<CustomTextFileds> {
   void initState() {
     _isPasswordTextFiled = widget.lable.toLowerCase() == 'password' ||
         widget.lable.toLowerCase() == 'contraseña';
+    _obscureText = _isPasswordTextFiled;
     super.initState();
   }
 
