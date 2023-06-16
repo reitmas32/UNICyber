@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:unica_cybercoffee/domain/models/computer.dart';
+import 'package:unica_cybercoffee/services/API/api_connection.dart';
+import 'package:unica_cybercoffee/services/API/data_static.dart';
 import 'package:unica_cybercoffee/ui/widgets/custom_textfield.dart';
 
 class LoanComputerDialog extends StatefulWidget {
   const LoanComputerDialog({
     super.key,
+    required this.computer,
   });
+  final Computer computer;
 
   @override
   State<LoanComputerDialog> createState() => _LoanComputerDialogState();
@@ -54,8 +59,17 @@ class _LoanComputerDialogState extends State<LoanComputerDialog> {
         actions: [
           InkWell(
             borderRadius: BorderRadius.circular(10.0),
-            onTap: () {
-              Navigator.of(context).pop();
+            onTap: () async {
+              var result = await api.loanService.createLoanOfComputer(
+                widget.computer.id,
+                accountNumberController.text,
+              );
+              if (result) {
+                setState(() {
+                  widget.computer.idState = dataStatic.states[5].id;
+                });
+              }
+              Navigator.of(context).pop(widget.computer);
             },
             hoverColor: Theme.of(context).colorScheme.secondary,
             child: Padding(
