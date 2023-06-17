@@ -4,11 +4,12 @@ import 'package:http/http.dart' as http;
 import 'package:unica_cybercoffee/domain/models/room.dart';
 import 'package:unica_cybercoffee/services/API/api_interface.dart';
 import 'package:unica_cybercoffee/services/API/data_static.dart';
+import 'package:unica_cybercoffee/services/API/production/base.dart' as BASE;
 
 class ProductionRoomAPI implements RoomAPI {
   @override
   Future<bool> createRoom(Room computerLab) async {
-    var url = Uri.parse('http://localhost:3000/api/v1/room');
+    var url = Uri.parse('${BASE.URL_API}/api/v1/room');
     var body = jsonEncode(computerLab.toJson());
     var response = await http.post(url, body: body);
 
@@ -27,8 +28,8 @@ class ProductionRoomAPI implements RoomAPI {
 
   @override
   Future<bool> getRoomsOfComputerLab(int idComputerLab) async {
-    var url = Uri.parse(
-        'http://localhost:3000/api/v1/rooms/${dataStatic.idComputerLab}');
+    var url =
+        Uri.parse('${BASE.URL_API}/api/v1/rooms/${dataStatic.idComputerLab}');
     var response = await http.get(url);
 
     if (response.statusCode == 200) {

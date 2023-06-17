@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:unica_cybercoffee/domain/models/student.dart';
 import 'package:unica_cybercoffee/services/API/api_interface.dart';
-import 'package:unica_cybercoffee/services/API/production/base.dart' as base;
+import 'package:unica_cybercoffee/services/API/production/base.dart' as BASE;
 
 class ProductionStudentAPI implements StudentAPI {
   @override
   Future<Student> getStudent(String accountNumber) async {
-    var url = Uri.parse('http://localhost:3000/api/v1/students/$accountNumber');
+    var url = Uri.parse('${BASE.URL_API}/api/v1/students/$accountNumber');
     var response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -33,7 +33,7 @@ class ProductionStudentAPI implements StudentAPI {
   @override
   Future<Student> createStudent(Student student) async {
     var url = Uri.parse(
-      '${base.host}:${base.port}/api/${base.apiVersion}/student',
+      '${BASE.HOST}::${BASE.PORT}/api/${BASE.apiVersion}/student',
     );
 
     if (student.email == '') {

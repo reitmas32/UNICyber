@@ -110,7 +110,7 @@ class _LinkComputerLabPageState extends State<LinkComputerLabPage> {
                               color: Colors.blue,
                               borderRadius: BorderRadius.circular(20)),
                           child: TextButton(
-                            onPressed: onLinkComputerLab,
+                            onPressed: onLinkComputerLabJanky,
                             child: const Text(
                               'Crear Nueva Sala',
                               style:
@@ -128,6 +128,40 @@ class _LinkComputerLabPageState extends State<LinkComputerLabPage> {
         ),
       ),
     );
+  }
+
+  onLinkComputerLabJanky() async {
+    var response = await api.computerLabs.linkComputerLabJanky(
+        radioButtonGroupController.selectedOption, nameController.text);
+    if (response) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.blue,
+          content: Text(
+            'Vinculacion Con exito 👌',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          duration: Duration(seconds: 2), // Duración del SnackBar
+        ),
+      );
+
+      context.go('/');
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(
+            'No se pudo vincular la Sala 😢',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          duration: Duration(seconds: 2), // Duración del SnackBar
+        ),
+      );
+    }
   }
 
   onLinkComputerLab() async {

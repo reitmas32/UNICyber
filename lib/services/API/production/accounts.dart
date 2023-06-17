@@ -4,11 +4,12 @@ import 'package:http/http.dart' as http;
 import 'package:unica_cybercoffee/domain/models/user.dart';
 import 'package:unica_cybercoffee/services/API/api_interface.dart';
 import 'package:unica_cybercoffee/services/API/data_static.dart';
+import 'package:unica_cybercoffee/services/API/production/base.dart' as BASE;
 
 class ProductionAccountAPI implements AccountAPI {
   @override
   Future<bool> signUp(User user) async {
-    var url = Uri.parse('http://localhost:3000/api/v1/signup');
+    var url = Uri.parse('${BASE.URL_API}/api/v1/signup');
     var body = jsonEncode(user.toJson());
     var response = await http.post(url, body: body);
     if (response.statusCode == 200) {
@@ -27,7 +28,7 @@ class ProductionAccountAPI implements AccountAPI {
 
   @override
   Future<bool> signIn(User user) async {
-    var url = Uri.parse('http://localhost:3000/api/v1/signin');
+    var url = Uri.parse('${BASE.URL_API}/api/v1/signin');
     var body = jsonEncode(user.toJson());
     var response = await http.put(url, body: body);
     if (response.statusCode == 200) {

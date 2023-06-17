@@ -4,11 +4,12 @@ import 'package:http/http.dart' as http;
 import 'package:unica_cybercoffee/domain/models/state.dart';
 import 'package:unica_cybercoffee/services/API/api_interface.dart';
 import 'package:unica_cybercoffee/services/API/data_static.dart';
+import 'package:unica_cybercoffee/services/API/production/base.dart' as BASE;
 
 class ProductionStateAPI implements StateAPI {
   @override
   Future<bool> getStates() async {
-    var url = Uri.parse('http://localhost:3000/api/v1/states');
+    var url = Uri.parse('${BASE.URL_API}/api/v1/states');
     var response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -32,8 +33,8 @@ class ProductionStateAPI implements StateAPI {
 
   @override
   Future<bool> setStateOfComputer(int idComputer, int idState) async {
-    var url = Uri.parse(
-        'http://localhost:3000/api/v1/computer-set-state/$idComputer');
+    var url =
+        Uri.parse('${BASE.URL_API}/api/v1/computer-set-state/$idComputer');
     var body = jsonEncode({'id_state': idState});
     var response = await http.put(url, body: body);
 

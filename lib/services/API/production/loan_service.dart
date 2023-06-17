@@ -4,14 +4,14 @@ import 'package:http/http.dart' as http;
 import 'package:unica_cybercoffee/domain/models/loan.dart';
 import 'package:unica_cybercoffee/domain/models/student.dart';
 import 'package:unica_cybercoffee/services/API/api_interface.dart';
-import 'package:unica_cybercoffee/services/API/production/base.dart' as base;
+import 'package:unica_cybercoffee/services/API/production/base.dart' as BASE;
 
 class ProductionLoanServiceAPI implements LoanServiceAPI {
   @override
   Future<bool> createLoanOfComputer(
       int idComputer, String accountNumber) async {
-    var url = Uri.parse(
-        'http://localhost:3000/api/v1/loan-computer-by-account-number');
+    var url =
+        Uri.parse('${BASE.URL_API}/api/v1/loan-computer-by-account-number');
     var body = jsonEncode(
       {
         'account_number': accountNumber,
@@ -33,7 +33,7 @@ class ProductionLoanServiceAPI implements LoanServiceAPI {
 
   @override
   Future<bool> leaveLoanOfComputer(int idComputer) async {
-    var url = Uri.parse('http://localhost:3000/api/v1/loan-leave-computer');
+    var url = Uri.parse('${BASE.URL_API}/api/v1/loan-leave-computer');
     var body = jsonEncode(
       {
         'id_computer': idComputer,
@@ -54,8 +54,7 @@ class ProductionLoanServiceAPI implements LoanServiceAPI {
 
   @override
   Future<Loan> getLoanByIdComputer(int idComputer) async {
-    var url =
-        Uri.parse('http://localhost:3000/api/v1/loan-computer/$idComputer');
+    var url = Uri.parse('${BASE.URL_API}/api/v1/loan-computer/$idComputer');
 
     var response = await http.get(url);
 
